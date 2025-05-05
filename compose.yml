@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./build/api/Dockerfile
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    environment:
+      - USER_NAME=elias
+      - USER_ID=1000
+      - GROUP_NAME=elias
+      - GROUP_ID=1000
+    volumes:
+      - ./api:/api
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./build/app/Dockerfile
+    command: sh -c 'yarn install && yarn dev --host'
+    environment:
+      - USER_NAME=elias
+      - USER_ID=1000
+      - GROUP_NAME=elias
+      - GROUP_ID=1000
+    volumes:
+      - ./app:/app
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
