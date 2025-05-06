@@ -13,19 +13,15 @@ class UserBase(SQLModel):
     username: str
     mail: str = Field(unique=True)
 
-class User(SQLModel, table=True):
+class User(UserBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    username: str
-    mail: str = Field(unique=True)
 
-class UserCreate(SQLModel):
-    username: str
-    mail: str
+class UserCreate(UserBase):
+    pass
 
-class UserRead(SQLModel):
+class UserRead(UserBase):
     id: int
-    username: str
-    mail: str
+
 
 
 #Creation du moteur SQLAlchemy
@@ -38,13 +34,7 @@ def read_users():
     with Session(engine) as session:
         users = session.query(User).all()
         return users
-def create_user(user: UserCreate):
-    with Session(engine) as session:
-        db_user = User.model_validate(user)
-        session.add(db_user)
-        session.commit()
-        session.refresh(db_user)
-        return db_user
+
 
 
 app = FastAPI()
@@ -58,5 +48,10 @@ def get_users():
     return read_users();
 
 @app.post("/user", response_model=UserRead)
-def post_user(user: UserCreate):
-    return create_user(user);
+def create_user(user: UserCreate):
+    with Session(engine) as session:
+        db_user = User.model_validate(user)
+        session.add(db_user)
+        session.commit()
+        session.refresh(db_user)
+        return db_user
