@@ -12,7 +12,8 @@ services:
     volumes:
       - ./api:/api
     ports:
-      - "8000:8000"
+      - "8000:8000" # API port
+     # - "5432:5432" # Database port
     networks:
       - app-network
 
@@ -33,6 +34,26 @@ services:
     networks:
       - app-network
 
+  database:
+    image: postgres:latest
+    command: ["postgres"]
+    environment:
+      POSTGRES_USER: api
+      POSTGRES_PASSWORD: lycee
+      POSTGRES_DB: lycee
+    volumes:
+      - type: volume
+        source: database-volume
+        target: /var/lib/postgresql
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  database-volume:
+    driver: local

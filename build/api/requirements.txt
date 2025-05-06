@@ -1,5 +1,5 @@
 fastapi
 uvicorn
-pydantic
-sqlalchemy
 sqlmodel
+alembic
+psycopg2-binary
