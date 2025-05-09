@@ -1,57 +1,35 @@
 from fastapi import FastAPI
-
-from sqlmodel import Field, Session, SQLModel, create_engine
-from typing import Optional
-
-from datetime import datetime
-from typing import Optional, List
-from sqlmodel import Field, SQLModel, Relationship
+from fastapi.middleware.cors import CORSMiddleware
 
 
-#Model
-class UserBase(SQLModel):
-    username: str
-    mail: str = Field(unique=True)
-
-class User(UserBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-
-class UserCreate(UserBase):
-    pass
-
-class UserRead(UserBase):
-    id: int
-
+from src.endpoints.cours import router as cours_router
 
 
 #Creation du moteur SQLAlchemy
-DATABASE_URL = "postgresql://api:lycee@database:5432/lycee"
-engine = create_engine(DATABASE_URL, echo=True)
+#DATABASE_URL = "postgresql://endpoints:lycee@database:5432/lycee"
+#engine = create_engine(DATABASE_URL, echo=True)
 
+app = FastAPI(
+    title="API",
+    version="0.0.1",
+)
 
-#Opérations CRUD
-def read_users():
-    with Session(engine) as session:
-        users = session.query(User).all()
-        return users
+origins = [
+    "http://localhost:5173",
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
-app = FastAPI()
+# Inclure vos routers
+#app.include_router(cours.router, prefix="/cours")
+app.include_router(cours_router)
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
-@app.get("/users", response_model=List[User])
-def get_users():
-    return read_users();
-
-@app.post("/user", response_model=UserRead)
-def create_user(user: UserCreate):
-    with Session(engine) as session:
-        db_user = User.model_validate(user)
-        session.add(db_user)
-        session.commit()
-        session.refresh(db_user)
-        return db_user

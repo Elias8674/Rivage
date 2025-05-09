@@ -1,0 +1,68 @@
+.cours_cards {
+    display: flex;
+    width: 260px;
+    height: 180px;
+    justify-content: center;
+    align-items: end;
+    flex-shrink: 0;
+
+    border-radius: 26px;
+    background: #D15E00;
+}
+
+.cours_cards_footer {
+    display: flex;
+    width: 260px;
+    height: 50px;
+    padding-left: 11px;
+    padding-right: 11px;
+    justify-content: space-between;
+    align-items: center;
+    /*gap: 106px;*/
+
+    border-radius: 0px 0px 26px 26px;
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-left: 1px solid rgba(0, 0, 0, 0.25);
+    background: #FFF;
+}
+
+.cours_cards_footer_title {
+    color: #01180B;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    width: 150px;
+    height: 27.2px;
+    margin: 0px;
+
+    overflow: hidden;
+    text-align: left;
+}
+
+.cours_cards_footer_button_ouvrir {
+    display: flex;
+    padding: 7px 13px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+
+    color: #000;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.cours_cards_footer_button_ouvrir:hover {
+    background: #0079FF;
+    color: white;
+    transition-duration: 0.6s;
+}
