@@ -16,6 +16,8 @@ services:
      # - "5432:5432" # Database port
     networks:
       - app-network
+    depends_on:
+      - database
 
   frontend:
     build:
@@ -38,7 +40,7 @@ services:
     image: postgres:latest
     command: ["postgres"]
     environment:
-      POSTGRES_USER: endpoints
+      POSTGRES_USER: api
       POSTGRES_PASSWORD: lycee
       POSTGRES_DB: lycee
     volumes:
