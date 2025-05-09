@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import './cours.css';
 
 const Cours = (props) => {
 
@@ -7,9 +8,11 @@ const Cours = (props) => {
     }
 
     return (
-        <div>
-            <h2>{props.name}</h2>
-            <button onClick={Redirect}>Ouvrir</button>
+        <div class="cours_cards">
+            <div class="cours_cards_footer">
+                <h2 class="cours_cards_footer_title">{props.name}</h2>
+                <button class="cours_cards_footer_button_ouvrir" onClick={Redirect}>Ouvrir</button>
+            </div>
         </div>
     )
 }
