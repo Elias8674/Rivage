@@ -13,12 +13,34 @@ class CoursBase(SQLModel):
 
 class Cours(CoursBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    tp: List["Tp"] = Relationship(back_populates="cours")
 
 class CoursRead(CoursBase):
     id: int
 
 class CoursWrite(CoursBase):
     pass
+
+
+
+#TP
+class TpBase(SQLModel):
+    titre: str
+    description: str
+
+class Tp(CoursRead, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    index: int = Field(autoincrement=True) #faire en sorte qu'il soit incrementé automatiquement
+    cours: List["Cours"] = Relationship(back_populates="tp")
+
+class TpRead(TpBase):
+    id: int
+    index: int
+    cours: List["Cours"]
+
+class TpWrite(TpBase):
+    pass
+
 
 engine = create_engine("postgresql://api:lycee@database:5432/lycee")
 
