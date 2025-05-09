@@ -1,6 +1,7 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-#from src.endpoints.cours import cours
+
 from src.endpoints.cours import router as cours_router
 
 
@@ -11,6 +12,18 @@ from src.endpoints.cours import router as cours_router
 app = FastAPI(
     title="API",
     version="0.0.1",
+)
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Inclure vos routers
