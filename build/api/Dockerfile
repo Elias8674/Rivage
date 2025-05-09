@@ -5,7 +5,7 @@ WORKDIR /api
 EXPOSE 8000
 COPY build/api/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
+#ENV PYTHONPATH="${PYTHONPATH}:/api"
 
 # Crée un utilisateur système pour exécuter les commandes npm/yarn
 RUN if [ ! -z ${USER_NAME} ] && [ ! -z ${GROUP_NAME} ] && [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ] ; then \
@@ -17,4 +17,4 @@ RUN if [ ! -z ${USER_NAME} ] && [ ! -z ${GROUP_NAME} ] && [ ${USER_ID:-0} -ne 0 
 # Connexion au conteneur en tant qu'utilisateur non-root
 USER ${USER_ID:-0}:${GROUP_ID:-0}
 
-CMD ["uvicorn", "main:api", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:api", "--host", "0.0.0.0", "--port", "8000"]

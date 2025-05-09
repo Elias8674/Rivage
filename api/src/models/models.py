@@ -19,3 +19,9 @@ class CoursRead(CoursBase):
 
 class CoursWrite(CoursBase):
     pass
+
+engine = create_engine("postgresql://endpoints:lycee@database:5432/lycee")
+
+def get_session():
+    with Session(engine) as session:
+        yield session

@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./build/api/Dockerfile
-    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
     environment:
       - USER_NAME=elias
       - USER_ID=1000
@@ -38,7 +38,7 @@ services:
     image: postgres:latest
     command: ["postgres"]
     environment:
-      POSTGRES_USER: api
+      POSTGRES_USER: endpoints
       POSTGRES_PASSWORD: lycee
       POSTGRES_DB: lycee
     volumes:
