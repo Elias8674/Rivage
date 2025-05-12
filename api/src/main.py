@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 from src.endpoints.cours import router as cours_router
+from src.endpoints.tp import router  as tp_router
 
 
 #Creation du moteur SQLAlchemy
@@ -29,6 +30,7 @@ app.add_middleware(
 # Inclure vos routers
 #app.include_router(cours.router, prefix="/cours")
 app.include_router(cours_router)
+app.include_router(tp_router)
 
 @app.get("/")
 def read_root():

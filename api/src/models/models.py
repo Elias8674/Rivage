@@ -18,6 +18,10 @@ class Cours(CoursBase, table=True):
 class CoursRead(CoursBase):
     id: int
 
+class CoursReadWithTp(CoursBase):
+    id: int
+    tp: List["TpRead"]
+
 class CoursWrite(CoursBase):
     pass
 
@@ -28,18 +32,22 @@ class TpBase(SQLModel):
     titre: str
     description: str
 
-class Tp(CoursRead, table=True):
+class Tp(TpBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    index: int = Field(autoincrement=True) #faire en sorte qu'il soit incrementé automatiquement
-    cours: List["Cours"] = Relationship(back_populates="tp")
+    index: int #faire en sorte qu'il soit incrementé automatiquement
+
+    cours_id: int = Field(foreign_key="cours.id")
+    cours: Cours = Relationship(back_populates="tp")
 
 class TpRead(TpBase):
     id: int
     index: int
-    cours: List["Cours"]
 
 class TpWrite(TpBase):
-    pass
+    index: int
+    cours_id: int
+
+
 
 
 engine = create_engine("postgresql://api:lycee@database:5432/lycee")
