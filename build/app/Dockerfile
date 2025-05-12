@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20.19
 USER root
 WORKDIR /app
 EXPOSE 5173

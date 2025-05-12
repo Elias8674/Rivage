@@ -1,0 +1,7 @@
+.accordion-header.open {
+    background-color: #535bf2;
+}
+
+.accordion-header.close {
+    background-color: black;
+}
