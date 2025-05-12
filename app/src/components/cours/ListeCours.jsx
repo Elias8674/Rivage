@@ -37,7 +37,7 @@ const ListeCours = () => {
         <div class='listeCours_container'>
             <input className='listeCours_container_Search'
                    type="text"
-                   placeholder="Search for a book"
+                   placeholder="Chercher un cours"
                    value={searchTerm}
                    onChange={updateSearch}
             />

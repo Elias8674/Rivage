@@ -10,12 +10,34 @@ const Tp = (props) => {
     };
 
     return (
-        <div className="tp">
-            <button onClick={toggleOpen}>ça déplie</button>
-            <h1>{props.titre}</h1>
-            <div className={`accordion-header ${isOpen ? 'open' : 'close'}`}>
-                <p>{props.description}</p>
+        <div className={"tp_container"}>
+            <div className={"tp_container_header"}>
+                <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={toggleOpen}
+                    className="tp_container_header_toggle"
+                    role="button"
+                    tabIndex="0"
+                    style={{cursor: 'pointer'}}
+                >
+                    <path d="M24 12L16 20L8 12" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                </svg>
+
+                <h1 className={"tp_container_header_title"}>{props.titre}</h1>
             </div>
+            {isOpen && (
+                <div className={"tp_container_content"}>
+                    <h3 className={"tp_container_content_title"}>{props.description}</h3>
+                </div>
+            )
+            }
+
+
         </div>
     );
 }

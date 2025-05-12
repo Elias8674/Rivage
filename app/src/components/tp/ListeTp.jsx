@@ -40,7 +40,7 @@ const ListeTp = (props) => {
         <div className={"listeTp_container"}>
             <input className={"listeTp_container_search"}
                 type="text"
-                placeholder="Search for a book"
+                placeholder="Chercher un tp"
                 value={searchTerm}
                 onChange={updateSearch}
             />

@@ -5,6 +5,8 @@ import Cours from "../components/cours/Cours.jsx";
 import Tp from "../components/tp/Tp.jsx";
 import ListeTp from "../components/tp/ListeTp.jsx";
 
+import './coursPage.css'
+
 const CoursPage = () => {
     const { id } = useParams();
 
@@ -31,13 +33,14 @@ const CoursPage = () => {
 
 
     return (
-        <div>
-            <p>OK</p>
-            <h1> {cours.nom } </h1>
-            <p> {cours.description} </p>
-
+        <div className={"courPage_container_content"}>
+            <h1 className={"coursPage_container_content_title"}> {cours.nom } </h1>
             <ListeTp id={id} />
         </div>
+
+
+
+
 
     )
 }

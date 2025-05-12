@@ -1,7 +1,52 @@
-.accordion-header.open {
-    background-color: #535bf2;
+.tp_container {
+    width: 830px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.09);
 }
 
-.accordion-header.close {
-    background-color: black;
+.tp_container_header {
+    display: flex;
+    align-items: center;
+    align-content: flex-start;
+    gap: 25px;
+    flex-shrink: 0;
+
+    height: 80px;
+}
+
+.tp_container_header_title {
+    color: #1B1B1B;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.tp_container_header_toggle {
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+
+    padding-left: 22px;
+}
+
+.tp_container_content {
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    flex-shrink: 0;
+
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+.tp_container_content_title {
+    color: #000;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
