@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import './tp.css';
 import {useState} from "react";
+import ListeDocuments from "../document/ListeDocuments.jsx";
 
 const Tp = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +34,7 @@ const Tp = (props) => {
             {isOpen && (
                 <div className={"tp_container_content"}>
                     <h3 className={"tp_container_content_title"}>{props.description}</h3>
+                    <ListeDocuments TpID={props.id} />
                 </div>
             )
             }

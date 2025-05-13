@@ -2,6 +2,7 @@
     width: 830px;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.09);
+
 }
 
 .tp_container_header {
@@ -36,10 +37,14 @@
     align-items: flex-start;
     align-content: flex-start;
 
+    flex-direction: column;
+
+
     flex-shrink: 0;
 
     padding-left: 22px;
     padding-right: 22px;
+    padding-bottom: 22px;
 }
 
 .tp_container_content_title {
@@ -49,4 +54,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
+
+    margin-bottom: 30px;
 }
