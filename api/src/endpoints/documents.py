@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, File, UploadFile
+from fastapi.responses import FileResponse
 from sqlmodel import Session, select
 
 
@@ -40,3 +41,12 @@ async def create_upload_file(file: UploadFile, tp_id: int, description: str = ""
 
     return db_document
 
+@router.get("/{document_id}", response_class=FileResponse)
+async def get_document(document_id: int, db: Session = Depends(get_db)):
+    """
+    Récupère un document par son ID.
+    """
+    document = db.get(Document, document_id)
+    if not document:
+        raise HTTPException(status_code=404, detail="Document non trouvé")
+    return document.path
