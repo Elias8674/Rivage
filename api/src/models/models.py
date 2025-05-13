@@ -38,14 +38,35 @@ class Tp(TpBase, table=True):
 
     cours_id: int = Field(foreign_key="cours.id")
     cours: Cours = Relationship(back_populates="tp")
+    documents: List["Document"] = Relationship(back_populates="tp")
 
 class TpRead(TpBase):
     id: int
     index: int
+    documents: List["DocumentRead"]
 
 class TpWrite(TpBase):
     index: int
     cours_id: int
+
+
+#Documents
+class DocumentBase(SQLModel):
+    nom: str
+    description: Optional[str] = None
+    path: str
+
+class Document(DocumentBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    tp_id: int = Field(foreign_key="tp.id")
+    tp: Tp = Relationship(back_populates="documents")
+
+class DocumentRead(DocumentBase):
+    id: int
+    tp_id: int
+
+class DocumentWrite(DocumentBase):
+    tp_id: int
 
 
 
