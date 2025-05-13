@@ -31,7 +31,7 @@ def create_cours(cours: CoursWrite, db: Session = Depends(get_db)):
 @router.get("/{cours_id}", response_model=CoursReadWithTp)
 def get_cours_by_id(cours_id: int, db: Session = Depends(get_db)):
     """
-    Récupère un cours par son ID.
+    Récupère un cours et les tp lié par son ID.
     """
     cours = db.get(Cours, cours_id)
     if not cours:
