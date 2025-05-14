@@ -31,13 +31,6 @@ const Tp = (props) => {
 
                 <h1 className={"tp_container_header_title"}>{props.titre}</h1>
             </div>
-            {isOpen && (
-                <div className={"tp_container_content"}>
-                    <h3 className={"tp_container_content_title"}>{props.description}</h3>
-                    <ListeDocuments TpID={props.id} />
-                </div>
-            )
-            }
 
 
         </div>

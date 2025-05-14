@@ -30,7 +30,7 @@ const ListeDocuments = (props) => {
         <div className="listeDocuments_container_content">
             {documents.map((document, index) => {
                 return (
-                    <Document key={index} nom={document.nom} description={document.description} />
+                    <Document key={index} id={document.id} nom={document.nom} description={document.description} />
                 )
             })}
         </div>

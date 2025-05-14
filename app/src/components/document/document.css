@@ -36,6 +36,48 @@
     line-height: normal;
 }
 
+.document_container_content_button {
+    margin-left: auto;
+    margin-right: 15px;
+
+    display: inline-flex;
+    padding: 7px 13px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    background-color: transparent;
+
+    color: #000;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.document_container_content_button:hover {
+    color: #000;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    background: #1F73FE;
+
+    color: #FFF;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
 .document_container_footer_text {
     color: #000;
     font-family: Inter;
