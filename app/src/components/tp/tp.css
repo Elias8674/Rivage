@@ -40,20 +40,8 @@
 }
 
 
+
 .tp_container_content {
-    max-height: 0;
-    opacity: 0;
-    visibility: hidden;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
-}
-
-.tp_container_content.open {
-    opacity: 1;
-    visibility: visible;
-
-    max-height: none;
-
     display: flex;
     align-items: flex-start;
     align-content: flex-start;
@@ -65,7 +53,6 @@
 
     padding-left: 22px;
     padding-right: 22px;
-    padding-bottom: 22px;
 }
 
 .tp_container_content_title {

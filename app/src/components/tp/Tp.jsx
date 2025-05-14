@@ -32,10 +32,20 @@ const Tp = (props) => {
 
                 <h1 className={"tp_container_header_title"}>{props.titre}</h1>
             </div>
-            <div className={`tp_container_content ${isOpen ? 'open' : ''}`}>
+
+
+
+            <motion.div
+                className={"tp_container_content"}
+                initial={{ height: 0, opacity: 0 }}
+                animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ overflow: "hidden" }}
+            >
                 <h3 className={"tp_container_content_title"}>{props.description}</h3>
                 <ListeDocuments TpID={props.id} />
-            </div>
+            </motion.div>
+
 
 
         </div>
