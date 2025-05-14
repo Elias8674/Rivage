@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import './tp.css';
 import {useState} from "react";
 import ListeDocuments from "../document/ListeDocuments.jsx";
+import { motion } from "framer-motion";
 
 const Tp = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,7 @@ const Tp = (props) => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     onClick={toggleOpen}
-                    className="tp_container_header_toggle"
+                    className={`tp_container_header_toggle ${isOpen ? 'open' : ''}`}
                     role="button"
                     tabIndex="0"
                     style={{cursor: 'pointer'}}
@@ -30,6 +31,10 @@ const Tp = (props) => {
                 </svg>
 
                 <h1 className={"tp_container_header_title"}>{props.titre}</h1>
+            </div>
+            <div className={`tp_container_content ${isOpen ? 'open' : ''}`}>
+                <h3 className={"tp_container_content_title"}>{props.description}</h3>
+                <ListeDocuments TpID={props.id} />
             </div>
 
 

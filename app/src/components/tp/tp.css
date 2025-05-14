@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     align-content: flex-start;
-    gap: 25px;
+    gap: 20px;
     flex-shrink: 0;
 
     height: 80px;
@@ -29,10 +29,31 @@
     width: 32px;
     height: 32px;
 
-    padding-left: 22px;
+    margin-left: 22px;
+
+    transition: transform 0.3s ease;
+    transform-origin: center !important;
 }
 
+.tp_container_header_toggle.open {
+    transform: rotate(180deg);
+}
+
+
 .tp_container_content {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+.tp_container_content.open {
+    opacity: 1;
+    visibility: visible;
+
+    max-height: none;
+
     display: flex;
     align-items: flex-start;
     align-content: flex-start;
@@ -56,5 +77,6 @@
     line-height: normal;
 
 
+    margin-top: 0px;
     margin-bottom: 30px;
 }
