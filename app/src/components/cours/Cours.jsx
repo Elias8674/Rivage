@@ -5,6 +5,7 @@ const Cours = (props) => {
 
     const Redirect = () => {
         window.location.href = "/" + props.id;
+
     }
 
     return (
@@ -18,8 +19,8 @@ const Cours = (props) => {
 }
 
 Cours.propTypes = {
-    name: PropTypes.string.isRequire,
-    id: PropTypes.number.isRequire,
+    name: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 }
 
 export default Cours;

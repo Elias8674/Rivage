@@ -11,6 +11,7 @@ services:
       - GROUP_ID=1000
     volumes:
       - ./api:/api
+      - ./data:/data
     ports:
       - "8000:8000" # API port
      # - "5432:5432" # Database port
@@ -46,7 +47,7 @@ services:
     volumes:
       - type: volume
         source: database-volume
-        target: /var/lib/postgresql
+        target: /var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:

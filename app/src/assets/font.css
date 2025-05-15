@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Inter';
+    src: url("./font/Inter/Inter-VariableFont_opsz,wght.ttf") format('truetype');
+    font-weight: 100 900; /* Plage de poids disponible */
+    font-stretch: 75% 125%; /* Si l'axe width/stretch est disponible */
+    font-style: normal;
+    font-display: swap;
+}
