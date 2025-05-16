@@ -4,3 +4,5 @@ sqlmodel
 alembic
 psycopg2-binary
 python-multipart
+pyjwt
+passlib[bcrypt]

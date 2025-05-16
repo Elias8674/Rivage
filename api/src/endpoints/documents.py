@@ -7,7 +7,9 @@ from sqlmodel import Session, select
 
 from src.services.fileService import uploadFile
 from src.endpoints.dependencies import get_db
-from src.models.models import Tp, Document, DocumentRead, DocumentWrite, DocumentBase
+
+from src.models.documentModel import DocumentRead, DocumentWrite, DocumentBase, Document
+from src.models.tpModel import Tp
 
 
 router = APIRouter(prefix="/documents", tags=["documents"])

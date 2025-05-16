@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from src.endpoints.dependencies import get_db
-from src.models.models import CoursRead, CoursWrite, Cours, CoursReadWithTp
+from src.models.coursModel import CoursRead, CoursWrite, Cours, CoursReadWithTp
 
 
 router = APIRouter(prefix="/cours", tags=["cours"])

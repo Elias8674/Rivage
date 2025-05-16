@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from src.endpoints.dependencies import get_db
-from src.models.models import TpWrite, Tp, TpRead
+from src.models.tpModel import TpWrite, Tp, TpRead
 
 
 router = APIRouter(prefix="/tp", tags=["tp"])
