@@ -7,12 +7,12 @@ from sqlmodel import Field, SQLModel, Relationship
 
 
 #Token
-class Token(BaseModel):
+class Token(SQLModel):
     access_token: str
     token_type: str
 
 
-class TokenData(BaseModel):
+class TokenData(Token):
     username: str | None = None
 
 
@@ -32,7 +32,7 @@ class User(UserBase, table=True):
 class UserRead(UserBase):
     id: int
     role_id: int
-    role_nom: role.nom
+    role: List["RoleRead"]
 
 class UserWrite(UserBase):
     role_id: int

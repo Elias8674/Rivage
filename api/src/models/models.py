@@ -6,14 +6,6 @@ from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
 
 
-
-
-
-
-
-
-
-
 engine = create_engine(
                         "postgresql://api:lycee@database:5432/lycee",
                         pool_timeout=30)
