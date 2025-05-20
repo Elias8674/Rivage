@@ -14,7 +14,7 @@ const ListeTp = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const url = 'http://127.0.0.1:8000/cours/' + props.id ;
+                const url = '/api/cours/' + props.id ;
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error("Erreur lors de la récupération du cours");

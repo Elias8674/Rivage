@@ -17,7 +17,7 @@ const CoursPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const url = 'http://127.0.0.1:8000/cours/' + id ;
+                const url = '/api/cours/' + id ;
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error("Erreur lors de la récupération du cours");
