@@ -12,9 +12,8 @@ services:
     volumes:
       - ./api:/api
       - ./data:/data
-    ports:
-      - "8000:8000" # API port
-     # - "5432:5432" # Database port
+    #ports:
+    #  - "8000:8000"  # Commenté car géré par Nginx
     networks:
       - app-network
     depends_on:
@@ -32,8 +31,20 @@ services:
       - GROUP_ID=1000
     volumes:
       - ./app:/app
+    #ports:
+    #  - "5173:5173"  # Commenté car géré par Nginx
+    networks:
+      - app-network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./build/nginx/Dockerfile
     ports:
-      - "5173:5173"
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
     networks:
       - app-network
 
@@ -52,7 +63,6 @@ services:
       - "5432:5432"
     networks:
       - app-network
-
 
 networks:
   app-network:
