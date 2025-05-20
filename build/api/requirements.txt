@@ -8,3 +8,4 @@ pyjwt
 passlib[bcrypt]
 fastapi-users[sqlalchemy]
 fastapi-users-db-sqlmodel
+asyncpg
