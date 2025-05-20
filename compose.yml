@@ -12,6 +12,8 @@ services:
     volumes:
       - ./api:/api
       - ./data:/data
+    expose:
+      - 8000
     #ports:
     #  - "8000:8000"  # Commenté car géré par Nginx
     networks:
@@ -31,6 +33,8 @@ services:
       - GROUP_ID=1000
     volumes:
       - ./app:/app
+    expose:
+      - 5173
     #ports:
     #  - "5173:5173"  # Commenté car géré par Nginx
     networks:
