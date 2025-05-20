@@ -16,11 +16,13 @@ from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
 
 app = FastAPI(
     title="API",
-    version="0.0.1",
+    version="0.1.0",
+    root_path="/api",
 )
 
 origins = [
     "http://localhost:5173",
+    "http://localhost"
 ]
 
 app.add_middleware(

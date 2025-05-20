@@ -17,7 +17,7 @@ const Login = () => {
 
         try {
 
-            const response = await fetch('http://127.0.0.1:8000/auth/jwt/login/', {
+            const response = await fetch('/api/auth/jwt/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -26,15 +26,21 @@ const Login = () => {
                 credentials: 'include', // Important pour les cookies
             });
 
+            // Si l'authentification réussit (statut 204)
+            if (response.status === 204) {
+                // Redirection réussie
+                window.location.href = '/home';
+                return;
+            }
+
+            // Pour les autres codes de statut, tenter de parser le JSON
             const data = await response.json();
 
             if (!response.ok) {
                 throw new Error(data.detail || 'Erreur de connexion');
             }
-            setTimeout(() => {
-                window.location.href = '/home';
-            }, 1000);
 
+            window.location.href = '/home';
         } catch (err) {
             setError(err.message || 'Une erreur est survenue');
         }
