@@ -6,6 +6,7 @@ import './index.css'
 import "./assets/font.css"
 import Home from "./pages/Home.jsx";
 import CoursPage from "./pages/CoursPage.jsx";
+import Login from "./pages/Login.jsx";
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     {
         path: "/:id",
         element: <CoursPage/>,
+    },
+    {
+        path: "/login",
+        element: <Login/>,
     }
 
 ]);
