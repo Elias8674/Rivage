@@ -1,54 +1,37 @@
-from sqlmodel import Field, Session, SQLModel, create_engine
-from typing import Optional
+from fastapi import Depends
+from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+from sqlalchemy.orm import DeclarativeBase
 
-from datetime import datetime
-from typing import Optional, List
-from sqlmodel import Field, SQLModel, Relationship
+from sqlmodel import Session
 
+import uuid
+from fastapi_users import schemas
 
-#Token
-class Token(SQLModel):
-    access_token: str
-    token_type: str
-
-
-class TokenData(Token):
-    username: str | None = None
+from src.models.models import engine, get_session
 
 
-#User (prof)
-class UserBase(SQLModel):
-    nom: str
-    prenom: str
-    email: str
-    password: str
 
-class User(UserBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    hashed_password: str
-    role_id: int = Field(foreign_key="role.id")
-    role: "Role" = Relationship(back_populates="users")
-
-class UserRead(UserBase):
-    id: int
-    role_id: int
-    role: List["RoleRead"]
-
-class UserWrite(UserBase):
-    role_id: int
-
-#Role
-class RoleBase(SQLModel):
-    nom: str
-    description: str
-
-class Role(RoleBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    users: List["User"] = Relationship(back_populates="role")
-
-class RoleRead(RoleBase):
-    id: int
-    users: List["UserRead"]
-
-class RoleWrite(RoleBase):
+class UserRead(schemas.BaseUser[uuid.UUID]):
     pass
+
+class UserCreate(schemas.BaseUserCreate):
+    pass
+
+class UserUpdate(schemas.BaseUserUpdate):
+    pass
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class User(SQLAlchemyBaseUserTableUUID, Base):
+    pass
+
+
+async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+
+
+async def get_user_db(session: Session = Depends(get_session)):
+    yield SQLAlchemyUserDatabase(session, User)

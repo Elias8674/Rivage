@@ -11,6 +11,7 @@ from src.models.tpModel import *
 from src.models.documentModel import *
 from src.models.userModel import *
 from src.models.coursModel import *
+from src.models.userModel import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
