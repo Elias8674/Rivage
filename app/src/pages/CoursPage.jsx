@@ -6,13 +6,28 @@ import Tp from "../components/tp/Tp.jsx";
 import ListeTp from "../components/tp/ListeTp.jsx";
 
 import './coursPage.css'
+import ListeTpEditing from "../components/tp/ListeTpEditing.jsx";
 
 const CoursPage = () => {
     const { id } = useParams();
-
     const [cours, setCours] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    // Vérifie si l'utilisateur est authentifié
+    useEffect(() => {
+        const checkAuthStatus = () => {
+            const authCookie = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('fusra_session_id='));
 
+            if (authCookie) {
+                setIsAuthenticated(true);
+                console.log("Utilisateur authentifié");
+            }
+        };
+
+        checkAuthStatus();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,10 +47,14 @@ const CoursPage = () => {
     }, []);
 
 
+
     return (
         <div className={"courPage_container_content"}>
             <h1 className={"coursPage_container_content_title"}> {cours.nom } </h1>
-            <ListeTp id={id} />
+            {isAuthenticated ?
+                <ListeTpEditing id={id}/> :
+                <ListeTp id={id}/>
+            }
         </div>
 
 

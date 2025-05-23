@@ -13,8 +13,8 @@ const ListeCours = () => {
     const [error, setError] = useState('');
 
 
+    // Vérifie si l'utilisateur est authentifié
     useEffect(() => {
-        // Vérifier si l'utilisateur est connecté (via cookie, localStorage, etc.)
         const checkAuthStatus = () => {
             const authCookie = document.cookie
                 .split('; ')
@@ -55,10 +55,6 @@ const ListeCours = () => {
     const handleAddCours = async (e) => {
         e.preventDefault();
         setError('');
-
-        const formData = new URLSearchParams();
-        formData.append('nom', isNameCours);
-        formData.append('couleur', "string");
 
         try {
 

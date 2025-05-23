@@ -22,6 +22,18 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+
+    border: none;
+
+    width: 700px;
+}
+
+.tp_container_header_title:focus {
+    outline: none;
+}
+
+.tp_container_header_title::placeholder {
+    color: rgba(16, 17, 17, 0.30);
 }
 
 .tp_container_header_toggle {
@@ -63,7 +75,20 @@
     font-weight: 400;
     line-height: normal;
 
+    border: none;
+    resize: none;
+    overflow: hidden;
 
     margin-top: 0px;
     margin-bottom: 30px;
+
+    width: 700px;
+}
+
+.tp_container_content_title:focus {
+    outline: none;
+}
+
+.tp_container_content_title::placeholder {
+    color: rgba(16, 17, 17, 0.30);
 }
