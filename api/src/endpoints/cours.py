@@ -4,6 +4,8 @@ from sqlmodel import Session, select
 
 from src.endpoints.dependencies import get_db
 from src.models.coursModel import CoursRead, CoursWrite, Cours, CoursReadWithTp
+from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
+from src.models.userModel import User
 
 
 router = APIRouter(prefix="/cours", tags=["cours"])
@@ -17,7 +19,7 @@ def get_cours(db: Session = Depends(get_db)):
     return cours
 
 @router.post("/", response_model=CoursWrite)
-def create_cours(cours: CoursWrite, db: Session = Depends(get_db)):
+def create_cours(cours: CoursWrite, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Crée un nouveau cours.
     """

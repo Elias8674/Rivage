@@ -8,6 +8,26 @@ const ListeCours = () => {
     const [cours, setCours] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredCours, setFilteredCours] = useState(cours);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isNameCours, setIsNameCours] = useState('');
+    const [error, setError] = useState('');
+
+
+    useEffect(() => {
+        // Vérifier si l'utilisateur est connecté (via cookie, localStorage, etc.)
+        const checkAuthStatus = () => {
+            const authCookie = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('fusra_session_id='));
+
+            if (authCookie) {
+                setIsAuthenticated(true);
+                console.log("Utilisateur authentifié");
+            }
+        };
+
+        checkAuthStatus();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +52,39 @@ const ListeCours = () => {
         setFilteredCours(cours.filter(c => c.nom.toLowerCase().includes(value.toLowerCase())));
     };
 
+    const handleAddCours = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        const formData = new URLSearchParams();
+        formData.append('nom', isNameCours);
+        formData.append('couleur', "string");
+
+        try {
+
+            const response = await fetch('/api/cours', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nom: isNameCours,
+                    couleur: "string"
+                }),
+                credentials: 'include',
+            });
+
+            if (response.status === 200) {
+                // Redirection réussie
+                window.location.href = '/home'; // a modif
+                return;
+            }
+
+        } catch (err) {
+            setError(err.message || 'Une erreur est survenue');
+        }
+    }
+
 
     return (
         <div class='listeCours_container'>
@@ -48,6 +101,25 @@ const ListeCours = () => {
                         <Cours index={index} id={cours.id} name={cours.nom}/>
                     )
                     })}
+                {isAuthenticated && (
+                    <div class="listeCours_container_authenticated_coursadd">
+                        <form className="listeCours_container_authenticated_coursadd_footer" onSubmit={handleAddCours}>
+                            <input
+                                className={"listeCours_container_authenticated_coursadd_footer_title"}
+                                id="coursName"
+                                name="coursName"
+                                type="text"
+                                required
+                                onChange={e => setIsNameCours(e.target.value)}
+                                placeholder="Nom du cours"
+                            />
+                            <button className="listeCours_container_authenticated_coursadd_footer_button" type={"submit"}>
+                                Créer
+                            </button>
+                        </form>
+                    </div>
+                )}
+
             </div>
         </div>
     )

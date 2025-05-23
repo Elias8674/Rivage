@@ -1,5 +1,6 @@
 import {useState} from "react";
 
+import "./login.css"
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -46,34 +47,47 @@ const Login = () => {
         }
     };
 
+    const handleBack = () => {
+        window.history.back();
+    }
+
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="email"
-                />
+        <div className={"coursPage_container"}>
+            <div className={"coursPage_container_content"}>
+                <h1 className={"coursPage_container_content_title"}>Login</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className={"coursPage_container_content_fields"}>
+                        <input
+                            className={"coursPage_container_content_fields_input"}
+                            id="email"
+                            name="email"
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="email"
+                        />
 
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="password"
-                />
-                <button type="submit">
-                    se connecter
-                </button>
+                        <input
+                            className={"coursPage_container_content_fields_input"}
+                            id="password"
+                            name="password"
+                            type="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="password"
+                        />
+                    </div>
+                    <button className={"coursPage_container_content_fields_button"} type="submit">
+                        Connexion
+                    </button>
+                    <button className={"coursPage_container_content_fields_secondaryButton"} onClick={handleBack}>
+                        Retour en arrière
+                    </button>
+                </form>
 
-            </form>
+            </div>
         </div>
     )
 }
