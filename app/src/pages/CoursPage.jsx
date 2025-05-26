@@ -8,6 +8,8 @@ import ListeTp from "../components/tp/ListeTp.jsx";
 import './coursPage.css'
 import ListeTpEditing from "../components/tp/ListeTpEditing.jsx";
 
+import { getCours } from "../services/apiService.js";
+
 const CoursPage = () => {
     const { id } = useParams();
     const [cours, setCours] = useState([]);
@@ -30,6 +32,12 @@ const CoursPage = () => {
     }, []);
 
     useEffect(() => {
+        setCours(getCours(id))
+    }, []);
+
+
+    /*
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const url = '/api/cours/' + id ;
@@ -45,6 +53,7 @@ const CoursPage = () => {
         };
         fetchData();
     }, []);
+     */
 
 
 
@@ -57,10 +66,7 @@ const CoursPage = () => {
             }
         </div>
 
-
-
-
-
+        
     )
 }
 

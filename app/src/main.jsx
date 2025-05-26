@@ -7,7 +7,6 @@ import "./assets/font.css"
 import Home from "./pages/Home.jsx";
 import CoursPage from "./pages/CoursPage.jsx";
 import Login from "./pages/Login.jsx";
-import CoursEditing from "./components/cours/CoursEditing.jsx";
 
 
 const router = createBrowserRouter([
@@ -23,11 +22,6 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login/>,
     },
-    {
-        path: "/coursEdit/:id",
-        element: <CoursEditing/>,
-    }
-
 ]);
 
 createRoot(document.getElementById('root')).render(

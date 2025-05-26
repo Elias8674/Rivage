@@ -100,6 +100,14 @@ const TpEditing = (props) => {
                     onChange={(e) => setIsDescription(e.target.value)}
                 />
                 <ListeDocuments TpID={props.id} />
+                <div className={"tp_container_content_addDocument"}>
+                    <p className={"tp_container_content_addDocument_text"}>Faites glisser et déposez un document ou :</p>
+                    <input
+                        className={"tp_container_content_addDocument_button"}
+                        type="file"
+                        form=""
+                    />
+                </div>
 
                 <button className={"tp_container_content_button"} type="submit">
                     Créer

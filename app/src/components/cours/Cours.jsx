@@ -5,7 +5,6 @@ const Cours = (props) => {
 
     const Redirect = () => {
         window.location.href = "/" + props.id;
-
     }
 
     return (
