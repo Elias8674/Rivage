@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import './listeTp.css'
 import ListeTp from "./ListeTp.jsx";
 import TpEditing from "./TpEditing.jsx";
+import {getDataWithId} from "../../services/apiService.js";
 
 const ListeTpEditing = (props) => {
     const [tp, setTp] = useState([]);
@@ -12,26 +13,16 @@ const ListeTpEditing = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [reload, setReload] = useState(false);
 
-
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = '/api/cours/' + props.id ;
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error("Erreur lors de la récupération du cours");
-                }
-                const data = await response.json();
-                setTp(data.tp);
-                setFilteredTp(data.tp)
-
-            } catch (error) {
-                console.error("Erreur :", error);
-            }
-        };
-        fetchData();
-        setReload(false)
+        const fetchTp = async () => {
+            const data = await getDataWithId('cours', props.id);
+            setTp(data.tp);
+            setFilteredTp(data.tp);
+        }
+        fetchTp();
+        setReload(false);
     }, [reload]);
+
 
     const handleReload = () => {
         setReload(true);

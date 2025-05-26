@@ -8,53 +8,25 @@ import ListeTp from "../components/tp/ListeTp.jsx";
 import './coursPage.css'
 import ListeTpEditing from "../components/tp/ListeTpEditing.jsx";
 
-import { getCours } from "../services/apiService.js";
+import {checkAuthStatus, getCours} from "../services/apiService.js";
 
 const CoursPage = () => {
     const { id } = useParams();
     const [cours, setCours] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+
     // Vérifie si l'utilisateur est authentifié
     useEffect(() => {
-        const checkAuthStatus = () => {
-            const authCookie = document.cookie
-                .split('; ')
-                .find(row => row.startsWith('fusra_session_id='));
-
-            if (authCookie) {
-                setIsAuthenticated(true);
-                console.log("Utilisateur authentifié");
-            }
-        };
-
-        checkAuthStatus();
-    }, []);
+        const checkAuth = async () => {
+            setIsAuthenticated(await checkAuthStatus());
+        }
+        checkAuth();
+    },[]);
 
     useEffect(() => {
         setCours(getCours(id))
     }, []);
-
-
-    /*
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = '/api/cours/' + id ;
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error("Erreur lors de la récupération du cours");
-                }
-                const data = await response.json();
-                setCours(data);
-            } catch (error) {
-                console.error("Erreur :", error);
-            }
-        };
-        fetchData();
-    }, []);
-     */
-
 
 
     return (
@@ -66,7 +38,7 @@ const CoursPage = () => {
             }
         </div>
 
-        
+
     )
 }
 

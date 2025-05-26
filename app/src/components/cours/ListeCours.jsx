@@ -1,8 +1,9 @@
 import PropsTypes from 'prop-types';
 import Cours from "./Cours.jsx";
-import {useEffect, useState} from "react";
+import {use, useEffect, useState} from "react";
 
 import './listeCours.css'
+import {checkAuthStatus, getData, postCours} from "../../services/apiService.js";
 
 const ListeCours = () => {
     const [cours, setCours] = useState([]);
@@ -12,39 +13,25 @@ const ListeCours = () => {
     const [isNameCours, setIsNameCours] = useState('');
     const [error, setError] = useState('');
 
+    const [reload, setReload] = useState(false);
 
-    // Vérifie si l'utilisateur est authentifié
+
     useEffect(() => {
-        const checkAuthStatus = () => {
-            const authCookie = document.cookie
-                .split('; ')
-                .find(row => row.startsWith('fusra_session_id='));
+        const checkAuth = async () => {
+            setIsAuthenticated(await checkAuthStatus());
+        }
+        checkAuth();
+    },[]);
 
-            if (authCookie) {
-                setIsAuthenticated(true);
-                console.log("Utilisateur authentifié");
-            }
-        };
-
-        checkAuthStatus();
-    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await fetch('/api/cours');
-                if (!response.ok) {
-                    throw new Error("Erreur lors de la récupération des cours");
-                }
-                const data = await response.json();
-                setCours(data); // Met à jour l'état avec les données résolues
-                setFilteredCours(data);
-            } catch (error) {
-                console.error("Erreur :", error);
-            }
+            const dataCours = await getData('cours');
+            setCours(dataCours);
+            setFilteredCours(dataCours);
         };
         fetchData();
-    }, []);
+    }, [reload]);
 
     const updateSearch = (e) => {
         const value = e.target.value;
@@ -56,29 +43,8 @@ const ListeCours = () => {
         e.preventDefault();
         setError('');
 
-        try {
-
-            const response = await fetch('/api/cours', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    nom: isNameCours,
-                    couleur: "string"
-                }),
-                credentials: 'include',
-            });
-
-            if (response.status === 200) {
-                // Redirection réussie
-                window.location.href = '/home'; // a modif
-                return;
-            }
-
-        } catch (err) {
-            setError(err.message || 'Une erreur est survenue');
-        }
+        await postCours(isNameCours, "string");
+        setReload(!reload);
     }
 
 

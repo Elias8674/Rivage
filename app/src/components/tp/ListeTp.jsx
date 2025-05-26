@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
 import './listeTp.css'
+import {getDataWithId} from "../../services/apiService.js";
 
 
 const ListeTp = (props) => {
@@ -12,23 +13,14 @@ const ListeTp = (props) => {
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = '/api/cours/' + props.id ;
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error("Erreur lors de la récupération du cours");
-                }
-                const data = await response.json();
-                setTp(data.tp);
-                setFilteredTp(data.tp)
-
-            } catch (error) {
-                console.error("Erreur :", error);
-            }
-        };
-        fetchData();
+        const fetchTp = async () => {
+            const data = await getDataWithId('cours', props.id);
+            setTp(data.tp);
+            setFilteredTp(data.tp);
+        }
+        fetchTp();
     }, []);
+
 
     const updateSearch = (e) => {
         const value = e.target.value;
