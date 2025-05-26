@@ -1,44 +1,27 @@
 import PropTypes from "prop-types";
 
 import "./document.css"
+import {downloadDocument} from "../../services/documentService.js";
+import useDownload from "../../hooks/useDownload.jsx";
 
 const Document = (props) => {
+    const { downloadDocument, isDownloading } = useDownload();
 
-    const Download =  async () => {
-        try {
-            const url = "/api/documents/" + props.id;
-            const response = await fetch(url);
+    const handleDownload = async () => {
+        const result = await downloadDocument(props.id, props.nom);
 
-            if (!response.ok) {
-                alert('Erreur lors du téléchargement');
-                return;
-            }
-
-            const blob = await response.blob();
-            const downloadUrl = window.URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = props.nom
-            document.body.appendChild(link);
-            link.click();
-
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(downloadUrl);
-
-        } catch (err) {
-            console.error('Erreur:', err);
-            alert('Erreur lors du téléchargement');
+        if (!result.success) {
+            alert(result.error);
         }
-
     };
+
 
     return (
         <div className="document_container">
             <div className="document_container_content">
                 <div className={"document_container_content_icon"}></div>
                 <h3 className={"document_container_content_title"}>{props.nom}</h3>
-                <button className={"document_container_content_button"} onClick={Download}>Téléchargement</button>
+                <button className={"document_container_content_button"} onClick={handleDownload}>Téléchargement</button>
             </div>
             <div className="document_container_footer">
                 {props.description && <p className={"document_container_footer_text"}>{props.description}</p>}

@@ -11,7 +11,6 @@ const ListeCours = () => {
     const [filteredCours, setFilteredCours] = useState(cours);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isNameCours, setIsNameCours] = useState('');
-    const [error, setError] = useState('');
 
     const [reload, setReload] = useState(false);
 

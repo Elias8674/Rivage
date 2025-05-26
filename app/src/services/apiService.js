@@ -28,7 +28,6 @@ export async function checkAuthStatus() {
 
 
 
-
 // Get param
 export async function getData(endpoint) {
     try {
@@ -81,10 +80,26 @@ export async function postCours(nom, couleur) {
         }, {
             withCredentials: true,
         });
-        console.log("datapush");
         return response.status;
     } catch (error) {
         console.error('Erreur POST Cours :', error);
+        throw error;
+    }
+}
+
+export async function postTp(titre, description, index, idCours) {
+    try {
+        const response = await API.post('tp', {
+            titre: titre,
+            description: description,
+            index: index,
+            cours_id: idCours
+        }, {
+            withCredentials: true,
+        });
+        return response.status;
+    } catch (error) {
+        console.error('Erreur POST Tp :', error);
         throw error;
     }
 }

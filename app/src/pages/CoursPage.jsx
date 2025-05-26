@@ -4,11 +4,10 @@ import {useEffect, useState} from "react";
 import Cours from "../components/cours/Cours.jsx";
 import Tp from "../components/tp/Tp.jsx";
 import ListeTp from "../components/tp/ListeTp.jsx";
-
 import './coursPage.css'
 import ListeTpEditing from "../components/tp/ListeTpEditing.jsx";
-
 import {checkAuthStatus, getCours} from "../services/apiService.js";
+
 
 const CoursPage = () => {
     const { id } = useParams();

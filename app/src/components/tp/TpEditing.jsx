@@ -5,6 +5,7 @@ import ListeDocuments from "../document/ListeDocuments.jsx";
 import { motion } from "framer-motion";
 import {replace} from "react-router-dom";
 import PropsTypes from "prop-types";
+import {postTp} from "../../services/apiService.js";
 
 const TpEditing = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,33 +26,14 @@ const TpEditing = (props) => {
 
     const handleAddTp = async (e) => {
         e.preventDefault();
-        setError('');
 
-        try {
+        const resultat = await postTp(isTitle, isDescription, 0, props.id);
 
-            const response = await fetch('/api/tp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    titre: isTitle,
-                    description: isDescription,
-                    index: 0,
-                    cours_id: props.id,
-                }),
-                credentials: 'include',
-            });
-
-            if (response.status === 200) {
-                props.startReload();
-                setIsTitle('');
-                setIsDescription('');
-                return;
-            }
-
-        } catch (err) {
-            setError(err.message || 'Une erreur est survenue');
+        if (resultat === 200) {
+            props.startReload();
+            setIsTitle('');
+            setIsDescription('');
+            setError('');
         }
     }
 
