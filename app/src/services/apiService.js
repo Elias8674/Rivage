@@ -42,7 +42,6 @@ export async function getData(endpoint) {
 export async function getDataWithId(endpoint, id) {
     try {
         const response = await API.get(`/${endpoint}/${id}`);
-        console.log(response.data);
         return (response.data);
     } catch (error) {
         console.error('Erreur GET avec ID :', error);

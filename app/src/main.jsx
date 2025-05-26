@@ -8,7 +8,8 @@ import Home from "./pages/Home.jsx";
 import CoursPage from "./pages/CoursPage.jsx";
 import Login from "./pages/Login.jsx";
 
-
+import './Ui/variables.css'
+import "./Ui/search.css"
 const router = createBrowserRouter([
     {
         path: "/home",

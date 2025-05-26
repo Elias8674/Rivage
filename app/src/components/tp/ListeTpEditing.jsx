@@ -36,7 +36,7 @@ const ListeTpEditing = (props) => {
 
     return (
         <div className={"listeTp_container"}>
-            <input className={"listeTp_container_search"}
+            <input className={"SearchBar"}
                    type="text"
                    placeholder="Chercher un tp"
                    value={searchTerm}

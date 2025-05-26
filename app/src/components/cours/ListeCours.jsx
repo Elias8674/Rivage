@@ -49,7 +49,7 @@ const ListeCours = () => {
 
     return (
         <div class='listeCours_container'>
-            <input className='listeCours_container_Search'
+            <input className='SearchBar'
                    type="text"
                    placeholder="Chercher un cours"
                    value={searchTerm}
