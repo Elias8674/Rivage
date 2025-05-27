@@ -28,3 +28,19 @@ export async function downloadDocument(documentId, nom) {
     }
 }
 
+export async function uploadDocuments(file, tpId){
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await API.post(`documents/uploadfile/${tpId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi du document :', error);
+        alert('Erreur lors de l\'envoi du document');
+    }
+}

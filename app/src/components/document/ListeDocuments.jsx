@@ -4,9 +4,12 @@ import {useEffect, useState} from "react";
 
 import "./listeDocuments.css"
 import {getDataWithId} from "../../services/apiService.js";
+import Dropzone from "./Dropzone.jsx";
+import {uploadDocuments} from "../../services/documentService.js";
 
 const ListeDocuments = (props) => {
     const [documents, setDocuments] = useState([]);
+    const [reload, setReload] = useState(false);
 
     // Récupération des documents du TP
     useEffect(() => {
@@ -15,8 +18,12 @@ const ListeDocuments = (props) => {
             setDocuments(data.documents);
         }
         fetchDocuments()
-    }, []);
+    }, [reload]);
 
+    const handleFiles = async(acceptedFiles) => {
+        await uploadDocuments(acceptedFiles[0], props.TpID);
+        setReload(!reload);
+    };
 
     return (
         <div className="listeDocuments_container_content">
@@ -25,6 +32,8 @@ const ListeDocuments = (props) => {
                     <Document key={index} id={document.id} nom={document.nom} description={document.description} />
                 )
             })}
+            <Dropzone onFilesDrop={handleFiles}/>
+
         </div>
     )
 }
