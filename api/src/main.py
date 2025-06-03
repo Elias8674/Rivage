@@ -68,8 +68,8 @@ app.include_router(
     tags=["users"],
 )
 
-@app.lifespan
-async def lifespan(app: FastAPI):
+@app.on_event("startup")
+async def startup_event(app: FastAPI):
     # Startup
     print("Application des migrations...")
     run_migrations()
