@@ -85,7 +85,10 @@ class SupabaseStorage:
 
 
 localStorage = LocalStorage()
-supabaseStorage = SupabaseStorage()
+
+if storage_cloud:
+    supabaseStorage = SupabaseStorage()
+
 
 def uploadFile(file, path):
     """

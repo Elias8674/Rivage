@@ -12,11 +12,9 @@ from src.config import database_url, database_url_async
 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 
-DATABASE_URL = database_url_async
-DATABASE_URL_SYNC = database_url
 
-engine_async = create_async_engine(DATABASE_URL, echo=True)
-engine_sync = create_engine(DATABASE_URL_SYNC, echo=True)
+engine_async = create_async_engine(database_url_async, echo=True)
+engine_sync = create_engine(database_url, echo=True)
 async_session_maker = async_sessionmaker(engine_async, expire_on_commit=False)
 
 async def get_async_session():

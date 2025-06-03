@@ -9,7 +9,7 @@ services:
       - USER_ID=1000
       - GROUP_NAME=elias
       - GROUP_ID=1000
-      - ENV=dev
+      - ENV=prod
     volumes:
       - ./api:/api
       - ./data:/data
@@ -72,6 +72,7 @@ services:
 networks:
   app-network:
     driver: bridge
+    enable_ipv6: true
 
 volumes:
   database-volume:
