@@ -34,7 +34,7 @@ class SupabaseStorage:
     Classe pour gérer le stockage dans Supabase.
     """
     def __init__(self):
-        self.client: Client = create_client(supabase_url, supabase_url)
+        self.client: Client = create_client(supabase_url, supabase_key)
         self.bucket_name = "lycee"
 
     def save_file(self, file, path):
