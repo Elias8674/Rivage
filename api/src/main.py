@@ -68,13 +68,18 @@ app.include_router(
     tags=["users"],
 )
 
+def run_migrations():
+    """Exécute les migrations Alembic"""
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
+
+
 @app.on_event("startup")
-async def startup_event(app: FastAPI):
+async def startup_event():
     # Startup
     print("Application des migrations...")
     run_migrations()
     print("Migrations appliquées avec succès")
-    yield
 
 @app.get("/")
 def read_root():
