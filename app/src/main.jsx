@@ -10,6 +10,7 @@ import Login from "./pages/Login.jsx";
 
 import './Ui/variables.css'
 import "./Ui/search.css"
+import "./Ui/button.css"
 const router = createBrowserRouter([
     {
         path: "/home",

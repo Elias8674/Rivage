@@ -22,14 +22,18 @@ const ListeDocuments = (props) => {
 
     const handleFiles = async(acceptedFiles) => {
         await uploadDocuments(acceptedFiles[0], props.TpID);
-        setReload(!reload);
+        handleReload();
     };
+
+    const handleReload = () => {
+        setReload(!reload);
+    }
 
     return (
         <div className="listeDocuments_container_content">
             {documents.map((document, index) => {
                 return (
-                    <Document key={index} id={document.id} nom={document.nom} description={document.description} />
+                    <Document key={index} id={document.id} nom={document.nom} description={document.description} reload={handleReload} />
                 )
             })}
             <Dropzone onFilesDrop={handleFiles}/>

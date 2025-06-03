@@ -61,6 +61,26 @@ export async function postData(endpoint, data) {
     }
 }
 
+export async function deleteData(endpoint, id) {
+    try {
+        const response = await API.delete(`/${endpoint}/${id}`, {
+            withCredentials: true,
+        });
+        return response.status;
+    } catch (error) {
+        console.error('Erreur DELETE :', error);
+        throw error;
+    }
+}
+
+
+
+
+
+
+
+
+
 
 export async function getCours(id) {
     try {
