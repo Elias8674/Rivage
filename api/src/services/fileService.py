@@ -1,6 +1,6 @@
 import os
 import shutil
-from config import storage_cloud, supabase_url, supabase_key
+from src.config import storage_cloud, supabase_url, supabase_key
 
 from supabase import create_client, Client
 
