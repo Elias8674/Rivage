@@ -52,3 +52,33 @@ async def get_document(document_id: int, db: Session = Depends(get_db)):
     if not document:
         raise HTTPException(status_code=404, detail="Document non trouvé")
     return document.path
+
+@router.post("/{document_id}", response_model=DocumentWrite)
+async def post_description_document(document_id: int, description: str, db: Session = Depends(get_db)):
+    """
+    Met à jour la description d'un document.
+    """
+    document = db.get(Document, document_id)
+    if not document:
+        raise HTTPException(status_code=404, detail="Document non trouvé")
+
+    document.description = description
+    db.add(document)
+    db.commit()
+    db.refresh(document)
+
+    return DocumentWrite.from_orm(document)
+
+@router.delete("/{document_id}")
+async def delete_document(document_id: int, db: Session = Depends(get_db)):
+    """
+    Supprime un document par son ID.
+    """
+    document = db.get(Document, document_id)
+    if not document:
+        raise HTTPException(status_code=404, detail="Document non trouvé")
+
+    db.delete(document)
+    db.commit()
+
+    return {"message": "Document supprimé avec succès"}
