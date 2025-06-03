@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-
 from src.endpoints.cours import router as cours_router
 from src.endpoints.tp import router  as tp_router
 from src.endpoints.documents import router as documents_router
@@ -9,6 +8,9 @@ from src.endpoints.documents import router as documents_router
 from src.models.userModel import User
 from src.models.userModel import UserCreate, UserRead, UserUpdate
 from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
+
+from alembic.config import Config
+from alembic import command
 
 #Creation du moteur SQLAlchemy
 #DATABASE_URL = "postgresql://endpoints:lycee@database:5432/lycee"
@@ -65,6 +67,14 @@ app.include_router(
     prefix="/users",
     tags=["users"],
 )
+
+@app.lifespan
+async def lifespan(app: FastAPI):
+    # Startup
+    print("Application des migrations...")
+    run_migrations()
+    print("Migrations appliquées avec succès")
+    yield
 
 @app.get("/")
 def read_root():

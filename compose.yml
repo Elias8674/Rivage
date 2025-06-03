@@ -9,6 +9,7 @@ services:
       - USER_ID=1000
       - GROUP_NAME=elias
       - GROUP_ID=1000
+      - ENV=dev
     volumes:
       - ./api:/api
       - ./data:/data

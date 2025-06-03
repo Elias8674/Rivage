@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from sqlmodel import Session, select
 
 
-from src.services.fileService import uploadFile
+from src.services.fileService import uploadFile, downloadFile
 from src.endpoints.dependencies import get_db
 
 from src.models.documentModel import DocumentRead, DocumentWrite, DocumentBase, Document
@@ -51,6 +51,10 @@ async def get_document(document_id: int, db: Session = Depends(get_db)):
     document = db.get(Document, document_id)
     if not document:
         raise HTTPException(status_code=404, detail="Document non trouvé")
+
+    path = downloadFile
+    if downloadFile != None:
+        return path
     return document.path
 
 @router.post("/{document_id}", response_model=DocumentWrite)
