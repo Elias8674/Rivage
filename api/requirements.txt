@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlmodel
+alembic
+psycopg2-binary
+python-multipart
+pyjwt
+passlib[bcrypt]
+fastapi-users[sqlalchemy]
+fastapi-users-db-sqlmodel
+asyncpg
+python-dotenv
+supabase
