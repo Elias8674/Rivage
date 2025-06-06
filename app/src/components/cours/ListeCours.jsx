@@ -28,6 +28,7 @@ const ListeCours = () => {
             const dataCours = await getData('cours');
             setCours(dataCours);
             setFilteredCours(dataCours);
+            console.log("data cours", dataCours);
         };
         fetchData();
     }, [reload]);
@@ -48,7 +49,7 @@ const ListeCours = () => {
 
 
     return (
-        <div class='listeCours_container'>
+        <div className='listeCours_container'>
             <input className='SearchBar'
                    type="text"
                    placeholder="Chercher un cours"
@@ -56,14 +57,14 @@ const ListeCours = () => {
                    onChange={updateSearch}
             />
 
-            <div class='listeCours_container_content'>
+            <div className='listeCours_container_content'>
                 {filteredCours.map((cours, index) => {
                     return (
                         <Cours index={index} id={cours.id} name={cours.nom}/>
                     )
                     })}
                 {isAuthenticated && (
-                    <div class="listeCours_container_authenticated_coursadd">
+                    <div className="listeCours_container_authenticated_coursadd">
                         <form className="listeCours_container_authenticated_coursadd_footer" onSubmit={handleAddCours}>
                             <input
                                 className={"listeCours_container_authenticated_coursadd_footer_title"}

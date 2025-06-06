@@ -9,7 +9,7 @@ services:
       - USER_ID=1000
       - GROUP_NAME=elias
       - GROUP_ID=1000
-      - ENV=prod
+      - ENV=dev
     volumes:
       - ./api:/api
       - ./data:/data
@@ -17,6 +17,14 @@ services:
       - 8000
     #ports:
     #  - "8000:8000"  # Commenté car géré par Nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.routers.backend.priority=2"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
+      - "traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.backend.middlewares=backend-stripprefix"
     networks:
       - app-network
     depends_on:
@@ -38,20 +46,28 @@ services:
       - 5173
     #ports:
     #  - "5173:5173"  # Commenté car géré par Nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.priority=1"
+      - "traefik.http.services.frontend.loadbalancer.server.port=5173"
     networks:
       - app-network
 
-  nginx:
-    build:
-      context: .
-      dockerfile: ./build/nginx/Dockerfile
+  traefik:
+    image: "traefik:v2.11"
+    container_name: "traefik"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - app-network
+      - "8080:8080"
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   database:
     image: postgres:latest
