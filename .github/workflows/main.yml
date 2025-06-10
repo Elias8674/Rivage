@@ -27,11 +27,11 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -t rivage-backend:latest -f Build/api/Dockerfile .
+          docker build -t rivage-backend:latest -f build-prod/api/Dockerfile .
 
       - name: Build frontend image
         run: |
-          docker build -t rivage-frontend:latest -f Build/app/Dockerfile .
+          docker build -t rivage-frontend:latest -f build-prod/app/Dockerfile .
 
       - name: Push backend image
         run: docker push rivage-backend:latest
