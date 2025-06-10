@@ -1,0 +1,107 @@
+services:
+  backend:
+    image: ghcr.io/Elias8674/rivage-backend:latest
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000
+    environment:
+      - USER_NAME=elias
+      - USER_ID=1000
+      - GROUP_NAME=elias
+      - GROUP_ID=1000
+      - ENV=dev # Option dispo dev et prod (dev = fichiers et DB local, prod = fichiers et DB distant chez supabase)
+    volumes:
+      - data-volume:/data
+    expose:
+      - 8000
+    #ports:
+    #  - "8000:8000"  # Commenté car géré par Nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.routers.backend.priority=2"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
+      - "traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.backend.middlewares=backend-stripprefix"
+    networks:
+      - app-network
+    depends_on:
+      - database
+    deploy:
+      restart_policy:
+        - condition: on-failure
+          delay: 10s
+          max_attempts: 3
+          window: 60s
+      resources:
+        limits:
+          memory: 512M
+
+
+  frontend:
+    image: ghcr.io/Elias8674/rivage-frontend:latest
+    environment:
+      - USER_NAME=elias
+      - USER_ID=1000
+      - GROUP_NAME=elias
+      - GROUP_ID=1000
+    expose:
+      - 5173
+    #ports:
+    #  - "5173:5173"  # Commenté car géré par Nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.priority=1"
+      - "traefik.http.services.frontend.loadbalancer.server.port=5173"
+    networks:
+      - app-network
+
+  traefik:
+    image: "traefik:v2.11"
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.swarmmode=true"  # Mode Swarm activé
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - traefik-certificates:/letsencrypt
+    deploy:
+      restart_policy:
+        - condition: on-failure
+          delay: 10s
+          max_attempts: 3
+          window: 60s
+      resources:
+        limits:
+          memory: 512M
+
+
+  database:
+    image: postgres:17
+    command: ["postgres"]
+    environment:
+      POSTGRES_USER: api
+      POSTGRES_PASSWORD: lycee
+      POSTGRES_DB: lycee
+    volumes:
+      - database-volume:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: overlay
+
+volumes:
+  database-volume:
+    driver: local
+  data-volume:
+    driver: local
+  traefik-certificates:
+    driver: local
