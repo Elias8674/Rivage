@@ -34,10 +34,10 @@ jobs:
           docker build -t rivage-frontend:latest -f build-prod/app/Dockerfile .
 
       - name: Push backend image
-        run: docker push rivage-backend:latest
+        run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/rivage-backend:latest
 
       - name: Push frontend image
-        run: docker push rivage-frontend:latest
+        run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/rivage-frontend:latest
 
   deploy:
     needs: build-and-push
