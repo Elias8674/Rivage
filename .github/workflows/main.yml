@@ -27,17 +27,17 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -t $IMAGE_BACKEND:latest -f Build/api/Dockerfile .
+          docker build -t rivage-backend:latest -f Build/api/Dockerfile .
 
       - name: Build frontend image
         run: |
-          docker build -t $IMAGE_FRONTEND:latest -f Build/app/Dockerfile .
+          docker build -t rivage-frontend:latest -f Build/app/Dockerfile .
 
       - name: Push backend image
-        run: docker push $IMAGE_BACKEND:latest
+        run: docker push rivage-backend:latest
 
       - name: Push frontend image
-        run: docker push $IMAGE_FRONTEND:latest
+        run: docker push rivage-frontend:latest
 
   deploy:
     needs: build-and-push
