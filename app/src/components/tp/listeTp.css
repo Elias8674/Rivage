@@ -1,0 +1,13 @@
+.listeTp_container {
+    margin-bottom: 50px;
+}
+
+.listeTp_container_content {
+    display: flex;
+    width: 830px;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 25px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}

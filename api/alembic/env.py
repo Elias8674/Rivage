@@ -6,7 +6,15 @@ from sqlalchemy import pool
 from alembic import context
 
 from sqlmodel import SQLModel
-from main import User
+from src.models.models import *
+from src.models.tpModel import *
+from src.models.documentModel import *
+from src.models.userModel import *
+from src.models.coursModel import *
+from src.models.userModel import *
+from src.models.userModel import user_metadata
+
+from src.config import database_url
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -21,8 +29,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadatadans le fichier alembic/env.py. Cela est nécessaire pour générer automatiquement les migrations
-target_metadata = SQLModel.metadata
-
+target_metadata = [user_metadata, SQLModel.metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -42,7 +49,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = database_url #config.get_main_option("sqlalchemy.url"))
     context.configure(
         url=url,
         target_metadata=target_metadata,

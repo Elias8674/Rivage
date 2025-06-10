@@ -1,0 +1,142 @@
+.tp_container {
+    width: 830px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+
+}
+
+.tp_container_header {
+    display: flex;
+    align-items: center;
+    align-content: flex-start;
+    gap: 20px;
+    flex-shrink: 0;
+
+    height: 80px;
+}
+
+.tp_container_header_title {
+    color: #1B1B1B;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    border: none;
+
+    width: 700px;
+}
+
+.tp_container_header_title:focus {
+    outline: none;
+}
+
+.tp_container_header_title::placeholder {
+    color: rgba(16, 17, 17, 0.30);
+}
+
+.tp_container_header_toggle {
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+
+    margin-left: 22px;
+
+    transition: transform 0.3s ease;
+    transform-origin: center !important;
+}
+
+.tp_container_header_toggle.open {
+    transform: rotate(180deg);
+}
+
+
+
+.tp_container_content {
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    flex-direction: column;
+
+
+    flex-shrink: 0;
+
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+.tp_container_content_title {
+    color: #000;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    border: none;
+    resize: none;
+    overflow: hidden;
+
+    margin-top: 0px;
+    margin-bottom: 30px;
+
+    width: 700px;
+}
+
+.tp_container_content_title:focus {
+    outline: none;
+}
+
+.tp_container_content_title::placeholder {
+    color: rgba(16, 17, 17, 0.30);
+}
+
+.tp_container_content_button {
+    display: inline-flex;
+    padding: 10px 25px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 20px;
+    background: #0D0D0D;
+
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    margin-bottom: 13px;
+}
+
+.tp_container_content_button:hover {
+    background: #0079FF;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.tp_container_content_addDocument {
+    display: inline-flex;
+    width: 546px;
+    padding: 47px 111px 47px 110px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 10px;
+    border: 1px dashed #0079FF;
+    background: #FFF;
+}
+
+.tp_container_content_addDocument_text {
+    color: #2F80ED;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
