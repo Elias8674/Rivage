@@ -62,4 +62,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
+            docker pull ghcr.io/elias8674/rivage-backend:latest
+            docker pull ghcr.io/elias8674/rivage-frontend:latest
             docker stack deploy -c stack.yaml rivage
