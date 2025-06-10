@@ -1,0 +1,55 @@
+name: CI/CD - Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_BACKEND: ghcr.io/${{ secrets.GHCR_USERNAME }}/rivagebackend
+  IMAGE_FRONTEND: ghcr.io/${{ secrets.GHCR_USERNAME }}/rivagefrontend
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Build backend image
+        run: |
+          docker build -t $IMAGE_BACKEND:latest -f Build/api/Dockerfile .
+
+      - name: Build frontend image
+        run: |
+          docker build -t $IMAGE_FRONTEND:latest -f Build/app/Dockerfile .
+
+      - name: Push backend image
+        run: docker push $IMAGE_BACKEND:latest
+
+      - name: Push frontend image
+        run: docker push $IMAGE_FRONTEND:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy on VPS via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
+            docker stack deploy -c /path/to/stack.yml rivage
