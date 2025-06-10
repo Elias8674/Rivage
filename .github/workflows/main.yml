@@ -62,4 +62,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
-            docker stack deploy -c /path/to/stack.yml rivage
+            docker stack deploy -c stack.yml rivage
