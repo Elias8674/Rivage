@@ -27,11 +27,21 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -t rivage-backend:latest -f build-prod/api/Dockerfile .
+          docker build -f build-prod/app/Dockerfile -t rivage-backend .
 
       - name: Build frontend image
         run: |
-          docker build -t rivage-frontend:latest -f build-prod/app/Dockerfile .
+          docker build -f build-prod/app/Dockerfile -t rivage-frontend .
+
+
+      - name: Tag backend image
+        run: |
+          docker tag rivage-frontend ghcr.io/elias8674/rivage-backend:latest
+
+      - name: Tag frontend image
+        run: |
+          docker tag rivage-frontend ghcr.io/elias8674/rivage-frontend:latest
+
 
       - name: Push backend image
         run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/rivage-backend:latest
