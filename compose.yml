@@ -15,18 +15,22 @@ services:
       - ./data:/data
     expose:
       - 8000
-    #ports:
-    #  - "8000:8000"  # Commenté car géré par Nginx
     labels:
+      # Labels Traefik pour Dokploy
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.rule=Host(`votre-domaine.com`) && PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.routers.backend.priority=2"
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
       - "traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.backend.middlewares=backend-stripprefix"
+      # HTTPS (optionnel, à configurer dans Dokploy)
+      - "traefik.http.routers.backend-secure.rule=Host(`votre-domaine.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend-secure.entrypoints=websecure"
+      - "traefik.http.routers.backend-secure.tls=true"
+      - "traefik.http.routers.backend-secure.middlewares=backend-stripprefix"
     networks:
-      - app-network
+      - dokploy-network
     depends_on:
       - database
 
@@ -44,30 +48,19 @@ services:
       - ./app:/app
     expose:
       - 5173
-    #ports:
-    #  - "5173:5173"  # Commenté car géré par Nginx
     labels:
+      # Labels Traefik pour Dokploy
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.rule=Host(`votre-domaine.com`)"
       - "traefik.http.routers.frontend.entrypoints=web"
       - "traefik.http.routers.frontend.priority=1"
       - "traefik.http.services.frontend.loadbalancer.server.port=5173"
+      # HTTPS (optionnel, à configurer dans Dokploy)
+      - "traefik.http.routers.frontend-secure.rule=Host(`votre-domaine.com`)"
+      - "traefik.http.routers.frontend-secure.entrypoints=websecure"
+      - "traefik.http.routers.frontend-secure.tls=true"
     networks:
-      - app-network
-
-  traefik:
-    image: "traefik:v2.11"
-    container_name: "traefik"
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-      - "8080:8080"
-    volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - dokploy-network
 
   database:
     image: postgres:latest
@@ -77,17 +70,17 @@ services:
       POSTGRES_PASSWORD: lycee
       POSTGRES_DB: lycee
     volumes:
-      - type: volume
-        source: database-volume
-        target: /var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - database-volume:/var/lib/postgresql/data
+    # Optionnel: exposer le port pour accès externe (à désactiver en production)
+    # ports:
+    #   - "5432:5432"
     networks:
-      - app-network
+      - dokploy-network
 
 networks:
-  app-network:
-    driver: bridge
+  dokploy-network:
+    external: true
+    name: dokploy-network
 
 volumes:
   database-volume:
