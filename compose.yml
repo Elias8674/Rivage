@@ -13,24 +13,8 @@ services:
     volumes:
       - ./api:/api
       - ./data:/data
-    expose:
-      - 8000
-    labels:
-      # Labels Traefik pour Dokploy
-      - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`votre-domaine.com`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.backend.entrypoints=web"
-      - "traefik.http.routers.backend.priority=2"
-      - "traefik.http.services.backend.loadbalancer.server.port=8000"
-      - "traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api"
-      - "traefik.http.routers.backend.middlewares=backend-stripprefix"
-      # HTTPS (optionnel, à configurer dans Dokploy)
-      - "traefik.http.routers.backend-secure.rule=Host(`votre-domaine.com`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.backend-secure.entrypoints=websecure"
-      - "traefik.http.routers.backend-secure.tls=true"
-      - "traefik.http.routers.backend-secure.middlewares=backend-stripprefix"
-    networks:
-      - dokploy-network
+    ports:
+      - 8000:8000
     depends_on:
       - database
 
@@ -46,21 +30,9 @@ services:
       - GROUP_ID=1000
     volumes:
       - ./app:/app
-    expose:
-      - 5173
-    labels:
-      # Labels Traefik pour Dokploy
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`votre-domaine.com`)"
-      - "traefik.http.routers.frontend.entrypoints=web"
-      - "traefik.http.routers.frontend.priority=1"
-      - "traefik.http.services.frontend.loadbalancer.server.port=5173"
-      # HTTPS (optionnel, à configurer dans Dokploy)
-      - "traefik.http.routers.frontend-secure.rule=Host(`votre-domaine.com`)"
-      - "traefik.http.routers.frontend-secure.entrypoints=websecure"
-      - "traefik.http.routers.frontend-secure.tls=true"
-    networks:
-      - dokploy-network
+    ports:
+      - 5173:5173
+
 
   database:
     image: postgres:latest
@@ -74,13 +46,7 @@ services:
     # Optionnel: exposer le port pour accès externe (à désactiver en production)
     # ports:
     #   - "5432:5432"
-    networks:
-      - dokploy-network
 
-networks:
-  dokploy-network:
-    external: true
-    name: dokploy-network
 
 volumes:
   database-volume:
