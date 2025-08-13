@@ -9,6 +9,7 @@ export default defineConfig({
 	},
 	server: {        // Also add this for development server
 		host: true,    // This enables listening on all network interfaces
-		port: 5173
+		port: 5173,
+    allowedHosts: ["traefik.me", ".traefik.me"]
 	}
 });
