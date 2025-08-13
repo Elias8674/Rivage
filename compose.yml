@@ -22,7 +22,7 @@ services:
     build:
       context: .
       dockerfile: ./build/app/Dockerfile
-    command: sh -c 'yarn install && yarn dev --host'
+    command: sh -c 'yarn install && yarn dev --host 0.0.0.0'
     environment:
       - USER_NAME=elias
       - USER_ID=1000
