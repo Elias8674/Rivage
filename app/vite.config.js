@@ -1,19 +1,35 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
- 
+import { defineConfig } from 'vite'
+import reactSwc from '@vitejs/plugin-react-swc'
+
 export default defineConfig({
-	plugins: [react()],
-	preview: {
-		port: 5173,
-		host: true,    // This enables listening on all network interfaces
-	},
-	server: {        // Also add this for development server
-		host: true,    // This enables listening on all network interfaces
-		port: 5173,
-    allowedHosts: ["traefik.me", ".traefik.me"],
-    hmr: {
-      host: "rivage-rivageallstack-pris1b-3afe35-46-62-137-212.traefik.me",
-      protocol: "wss", // ou "ws" si pas HTTPS
+  plugins: [reactSwc()],
+
+  // Configuration serveur de développement
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    // Proxy pour le développement local
+    proxy: {
+      '/api': {
+        target: 'http://backend:8000',
+        changeOrigin: true,
+        secure: false
+      }
     }
-	}
-});
+  },
+
+  // Configuration de build pour la production
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+        },
+      },
+    },
+  },
+
+})
+

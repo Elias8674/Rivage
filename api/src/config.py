@@ -7,8 +7,7 @@ load_dotenv(f'.env.{env}')
 
 # Maintenant vos variables sont disponibles
 database_url = os.getenv('DATABASE_URL')
-print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", flush=True)
-print(f"Using database URL: {database_url}", flush=True)
+#print(f"Using database URL: {database_url}", flush=True)
 database_url_async = os.getenv('DATABASE_URL_ASYNC')
 
 
