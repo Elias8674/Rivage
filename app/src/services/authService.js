@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const APIAUTH = axios.create({
-    baseURL: '/api/',
+    baseURL: process.env.REACT_APP_API_BASE_URL || '/api/',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
     }

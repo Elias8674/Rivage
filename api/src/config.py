@@ -1,15 +1,11 @@
 import os
-from dotenv import load_dotenv
 
-# Charge le bon fichier .env.dev selon l'environnement
+# Récupération directe des variables d'environnement depuis docker-compose
 env = os.getenv('ENV', 'dev')
-load_dotenv(f'.env.{env}')
 
-# Maintenant vos variables sont disponibles
+# Variables de base de données définies dans docker-compose
 database_url = os.getenv('DATABASE_URL')
-#print(f"Using database URL: {database_url}", flush=True)
 database_url_async = os.getenv('DATABASE_URL_ASYNC')
-
 
 if env == "prod":
     storage_cloud = True

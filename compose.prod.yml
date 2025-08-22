@@ -5,7 +5,9 @@ services:
       dockerfile: ./build-prod/api/Dockerfile
     environment:
       - ENV=dev
-#    environment:
+      - DATABASE_URL=postgresql://api:lycee@database:5432/lycee
+      - DATABASE_URL_ASYNC=postgresql+asyncpg://api:lycee@database:5432/lycee
+      #    environment:#    environment:
 #      - ENV=production
 #      - DATABASE_URL=postgresql://api:lycee@database:5432/lycee
 #      - CORS_ORIGINS=${CORS_ORIGINS:-https://yourdomain.com}
@@ -20,6 +22,8 @@ services:
     build:
       context: .
       dockerfile: ./build-prod/app/Dockerfile
+    environment:
+      - API_BASE_URL=http://127.0.0.1:8000
     ports:
       - "3000:3000"
     restart: unless-stopped
