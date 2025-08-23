@@ -1,11 +1,9 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://10.0.1.4:8000/api/',
-    headers: {
-        'Content-Type': 'application/json',
-    }
-})
+  baseURL: 'http://localhost:8000/api/',
+  headers: { 'Content-Type': 'application/json' }
+});
 
 export async function checkAuthStatus() {
     try {
@@ -72,14 +70,6 @@ export async function deleteData(endpoint, id) {
         throw error;
     }
 }
-
-
-
-
-
-
-
-
 
 
 export async function getCours(id) {
