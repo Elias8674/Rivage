@@ -12,7 +12,7 @@ services:
 #      - DATABASE_URL=postgresql://api:lycee@database:5432/lycee
 #      - CORS_ORIGINS=${CORS_ORIGINS:-https://yourdomain.com}
     ports:
-      - "8000:8000"
+      - 8000
     depends_on:
       - database
     restart: unless-stopped
@@ -24,10 +24,8 @@ services:
     build:
       context: .
       dockerfile: ./build-prod/app/Dockerfile
-    environment:
-      - API_BASE_URL=http://127.0.0.1:8000/api/
     ports:
-      - "5173:5173"
+      - 5173
     restart: unless-stopped
     networks:
       - app-network
