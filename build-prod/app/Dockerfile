@@ -23,7 +23,7 @@ RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 5173
 
 # Serveur statique avec support SPA
 CMD ["serve", "-s", ".", "-l", "5173"]
