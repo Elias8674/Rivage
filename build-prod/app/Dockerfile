@@ -26,4 +26,4 @@ USER nextjs
 EXPOSE 3000
 
 # Serveur statique avec support SPA
-CMD ["serve", "-s", ".", "-l", "3000"]
+CMD ["serve", "-s", ".", "-l", "5173"]
