@@ -6,6 +6,7 @@ env = os.getenv('ENV', 'dev')
 # Variables de base de données définies dans docker-compose
 database_url = os.getenv('DATABASE_URL')
 database_url_async = os.getenv('DATABASE_URL_ASYNC')
+print(f"url database : {database_url}")
 
 if env == "prod":
     storage_cloud = True

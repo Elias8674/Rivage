@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,6 +17,7 @@ from alembic import command
 #Creation du moteur SQLAlchemy
 #DATABASE_URL = "postgresql://endpoints:lycee@database:5432/lycee"
 #engine = create_engine(DATABASE_URL, echo=True)
+
 
 app = FastAPI(
     title="API",

@@ -14,7 +14,11 @@ from src.models.coursModel import *
 from src.models.userModel import *
 from src.models.userModel import user_metadata
 
-from src.config import database_url
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+database_url = os.getenv("DATABASE_URL")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -68,6 +72,9 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
+
+    config.set_main_option("sqlalchemy.url", database_url)
+
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
