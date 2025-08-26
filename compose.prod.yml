@@ -7,7 +7,6 @@ services:
       - ENV=dev
       - DATABASE_URL=${DATABASE_URL}
       - DATABASE_URL_ASYNC=${DATABASE_URL_ASYNC}
-
     ports:
       - 8000:8000
     restart: unless-stopped
