@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -8,10 +11,13 @@ from datetime import datetime
 from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
 
-from src.config import database_url, database_url_async
-
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 
+
+load_dotenv()
+
+database_url = os.getenv("DATABASE_URL")
+database_url_async = os.getenv("DATABASE_URL_ASYNC")
 
 engine_async = create_async_engine(database_url_async, echo=True)
 engine_sync = create_engine(database_url, echo=True)

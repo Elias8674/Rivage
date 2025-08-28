@@ -3,56 +3,34 @@ services:
     build:
       context: .
       dockerfile: ./build/api/Dockerfile
-    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
     environment:
-      - USER_NAME=elias
-      - USER_ID=1000
-      - GROUP_NAME=elias
-      - GROUP_ID=1000
       - ENV=dev
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL_ASYNC=${DATABASE_URL_ASYNC}
     volumes:
       - ./api:/api
       - ./data:/data
     ports:
       - 8000:8000
-    expose:
-      - 8000
-    depends_on:
-      - database
+    networks:
+      - app-network
+
 
   frontend:
     build:
       context: .
       dockerfile: ./build/app/Dockerfile
-    command: sh -c 'yarn install && yarn dev --host 0.0.0.0'
-    environment:
-      - USER_NAME=elias
-      - USER_ID=1000
-      - GROUP_NAME=elias
-      - GROUP_ID=1000
     volumes:
       - ./app:/app
     ports:
       - 5173:5173
-    expose:
-      - 5173
-    depends_on:
-      - backend
+    networks:
+      - app-network
 
 
-  database:
-    image: postgres:latest
-    command: ["postgres"]
-    environment:
-      POSTGRES_USER: api
-      POSTGRES_PASSWORD: lycee
-      POSTGRES_DB: lycee
-    volumes:
-      - database-volume:/var/lib/postgresql/data
-    # Optionnel: exposer le port pour accès externe (à désactiver en production)
-    # ports:
-    #   - "5432:5432"
-
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   database-volume:

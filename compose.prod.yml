@@ -5,16 +5,10 @@ services:
       dockerfile: ./build-prod/api/Dockerfile
     environment:
       - ENV=dev
-      - DATABASE_URL=postgresql://api:lycee@database:5432/lycee
-      - DATABASE_URL_ASYNC=postgresql+asyncpg://api:lycee@database:5432/lycee
-      #    environment:#    environment:
-#      - ENV=production
-#      - DATABASE_URL=postgresql://api:lycee@database:5432/lycee
-#      - CORS_ORIGINS=${CORS_ORIGINS:-https://yourdomain.com}
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL_ASYNC=${DATABASE_URL_ASYNC}
     ports:
       - 8000:8000
-    depends_on:
-      - database
     restart: unless-stopped
     networks:
       - app-network
@@ -29,19 +23,6 @@ services:
     restart: unless-stopped
     networks:
       - app-network
-
-  database:
-    image: postgres:latest
-    command: ["postgres"]
-    environment:
-      POSTGRES_USER: api
-      POSTGRES_PASSWORD: lycee
-      POSTGRES_DB: lycee
-    volumes:
-      - database-volume:/var/lib/postgresql/data
-    networks:
-      - app-network
-
 
 
 networks:
