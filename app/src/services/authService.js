@@ -31,3 +31,16 @@ export async function login(username, password) {
         throw error;
     }
 }
+
+export async function logout() {
+    try {
+        const response = await APIAUTH.post('auth/jwt/logout', {}, {
+            withCredentials: true,
+            validateStatus: () => true
+        });
+    }
+    catch (error) {
+        console.error('Erreur lors de la déconnexion :', error);
+        throw error;
+    }
+}

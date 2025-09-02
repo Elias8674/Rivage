@@ -1,0 +1,24 @@
+.header_logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header_logo_title {
+    color: #353535;
+    font-family: Plush-Trial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.header_container {
+    display: flex;
+    align-items: center;
+    width: 830px;
+
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+}

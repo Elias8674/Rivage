@@ -8,11 +8,8 @@ const Cours = (props) => {
     }
 
     return (
-        <div class="cours_cards">
-            <div class="cours_cards_footer">
-                <h2 class="cours_cards_footer_title">{props.name}</h2>
-                <button class="cours_cards_footer_button_ouvrir" onClick={Redirect}>Ouvrir</button>
-            </div>
+        <div class="cours_cards" onClick={Redirect}>
+            <h2 class="cours_cards_title">{props.name}</h2>
         </div>
     )
 }

@@ -50,11 +50,12 @@ const ListeCours = () => {
 
     return (
         <div className='listeCours_container'>
-            <input className='SearchBar'
-                   type="text"
-                   placeholder="Chercher un cours"
-                   value={searchTerm}
-                   onChange={updateSearch}
+            <input
+                className='SearchBar'
+                type="text"
+                placeholder="Chercher un cours"
+                value={searchTerm}
+                onChange={updateSearch}
             />
 
             <div className='listeCours_container_content'>

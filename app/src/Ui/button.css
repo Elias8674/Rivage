@@ -47,3 +47,36 @@
     background: #1F73FE;
     color: #FFF;
 }
+
+.button-rounded {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    width: fit-content;
+
+    border-radius: 11px;
+    background: #F2F2F2;
+
+    padding: 10px 15px;
+}
+
+.button-rounded:hover {
+    background: #E8E8E8;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.button-rounded p {
+    color: #232323;
+    font-family: Switzer;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    margin: 0px;
+}
