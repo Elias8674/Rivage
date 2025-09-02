@@ -19,8 +19,19 @@ load_dotenv()
 database_url = os.getenv("DATABASE_URL")
 database_url_async = os.getenv("DATABASE_URL_ASYNC")
 
-engine_async = create_async_engine(database_url_async, echo=True)
-engine_sync = create_engine(database_url, echo=True)
+engine_async = create_async_engine(database_url_async,
+                                   pool_size=5,        # Nombre de connexions permanentes
+                                    max_overflow=10,    # Connexions supplémentaires temporaires
+                                    pool_timeout=30,    # Temps d'attente pour obtenir une connexion
+                                    pool_recycle=3600,  # Renouvellement des connexions (en secondes)
+                                    pool_pre_ping=True) # Vérification de la connexion avant utilisation)
+engine_sync = create_engine(database_url,
+                            pool_size=5,        # Nombre de connexions permanentes
+                            max_overflow=10,    # Connexions supplémentaires temporaires
+                            pool_timeout=30,    # Temps d'attente pour obtenir une connexion
+                            pool_recycle=3600,  # Renouvellement des connexions (en secondes)
+                            pool_pre_ping=True)
+
 async_session_maker = async_sessionmaker(engine_async, expire_on_commit=False)
 
 async def get_async_session():
