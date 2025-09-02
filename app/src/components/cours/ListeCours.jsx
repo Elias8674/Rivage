@@ -65,22 +65,17 @@ const ListeCours = () => {
                     )
                     })}
                 {isAuthenticated && (
-                    <div className="listeCours_container_authenticated_coursadd">
-                        <form className="listeCours_container_authenticated_coursadd_footer" onSubmit={handleAddCours}>
-                            <input
-                                className={"listeCours_container_authenticated_coursadd_footer_title"}
-                                id="coursName"
-                                name="coursName"
-                                type="text"
-                                required
-                                onChange={e => setIsNameCours(e.target.value)}
-                                placeholder="Nom du cours"
-                            />
-                            <button className="listeCours_container_authenticated_coursadd_footer_button" type={"submit"}>
-                                Créer
-                            </button>
-                        </form>
-                    </div>
+                    <form className="listeCours_container_authenticated_coursadd" onClick={handleAddCours} >
+                        <input
+                            className={"listeCours_container_authenticated_coursadd_footer_title"}
+                            id="coursName"
+                            name="coursName"
+                            type="text"
+                            required
+                            onChange={e => setIsNameCours(e.target.value)}
+                            placeholder="Nom du cours"
+                        />
+                    </form>
                 )}
 
             </div>

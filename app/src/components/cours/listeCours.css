@@ -13,16 +13,16 @@
 .listeCours_container_authenticated_coursadd {
     display: flex;
     width: 260px;
-    height: 180px;
-    justify-content: center;
-    align-items: end;
-    flex-shrink: 0;
+    height: 148px;
+    padding: 26px 89px 15px 26px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 38px;
 
-    box-sizing: border-box;
-
-    border-radius: 26px;
-    border: 1px dashed #0079FF;
-    background: rgba(0, 125, 252, 0.10);
+    border-radius: 17px;
+    border: 2px dashed #DFDFDF;
+    background: #FFF;
 }
 
 .listeCours_container_authenticated_coursadd_footer {
