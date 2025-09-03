@@ -10,11 +10,12 @@ from src.models.tpModel import Tp, TpRead
 #Cours
 class CoursBase(SQLModel):
     nom: str
-    couleur: str
+    couleur_id: Optional[int] = Field(default=None, foreign_key="couleur.id")
 
 class Cours(CoursBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     tp: List["Tp"] = Relationship(back_populates="cours")
+    couleur: Optional["Couleur"] = Relationship(back_populates="cours")
 
 class CoursRead(CoursBase):
     id: int
@@ -24,4 +25,19 @@ class CoursReadWithTp(CoursBase):
     tp: List["TpRead"]
 
 class CoursWrite(CoursBase):
+    pass
+
+#Couleur
+class CouleurBase(SQLModel):
+    background_color: str  # Correction de la faute de frappe
+    text_color: str
+
+class Couleur(CouleurBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    cours: List["Cours"] = Relationship(back_populates="couleur")
+
+class CouleurRead(CouleurBase):
+    id: int
+
+class CouleurWrite(CouleurBase):
     pass
