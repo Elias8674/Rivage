@@ -1,12 +1,12 @@
 import './coursPage.css'
-import {useParams} from "react-router-dom";
+import {data, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Cours from "../components/cours/Cours.jsx";
 import Tp from "../components/tp/Tp.jsx";
 import ListeTp from "../components/tp/ListeTp.jsx";
 import './coursPage.css'
 import ListeTpEditing from "../components/tp/ListeTpEditing.jsx";
-import {checkAuthStatus, getCours} from "../services/apiService.js";
+import {checkAuthStatus, getCours, getDataWithId} from "../services/apiService.js";
 import Header from "../components/header/Header.jsx";
 
 
@@ -25,8 +25,13 @@ const CoursPage = () => {
     },[]);
 
     useEffect(() => {
-        setCours(getCours(id))
+        const fetchData = async () => {
+            const dataCours = await getDataWithId('cours', id);
+            setCours(dataCours)
+        };
+        fetchData();
     }, []);
+
 
 
     return (
