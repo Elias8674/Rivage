@@ -27,6 +27,10 @@ class CoursReadWithTp(CoursBase):
 class CoursWrite(CoursBase):
     pass
 
+class CoursUpdate(CoursBase):
+    nom: Optional[str] = None
+    couleur_id: Optional[int] = None
+
 #Couleur
 class CouleurBase(SQLModel):
     background_color: str  # Correction de la faute de frappe

@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.endpoints.cours import router as cours_router
 from src.endpoints.tp import router  as tp_router
 from src.endpoints.documents import router as documents_router
+from src.endpoints.couleur import router as couleur_router
 
 from src.models.userModel import User
 from src.models.userModel import UserCreate, UserRead, UserUpdate
@@ -46,6 +47,7 @@ app.add_middleware(
 app.include_router(cours_router)
 app.include_router(tp_router)
 app.include_router(documents_router)
+app.include_router(couleur_router)
 
 app.include_router(
     fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]

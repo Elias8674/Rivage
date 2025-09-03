@@ -1,11 +1,9 @@
-
-
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from src.endpoints.dependencies import get_db
-from src.models.coursModel import CoursRead, CoursWrite, Cours, CoursReadWithTp
+from src.models.coursModel import CoursRead, CoursWrite, Cours, CoursReadWithTp, CoursUpdate
 from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
 from src.models.userModel import User
 
@@ -41,4 +39,20 @@ def get_cours_by_id(cours_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Cours non trouvé")
     return cours
 
+@router.patch("/{cours_id}", response_model=CoursRead)
+def update_cours_by_id(cours_id: int, cours: CoursUpdate, db: Session = Depends(get_db)):
+    """
+    Met à jour un cours par son ID.
+    """
+    db_cours = db.get(Cours, cours_id)
+    if not cours:
+        raise HTTPException(status_code=404, detail="Cours non trouvé")
 
+    cours_data = cours.model_dump(exclude_unset=True)
+    for key, value in cours_data.items():
+        setattr(db_cours, key, value)
+
+    db.add(db_cours)
+    db.commit()
+    db.refresh(db_cours)
+    return db_cours
