@@ -61,7 +61,7 @@ const ListeCours = () => {
             <div className='listeCours_container_content'>
                 {filteredCours.map((cours, index) => {
                     return (
-                        <Cours index={index} id={cours.id} name={cours.nom}/>
+                        <Cours index={index} id={cours.id} name={cours.nom} couleur_id={cours.couleur_id}/>
                     )
                     })}
                 {isAuthenticated && (

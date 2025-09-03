@@ -33,7 +33,6 @@ const CoursPage = () => {
         <div className={"courPage_container_content"}>
             <Header/>
             <div className={"coursPage_container_content_header"}>
-                <h1 className={"coursPage_container_content_header_title"}>Hello world</h1>
                 <h1 className={"coursPage_container_content_header_title"}> {cours.nom} </h1>
             </div>
             {isAuthenticated ?
