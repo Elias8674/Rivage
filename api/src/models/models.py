@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import NullPool
 
 from sqlmodel import Field, Session, SQLModel, create_engine
 from typing import Optional
@@ -20,17 +21,9 @@ database_url = os.getenv("DATABASE_URL")
 database_url_async = os.getenv("DATABASE_URL_ASYNC")
 
 engine_async = create_async_engine(database_url_async,
-                                   pool_size=5,        # Nombre de connexions permanentes
-                                    max_overflow=10,    # Connexions supplémentaires temporaires
-                                    pool_timeout=30,    # Temps d'attente pour obtenir une connexion
-                                    pool_recycle=3600,  # Renouvellement des connexions (en secondes)
-                                    pool_pre_ping=True) # Vérification de la connexion avant utilisation)
+                                   poolclass=NullPool)
 engine_sync = create_engine(database_url,
-                            pool_size=5,        # Nombre de connexions permanentes
-                            max_overflow=10,    # Connexions supplémentaires temporaires
-                            pool_timeout=30,    # Temps d'attente pour obtenir une connexion
-                            pool_recycle=3600,  # Renouvellement des connexions (en secondes)
-                            pool_pre_ping=True)
+                            poolclass=NullPool)
 
 async_session_maker = async_sessionmaker(engine_async, expire_on_commit=False)
 
