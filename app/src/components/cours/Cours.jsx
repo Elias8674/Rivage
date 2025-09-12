@@ -7,6 +7,7 @@ const Cours = (props) => {
     const [backgroudColor, setBackgroundColor] = useState("#fff");
     const [textColor, setTextColor] = useState("#000");
 
+
     useEffect(() => {
         const fetchData = async () => {
             const dataCouleur = await getDataWithId('couleur', props.couleur_id);

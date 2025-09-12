@@ -36,6 +36,7 @@ class Cours(CoursBase, table=True):
 
 class CoursRead(CoursBase):
     id: int
+    couleur_id: int
 
 class CoursReadWithTp(CoursBase):
     id: int
