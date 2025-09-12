@@ -4,20 +4,14 @@ import "./document.css"
 import {downloadDocument} from "../../services/documentService.js";
 import useDownload from "../../hooks/useDownload.jsx";
 import {useEffect, useState} from "react";
-import {checkAuthStatus, deleteData} from "../../services/apiService.js";
+import {deleteData} from "../../services/apiService.js";
+import {useAuth} from "../../services/AuthContext.jsx";
 
 const Document = (props) => {
     const { downloadDocument, isDownloading } = useDownload();
     const [isDescription, setIsDescription] = useState(props.description || '');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { connected } = useAuth();
 
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            setIsAuthenticated(await checkAuthStatus());
-        }
-        checkAuth();
-    },[]);
 
     const handleDownload = async () => {
         const result = await downloadDocument(props.id, props.nom);
@@ -48,14 +42,14 @@ const Document = (props) => {
                 <h3 className={"document_container_content_title"}>{props.nom}</h3>
 
                 <div className={"document_container_content_buttons"}>
-                    {isAuthenticated && (
+                    {connected && (
                         <button className="button-delete" onClick={handleDelete}>Supprimer</button>
                     )}
                     <button className="button" onClick={handleDownload}>Téléchargement</button>
                 </div>
             </div>
 
-            {isAuthenticated ? (
+            {connected ? (
                 <form className="document_container_footer">
                     <input
                         className={"document_container_footer_text"}

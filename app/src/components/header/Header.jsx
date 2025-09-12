@@ -1,26 +1,13 @@
 import './header.css'
-import {useEffect, useState} from "react";
-import {checkAuthStatus} from "../../services/apiService.js";
-import {login, logout} from "../../services/authService.js";
+import {useAuth} from "../../services/AuthContext.jsx";
 
 const Header = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { connected, logout } = useAuth();
+    console.log(connected)
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            setIsAuthenticated(await checkAuthStatus());
-        }
-        checkAuth();
-    }, []);
 
     const Redirect = () => {
         window.location.href = "/login";
-    }
-
-    const Logout = async(e) => {
-        e.preventDefault();
-        await logout();
-        setIsAuthenticated(false);
     }
 
     return (
@@ -30,8 +17,8 @@ const Header = () => {
                 <h1 className={"header_logo_title"}>Rivage</h1>
             </div>
 
-            {isAuthenticated ? (
-                <div className={"button-rounded"} onClick={Logout}>
+            {connected ? (
+                <div className={"button-rounded"} onClick={logout}>
                     <p className={"header_text"}>Déconnexion</p>
                 </div>
             ) : (

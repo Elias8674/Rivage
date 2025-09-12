@@ -1,26 +1,19 @@
 import PropsTypes from 'prop-types';
 import Cours from "./Cours.jsx";
-import {use, useEffect, useState} from "react";
-
 import './listeCours.css'
-import {checkAuthStatus, getData, postCours} from "../../services/apiService.js";
+
+import {useEffect, useState} from "react";
+import {getData, postCours} from "../../services/apiService.js";
+import {useAuth} from "../../services/AuthContext.jsx";
 
 const ListeCours = () => {
     const [cours, setCours] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredCours, setFilteredCours] = useState(cours);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isNameCours, setIsNameCours] = useState('');
-
     const [reload, setReload] = useState(false);
 
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            setIsAuthenticated(await checkAuthStatus());
-        }
-        checkAuth();
-    },[]);
+    const { connected } = useAuth();
 
 
     useEffect(() => {
@@ -64,7 +57,7 @@ const ListeCours = () => {
                         <Cours index={index} id={cours.id} name={cours.nom} couleur_id={cours.couleur_id}/>
                     )
                     })}
-                {isAuthenticated && (
+                {connected && (
                     <div className="listeCours_container_authenticated_coursadd">
                         <form className="listeCours_container_authenticated_coursadd_footer" onSubmit={handleAddCours}>
                             <input

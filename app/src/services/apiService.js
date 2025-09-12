@@ -5,26 +5,6 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' }
 });
 
-export async function checkAuthStatus() {
-    try {
-        const response = await API.get('/users/me', {
-            withCredentials: true, // Inclut les cookies dans la requête
-        });
-
-        if (response.status === 200) {
-            console.log("Utilisateur authentifié");
-            return true;
-        } else {
-            console.log("Utilisateur non authentifié");
-            return false;
-        }
-    } catch (error) {
-        console.error("Erreur lors de la vérification de l'authentification :", error);
-        return false;
-    }
-}
-
-
 
 // Get param
 export async function getData(endpoint) {

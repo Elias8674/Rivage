@@ -6,30 +6,7 @@ from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
 
 from src.models.tpModel import Tp, TpRead
-
-#Cours
-class CoursBase(SQLModel):
-    nom: str
-    couleur_id: Optional[int] = Field(default=None, foreign_key="couleur.id")
-
-class Cours(CoursBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    tp: List["Tp"] = Relationship(back_populates="cours")
-    couleur: Optional["Couleur"] = Relationship(back_populates="cours")
-
-class CoursRead(CoursBase):
-    id: int
-
-class CoursReadWithTp(CoursBase):
-    id: int
-    tp: List["TpRead"]
-
-class CoursWrite(CoursBase):
-    pass
-
-class CoursUpdate(CoursBase):
-    nom: Optional[str] = None
-    couleur_id: Optional[int] = None
+from src.services.colorService import choice_color
 
 #Couleur
 class CouleurBase(SQLModel):
@@ -45,3 +22,28 @@ class CouleurRead(CouleurBase):
 
 class CouleurWrite(CouleurBase):
     pass
+
+
+#Cours
+class CoursBase(SQLModel):
+    nom: str
+
+class Cours(CoursBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    tp: List["Tp"] = Relationship(back_populates="cours")
+    couleur_id: int = Field(default_factory=choice_color, foreign_key="couleur.id")
+    couleur: Optional["Couleur"] = Relationship(back_populates="cours")
+
+class CoursRead(CoursBase):
+    id: int
+
+class CoursReadWithTp(CoursBase):
+    id: int
+    tp: List["TpRead"]
+
+class CoursWrite(CoursBase):
+    pass
+
+class CoursUpdate(CoursBase):
+    nom: Optional[str] = None
+    couleur_id: Optional[int] = None
