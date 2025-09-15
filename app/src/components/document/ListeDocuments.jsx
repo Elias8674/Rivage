@@ -36,7 +36,6 @@ const ListeDocuments = (props) => {
                     <Document key={index} id={document.id} nom={document.nom} description={document.description} reload={handleReload} />
                 )
             })}
-            <Dropzone onFilesDrop={handleFiles}/>
 
         </div>
     )
