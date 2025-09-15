@@ -1,8 +1,13 @@
 import os
 import shutil
+from unidecode import unidecode
+from supabase import create_client, Client
+
+
 from src.config import storage_cloud, supabase_url, supabase_key, supabase_bucket_name
 
-from supabase import create_client, Client
+
+
 
 class LocalStorage:
     """
@@ -43,6 +48,7 @@ class SupabaseStorage:
         Enregistre un fichier dans Supabase.
         """
         try:
+            path = unidecode(path)
             # Lire le contenu du fichier
             file.file.seek(0)  # Retour au début du fichier
             file_content = file.file.read()
@@ -72,6 +78,7 @@ class SupabaseStorage:
         Télécharge un fichier depuis Supabase.
         """
         try:
+            path = unidecode(path)
             # Télécharger le fichier
             result = self.client.storage.from_(self.bucket_name).download(path)
 
