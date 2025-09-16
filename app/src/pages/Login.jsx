@@ -20,6 +20,8 @@ const Login = () => {
         if (reponse) {
             //window.location.href = '/home';
             navigate('/home');
+        } else {
+            setError('Email ou mot de passe incorrect');
         }
     }
 
@@ -31,9 +33,10 @@ const Login = () => {
     return (
         <div className={"coursPage_container"}>
             <div className={"coursPage_container_content"}>
-                <h1 className={"coursPage_container_content_title"}>Login</h1>
+                <h1 className={"coursPage_container_content_title"}>Connexion à votre compte</h1>
                 <form onSubmit={handleSubmit}>
                     <div className={"coursPage_container_content_fields"}>
+                        <p className={"coursPage_container_content_fields_text"}>Email</p>
                         <input
                             className={"coursPage_container_content_fields_input"}
                             id="email"
@@ -45,6 +48,7 @@ const Login = () => {
                             placeholder="email"
                         />
 
+                        <p className={"coursPage_container_content_fields_text"}>Mot de passe</p>
                         <input
                             className={"coursPage_container_content_fields_input"}
                             id="password"
@@ -56,6 +60,11 @@ const Login = () => {
                             placeholder="password"
                         />
                     </div>
+                    {error && (
+                        <div className="login-error">
+                            {error}
+                        </div>
+                    )}
                     <button className={"coursPage_container_content_fields_button"} type="submit">
                         Connexion
                     </button>
