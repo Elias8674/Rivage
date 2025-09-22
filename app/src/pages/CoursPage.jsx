@@ -9,7 +9,9 @@ import ListeTpEditing from "../components/tp/ListeTpEditing.jsx";
 import {getDataWithId} from "../services/apiService.js";
 import Header from "../components/header/Header.jsx";
 
+
 import {useAuth} from "../services/AuthContext.jsx";
+import ToolBar from "../components/toolBar/ToolBar.jsx";
 
 const CoursPage = () => {
     const { id } = useParams();
@@ -37,9 +39,8 @@ const CoursPage = () => {
                 <ListeTpEditing id={id}/> :
                 <ListeTp id={id}/>
             }
+            <ToolBar />
         </div>
-
-
     )
 }
 

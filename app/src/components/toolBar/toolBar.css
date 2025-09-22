@@ -1,0 +1,38 @@
+.toolBar_container {
+    position: fixed;
+    z-index: 100;
+    bottom: 30px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: fit-content;
+
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 13px;
+    border: 1px solid #E8E8E8;
+    background: #FFF;
+    box-shadow: 0 65px 18px 0 rgba(0, 0, 0, 0.00), 0 41px 17px 0 rgba(0, 0, 0, 0.01), 0 23px 14px 0 rgba(0, 0, 0, 0.02), 0 10px 10px 0 rgba(0, 0, 0, 0.03), 0 3px 6px 0 rgba(0, 0, 0, 0.04);
+}
+
+.toolBar_container_save_button {
+    display: flex;
+    padding: 12px 18px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 14px;
+    background: var(--color-primary, #0079FF);
+
+    color: #FFF;
+    font-family: Switzer;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
