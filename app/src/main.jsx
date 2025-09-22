@@ -3,6 +3,8 @@ import {createRoot} from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import {AuthProvider} from "./services/AuthContext.jsx";
+import {UpdateProvider} from "./services/UpdateContext.jsx";
+
 
 import './index.css'
 import "./assets/font.css"
@@ -31,7 +33,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
     <StrictMode>
         <AuthProvider>
-            <RouterProvider router={router}/>
+            <UpdateProvider>
+                <RouterProvider router={router}/>
+            </UpdateProvider>
         </AuthProvider>
     </StrictMode>
 );
