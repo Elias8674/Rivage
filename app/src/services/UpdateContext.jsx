@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import {putTp} from "./apiService.js";
+import {postDescriptionDocument, putTp} from "./apiService.js";
 
 
 const UpdateContext = createContext(null);
@@ -26,22 +26,28 @@ export const UpdateProvider = ({children}) => {
         });
     }
 
-    const addDocumentUpdate = (documentId, nom, description) => {
+    const addDocumentUpdate = (documentId, description) => {
         setUpdateDocument(prevMap => {
             const newMap = new Map(prevMap);
-            newMap.set(documentId, [nom, description]);
+            newMap.set(documentId, description);
             return newMap;
         });
     }
 
     //fonction pour envoyé les update à l'api
     //boucle for sur la maps pour envoyer chaque update
-    const sendUpdate = () => {
+    const sendUpdate = async () => {
 
-        updateTp.forEach((value, key) => {
+        for (const [key, value] of updateTp.entries()) {
             const [titre, description] = value;
-            putTp(key, titre, description);
-        })
+            await putTp(key, titre, description);
+        }
+
+        for (const [key, description] of updateDocument.entries()) {
+            await postDescriptionDocument(key, description);
+        }
+
+
     }
 
     //fonction pour tout supprimer

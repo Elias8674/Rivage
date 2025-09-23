@@ -102,5 +102,19 @@ export async function putTp(id, titre, description) {
             withCredentials: true,
         });
         return response.status;
-    } catch (error) {}
+    } catch (error) {
+        console.error('Erreur PUT Tp :', error);
+        throw error;
+    }
+}
+
+export async function postDescriptionDocument(id, description) {
+    try {
+        const response = await API.post(`documents/${id}?description=${encodeURIComponent(description)}`, {}, {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur POST Description Document :', error);
+        throw error;
+    }
 }

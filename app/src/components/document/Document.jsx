@@ -7,10 +7,13 @@ import {useEffect, useState} from "react";
 import {deleteData} from "../../services/apiService.js";
 import {useAuth} from "../../services/AuthContext.jsx";
 
+import {useUpdate} from "../../services/UpdateContext.jsx";
+
 const Document = (props) => {
     const { downloadDocument, isDownloading } = useDownload();
     const [isDescription, setIsDescription] = useState(props.description || '');
     const { connected } = useAuth();
+    const { addDocumentUpdate } = useUpdate();
 
 
     const handleDownload = async () => {
@@ -34,37 +37,48 @@ const Document = (props) => {
         }
     };
 
+    const updateDescriptionDocument = async (e) => {
+        setIsDescription(e.target.value);
+        addDocumentUpdate(props.id, isDescription);
+    }
 
-    return (
-        <div className="document_container">
-            <div className="document_container_content">
-                <div className={"document_container_content_icon"}></div>
-                <h3 className={"document_container_content_title"}>{props.nom}</h3>
 
-                <div className={"document_container_content_buttons"}>
-                    {connected && (
+    return connected ? (
+            <div className={"document_container"}>
+
+                <div className="document_container_content">
+                    <div className={"document_container_content_icon"}></div>
+                    <h3 className={"document_container_content_title"}>{props.nom}</h3>
+
+                    <div className={"document_container_content_buttons"}>
                         <button className="button-delete" onClick={handleDelete}>Supprimer</button>
-                    )}
-                    <button className="button" onClick={handleDownload}>Téléchargement</button>
+                        <button className="button" onClick={handleDownload}>Téléchargement</button>
+                    </div>
                 </div>
-            </div>
-
-            {connected ? (
-                <form className="document_container_footer">
+                <div className="document_container_footer">
                     <input
                         className={"document_container_footer_text"}
                         value={isDescription}
                         placeholder="Description du document"
-                        onChange={(e) => setIsDescription(e.target.value)}
+                        onChange={(e) => updateDescriptionDocument(e)}
                     />
-                </form>
-            ) : (
-                <div className="document_container_footer">
-                    {props.description && <p className={"document_container_footer_text"}>{props.description}</p>}
                 </div>
-            )}
+            </div>
+        ) : (
+            <div className={"document_container"}>
+                <div className="document_container_content">
+                    <div className={"document_container_content_icon"}></div>
+                    <h3 className={"document_container_content_title"}>{props.nom}</h3>
 
-        </div>
+                    <div className={"document_container_content_buttons"}>
+                        <button className="button" onClick={handleDownload}>Téléchargement</button>
+                    </div>
+                </div>
+                <div className="document_container_footer">
+                    {isDescription && <p className={"document_container_footer_text"}>{isDescription}</p>}
+
+                </div>
+            </div>
     )
 }
 

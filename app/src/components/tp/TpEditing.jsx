@@ -41,8 +41,13 @@ const TpEditing = (props) => {
         }
     }
 
-    const update = (e) => {
+    const updateTitleTp = (e) => {
         setIsTitle(e.target.value);
+        addTpUpdate(props.id, isTitle , isDescription)
+    }
+
+    const updateDescriptionTp = (e) => {
+        setIsDescription(e.target.value);
         addTpUpdate(props.id, isTitle , isDescription)
     }
 
@@ -66,12 +71,10 @@ const TpEditing = (props) => {
 
                 </svg>
 
-                <h1 className={"tp_container_header_title"}>{props.titre}</h1>
-
                 <input
-                    className={"tp_container_header_title_input"}
+                    className={"tp_container_header_title"}
                     value={isTitle}
-                    onChange={(e) => update(e)}
+                    onChange={(e) => updateTitleTp(e)}
                 />
             </div>
 
@@ -83,7 +86,11 @@ const TpEditing = (props) => {
                 transition={{duration: 0.5, ease: "easeInOut"}}
                 style={{overflow: "hidden"}}
             >
-                <h3 className={"tp_container_content_title"}>{props.description}</h3>
+                <input
+                    className={"tp_container_content_title"}
+                    value={isDescription}
+                    onChange={(e) => updateDescriptionTp(e)}
+                />
                 <ListeDocuments TpID={props.id}/>
             </motion.div>
 
