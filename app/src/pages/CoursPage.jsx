@@ -8,6 +8,7 @@ import './coursPage.css'
 import ListeTpEditing from "../components/tp/ListeTpEditing.jsx";
 import {getDataWithId} from "../services/apiService.js";
 import Header from "../components/header/Header.jsx";
+import {useUpdate} from "../services/UpdateContext.jsx";
 
 
 import {useAuth} from "../services/AuthContext.jsx";
@@ -17,6 +18,7 @@ const CoursPage = () => {
     const { id } = useParams();
     const [cours, setCours] = useState([]);
     const { connected } = useAuth();
+    const { CoursNameUpdate } = useUpdate();
 
 
     useEffect(() => {
@@ -27,21 +29,35 @@ const CoursPage = () => {
         fetchData();
     }, []);
 
+    const updateCoursName = async (e) => {
+        const newName = e.target.value;
+        setCours(prevCours => ({ ...prevCours, nom: newName }));
+        CoursNameUpdate(cours.id, newName);
+    }
 
-
-    return (
-        <div className={"courPage_container_content"}>
-            <Header/>
-            <div className={"coursPage_container_content_header"}>
-                <h1 className={"coursPage_container_content_header_title"}> {cours.nom} </h1>
+    return connected ? (
+            <div className={"courPage_container_content"}>
+                <Header/>
+                <div className={"coursPage_container_content_header"}>
+                    <input
+                        className={"coursPage_container_content_header_title"}
+                        value={cours.nom}
+                        onChange={(e) => updateCoursName(e)}
+                    />
+                </div>
+                    <ListeTpEditing id={id}/> :
+                <ToolBar />
             </div>
-            {connected ?
-                <ListeTpEditing id={id}/> :
-                <ListeTp id={id}/>
-            }
-            <ToolBar />
-        </div>
-    )
+        ) : (
+            <div className={"courPage_container_content"}>
+                <Header/>
+                <div className={"coursPage_container_content_header"}>
+                    <h1 className={"coursPage_container_content_header_title"}> {cours.nom} </h1>
+                </div>
+                    <ListeTp id={id}/>
+            </div>
+        )
+
 }
 
 export default CoursPage;

@@ -39,6 +39,9 @@
 }
 
 .coursPage_container_content_header_title {
+    border: none;
+    background: transparent;
+
     color: #6C043E;
     leading-trim: both;
     text-edge: cap;
@@ -50,4 +53,8 @@
 
     margin-bottom: 25px;
     margin-left: 25px;
+}
+
+.coursPage_container_content_header_title:focus {
+    outline: none;
 }

@@ -118,3 +118,16 @@ export async function postDescriptionDocument(id, description) {
         throw error;
     }
 }
+
+export async function putCoursName(id, coursName) {
+    try {
+        const response = await API.patch(`cours/${id}`, {
+            nom: coursName
+        }, {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur PUT Cours Name :', error);
+        throw error;
+    }
+}

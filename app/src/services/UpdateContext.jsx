@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import {postDescriptionDocument, putTp} from "./apiService.js";
+import {postDescriptionDocument, putCoursName, putTp} from "./apiService.js";
 
 
 const UpdateContext = createContext(null);
@@ -7,6 +7,7 @@ const UpdateContext = createContext(null);
 export const UpdateProvider = ({children}) => {
     const [updateTp, setUpdateTp] = useState(new Map());
     const [updateDocument, setUpdateDocument] = useState(new Map());
+    const [updateNameCours, setUpdateNameCours] = useState(new Map());
 
 
     //fonction pour effacer a chaque rechargement de la page
@@ -34,6 +35,14 @@ export const UpdateProvider = ({children}) => {
         });
     }
 
+    const CoursNameUpdate = (coursId, coursName) => {
+        setUpdateNameCours(prevMap => {
+            const newMap = new Map(prevMap);
+            newMap.set(coursId, coursName);
+            return newMap;
+        })
+    }
+
     //fonction pour envoyé les update à l'api
     //boucle for sur la maps pour envoyer chaque update
     const sendUpdate = async () => {
@@ -45,6 +54,10 @@ export const UpdateProvider = ({children}) => {
 
         for (const [key, description] of updateDocument.entries()) {
             await postDescriptionDocument(key, description);
+        }
+
+        for (const [key, CoursName] of updateNameCours.entries()) {
+            await putCoursName(key, CoursName);
         }
 
 
@@ -61,6 +74,7 @@ export const UpdateProvider = ({children}) => {
         updateDocument,
         addTpUpdate,
         addDocumentUpdate,
+        CoursNameUpdate,
         clearUpdate,
         sendUpdate
     }
