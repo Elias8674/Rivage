@@ -29,3 +29,6 @@ class TpRead(TpBase):
 class TpWrite(TpBase):
     index: int
     cours_id: int
+
+class TpUpdate(TpBase):
+    pass

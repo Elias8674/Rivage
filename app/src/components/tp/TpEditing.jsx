@@ -42,7 +42,8 @@ const TpEditing = (props) => {
     }
 
     const update = (e) => {
-        addTpUpdate(props.id, e.target.value , isDescription)
+        setIsTitle(e.target.value);
+        addTpUpdate(props.id, isTitle , isDescription)
     }
 
     return (

@@ -92,3 +92,15 @@ export async function postTp(titre, description, index, idCours) {
         throw error;
     }
 }
+
+export async function putTp(id, titre, description) {
+    try {
+        const response = await API.put(`tp/${id}`, {
+            titre: titre,
+            description: description
+        }, {
+            withCredentials: true,
+        });
+        return response.status;
+    } catch (error) {}
+}

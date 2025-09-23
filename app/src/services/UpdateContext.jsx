@@ -1,4 +1,6 @@
 import {createContext, useContext, useEffect, useState} from "react";
+import {putTp} from "./apiService.js";
+
 
 const UpdateContext = createContext(null);
 
@@ -32,6 +34,16 @@ export const UpdateProvider = ({children}) => {
         });
     }
 
+    //fonction pour envoyé les update à l'api
+    //boucle for sur la maps pour envoyer chaque update
+    const sendUpdate = () => {
+
+        updateTp.forEach((value, key) => {
+            const [titre, description] = value;
+            putTp(key, titre, description);
+        })
+    }
+
     //fonction pour tout supprimer
     const clearUpdate = () => {
         setUpdateTp(new Map());
@@ -43,7 +55,8 @@ export const UpdateProvider = ({children}) => {
         updateDocument,
         addTpUpdate,
         addDocumentUpdate,
-        clearUpdate
+        clearUpdate,
+        sendUpdate
     }
 
     return (
