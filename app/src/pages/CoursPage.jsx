@@ -10,13 +10,17 @@ import {getDataWithId} from "../services/apiService.js";
 import Header from "../components/header/Header.jsx";
 import {useUpdate} from "../services/UpdateContext.jsx";
 
-
 import {useAuth} from "../services/AuthContext.jsx";
 import ToolBar from "../components/toolBar/ToolBar.jsx";
+
 
 const CoursPage = () => {
     const { id } = useParams();
     const [cours, setCours] = useState([]);
+    const [backgroudColor, setBackgroundColor] = useState("#fff");
+    const [textColor, setTextColor] = useState("#000");
+
+
     const { connected } = useAuth();
     const { CoursNameUpdate } = useUpdate();
 
@@ -25,9 +29,13 @@ const CoursPage = () => {
         const fetchData = async () => {
             const dataCours = await getDataWithId('cours', id);
             setCours(dataCours)
+
+            const dataCouleur  = await getDataWithId('couleur', dataCours.couleur_id);
+            setBackgroundColor(dataCouleur.background_color);
+            setTextColor(dataCouleur.text_color);
         };
         fetchData();
-    }, []);
+    }, [id]);
 
     const updateCoursName = async (e) => {
         const newName = e.target.value;
@@ -38,9 +46,10 @@ const CoursPage = () => {
     return connected ? (
             <div className={"courPage_container_content"}>
                 <Header/>
-                <div className={"coursPage_container_content_header"}>
+                <div className={"coursPage_container_content_header"} style={{backgroundColor: backgroudColor}}>
                     <input
                         className={"coursPage_container_content_header_title"}
+                        style={{color: textColor}}
                         value={cours.nom}
                         onChange={(e) => updateCoursName(e)}
                     />
@@ -51,8 +60,8 @@ const CoursPage = () => {
         ) : (
             <div className={"courPage_container_content"}>
                 <Header/>
-                <div className={"coursPage_container_content_header"}>
-                    <h1 className={"coursPage_container_content_header_title"}> {cours.nom} </h1>
+                <div className={"coursPage_container_content_header"} style={{backgroundColor: backgroudColor}}>
+                    <h1 className={"coursPage_container_content_header_title"} style={{color: textColor}}> {cours.nom} </h1>
                 </div>
                     <ListeTp id={id}/>
             </div>
