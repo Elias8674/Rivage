@@ -15,10 +15,11 @@ export const UpdateProvider = ({children}) => {
         return () => {
             setUpdateTp(new Map());
             setUpdateDocument(new Map());
+            setUpdateNameCours(new Map());
         };
     }, []);
 
-    //fonction pour rajouter un update
+
     const addTpUpdate = (tpId, titre, description) => {
         setUpdateTp(prevMap => {
             const newMap = new Map(prevMap);
@@ -43,8 +44,8 @@ export const UpdateProvider = ({children}) => {
         })
     }
 
-    //fonction pour envoyé les update à l'api
-    //boucle for sur la maps pour envoyer chaque update
+
+    //fonction pour envoyer les modifications à l'api
     const sendUpdate = async () => {
 
         for (const [key, value] of updateTp.entries()) {
@@ -60,13 +61,14 @@ export const UpdateProvider = ({children}) => {
             await putCoursName(key, CoursName);
         }
 
-
+        clearUpdate();
     }
 
     //fonction pour tout supprimer
     const clearUpdate = () => {
         setUpdateTp(new Map());
         setUpdateDocument(new Map());
+        setUpdateNameCours(new Map());
     }
 
     const value = {

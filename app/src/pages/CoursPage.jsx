@@ -19,8 +19,6 @@ const CoursPage = () => {
     const [cours, setCours] = useState([]);
     const [backgroudColor, setBackgroundColor] = useState("#fff");
     const [textColor, setTextColor] = useState("#000");
-
-
     const { connected } = useAuth();
     const { CoursNameUpdate } = useUpdate();
 
@@ -43,6 +41,9 @@ const CoursPage = () => {
         CoursNameUpdate(cours.id, newName);
     }
 
+
+    // Si l'utilisateur est connecté la première partie est affiché en mode édition
+    // Sinon la deuxième partie est affiché en mode lecture seule
     return connected ? (
             <div className={"courPage_container_content"}>
                 <Header/>

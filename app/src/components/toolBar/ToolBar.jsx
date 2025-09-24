@@ -10,8 +10,6 @@ const ToolBar = () => {
         window.location.reload();
     }
 
-
-
     return (
         <div className={"toolBar_container"}>
             <button className={"toolBar_container_save_button"} onClick={handleSave}>Sauvegarder</button>
