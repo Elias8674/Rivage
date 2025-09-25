@@ -32,12 +32,10 @@ const ListeCours = () => {
         setFilteredCours(cours.filter(c => c.nom.toLowerCase().includes(value.toLowerCase())));
     };
 
-    const handleAddCours = async (e) => {
-        e.preventDefault();
-        setError('');
-
-        await postCours(isNameCours, "string");
-        setReload(!reload);
+    const handleAddCours = async () => {
+        const dataCours = await postCours("Aucun nom");
+        window.location.href = "/" + dataCours.id;
+        //setReload(!reload);
     }
 
 
@@ -52,30 +50,16 @@ const ListeCours = () => {
             />
 
             <div className='listeCours_container_content'>
+                {connected && (
+                    <div className={"listeCours_container_authenticated_coursadd"} onClick={handleAddCours}>
+                        <h3 className={"listeCours_container_authenticated_coursadd_title"}>Nouveau cours</h3>
+                    </div>
+                )}
                 {filteredCours.map((cours, index) => {
                     return (
                         <Cours index={index} id={cours.id} name={cours.nom} couleur_id={cours.couleur_id}/>
                     )
                     })}
-                {connected && (
-                    <div className="listeCours_container_authenticated_coursadd">
-                        <form className="listeCours_container_authenticated_coursadd_footer" onSubmit={handleAddCours}>
-                            <input
-                                className={"listeCours_container_authenticated_coursadd_footer_title"}
-                                id="coursName"
-                                name="coursName"
-                                type="text"
-                                required
-                                onChange={e => setIsNameCours(e.target.value)}
-                                placeholder="Nom du cours"
-                            />
-                            <button className="listeCours_container_authenticated_coursadd_footer_button" type={"submit"}>
-                                Créer
-                            </button>
-                        </form>
-                    </div>
-                )}
-
             </div>
         </div>
     )

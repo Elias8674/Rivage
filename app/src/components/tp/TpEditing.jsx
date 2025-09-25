@@ -42,13 +42,15 @@ const TpEditing = (props) => {
     }
 
     const updateTitleTp = (e) => {
-        setIsTitle(e.target.value);
-        addTpUpdate(props.id, isTitle , isDescription)
+        const value = e.target.value;
+        setIsTitle(value);
+        addTpUpdate(props.id, value , isDescription)
     }
 
     const updateDescriptionTp = (e) => {
-        setIsDescription(e.target.value);
-        addTpUpdate(props.id, isTitle , isDescription)
+        const value = e.target.value;
+        setIsDescription(value);
+        addTpUpdate(props.id, isTitle , value)
     }
 
     return (

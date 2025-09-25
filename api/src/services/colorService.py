@@ -16,8 +16,8 @@ def choice_color(db = next(get_session())):
 
     #call db pour récupérer toute les ID de couleur et toute les ID des couleurs dans cours
 
-    colors_id = db.exec(select(Couleur.id))
-    cours_color_id = db.exec(select(Cours.couleur_id))
+    colors_id = db.exec(select(Couleur.id)).all()
+    cours_color_id = db.exec(select(Cours.couleur_id)).all()
 
     #colors_id = [row[0] for row in db.exec(select(Couleur.id))]
     #cours_color_id = [row[0] for row in db.exec(select(Cours.couleur_id))]

@@ -38,8 +38,9 @@ const Document = (props) => {
     };
 
     const updateDescriptionDocument = async (e) => {
-        setIsDescription(e.target.value);
-        addDocumentUpdate(props.id, isDescription);
+        const value = e.target.value;
+        setIsDescription(value);
+        addDocumentUpdate(props.id, value);
     }
 
 

@@ -55,7 +55,7 @@ const CoursPage = () => {
                         onChange={(e) => updateCoursName(e)}
                     />
                 </div>
-                    <ListeTpEditing id={id}/> :
+                    <ListeTpEditing id={id}/> 
                 <ToolBar />
             </div>
         ) : (

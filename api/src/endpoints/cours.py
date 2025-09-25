@@ -18,7 +18,7 @@ def get_cours(db: Session = Depends(get_db)):
     cours = db.exec(select(Cours)).all()
     return cours
 
-@router.post("/", response_model=CoursWrite)
+@router.post("/", response_model=CoursRead)
 def create_cours(cours: CoursWrite, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Crée un nouveau cours.

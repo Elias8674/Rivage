@@ -69,7 +69,7 @@ export async function postCours(nom, couleur) {
         }, {
             withCredentials: true,
         });
-        return response.status;
+        return response.data;
     } catch (error) {
         console.error('Erreur POST Cours :', error);
         throw error;
