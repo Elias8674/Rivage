@@ -24,6 +24,7 @@
 
 .tp_container_header_title {
     border: none;
+    background: transparent;
     width: 700px;
 
     color: #232323;
@@ -88,6 +89,7 @@
     margin-bottom: 30px;
 
     width: 700px;
+    background: transparent;
 }
 
 .tp_container_content_title:focus {
@@ -144,4 +146,8 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.tp_container_header_dragHandle {
+    margin-right: 25px;
 }

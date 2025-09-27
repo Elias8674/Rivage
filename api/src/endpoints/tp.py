@@ -1,19 +1,34 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session, select, func
 
 from src.endpoints.dependencies import get_db
-from src.models.tpModel import TpWrite, Tp, TpRead, TpUpdate
+from src.models.tpModel import TpWrite, Tp, TpRead, TpUpdate, TpWriteInternal
 
 
 router = APIRouter(prefix="/tp", tags=["tp"])
 
-@router.post("/", response_model=TpWrite)
+@router.post("/", response_model=TpWriteInternal)
 def create_tp(tp: TpWrite, db: Session = Depends(get_db)):
     """
     Crée un nouveau TP.
     """
-    db_tp = Tp.model_validate(tp)
+    cours_id = tp.cours_id
+    count = db.exec(
+        select(func.count(Tp.id)).where(Tp.cours_id == cours_id)
+    ).first()
+
+    # Le nouvel index est le nombre existant + 1
+    next_index = (count or 0) + 1
+
+    tp_obj = TpWriteInternal(
+        titre=tp.titre,
+        description=tp.description,
+        cours_id=tp.cours_id,
+        index=next_index
+    )
+
+    db_tp = Tp.model_validate(tp_obj)
     db.add(db_tp)
     db.commit()
     db.refresh(db_tp)
