@@ -58,6 +58,32 @@ def update_tp_by_id(tp_id: int, tp: TpUpdate, db: Session = Depends(get_db)):
     db.refresh(db_tp)
     return db_tp
 
+@router.put("/{tp_id}/{index}", response_model=TpUpdate, name="Interchange l'index d'un TP avec un autre.")
+def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db)):
+    """
+    Interchange l'index d'un TP avec un autre.
+    :param tp_id:
+    :param index:
+    :param db:
+    :return:
+    """
+
+    db_tp1 = db.exec(select(Tp).where(Tp.id == tp_id)).first()
+    db_tp2 = db.exec(select(Tp).where(Tp.index == index)).first()
+
+    if not db_tp1 or not db_tp2:
+        raise HTTPException(status_code=404, detail="TP non trouvé")
+
+    db_tp2.index = db_tp1.index
+    db_tp1.index = index
+
+    db.add(db_tp1)
+    db.add(db_tp2)
+    db.commit()
+    db.refresh(db_tp1)
+    db.refresh(db_tp2)
+    return db_tp1
+
 
 @router.get("/{tp_id}", response_model=TpRead)
 def read_tp_by_id(tp_id: int, db: Session = Depends(get_db)):

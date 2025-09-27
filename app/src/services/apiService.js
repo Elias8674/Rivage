@@ -131,3 +131,4 @@ export async function putCoursName(id, coursName) {
         throw error;
     }
 }
+

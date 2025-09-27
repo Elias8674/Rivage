@@ -49,8 +49,9 @@ const ListeTp = (props) => {
     useEffect(() => {
         const fetchTp = async () => {
             const data = await getDataWithId('cours', props.id);
-            setTp(data.tp);
-            setFilteredTp(data.tp);
+            const sortedTp = data.tp.slice().sort((a, b) => a.index - b.index);
+            setTp(sortedTp);
+            setFilteredTp(sortedTp);
         }
         fetchTp();
     }, []);
