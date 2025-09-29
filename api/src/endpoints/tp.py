@@ -4,7 +4,7 @@ from sqlmodel import Session, select, func
 
 from src.endpoints.dependencies import get_db
 from src.models.tpModel import TpWrite, Tp, TpRead, TpUpdate, TpWriteInternal
-
+from src.services.indexService import switchTpByIndex
 
 router = APIRouter(prefix="/tp", tags=["tp"])
 
@@ -68,6 +68,9 @@ def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db))
     :return:
     """
 
+    switchTpByIndex(tp_id, index, db)
+
+    """
     db_tp1 = db.exec(select(Tp).where(Tp.id == tp_id)).first()
     db_tp2 = db.exec(select(Tp).where(Tp.index == index)).first()
 
@@ -82,7 +85,9 @@ def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db))
     db.commit()
     db.refresh(db_tp1)
     db.refresh(db_tp2)
-    return db_tp1
+    """
+
+    return {"message": "Opération réussie"}
 
 
 @router.get("/{tp_id}", response_model=TpRead)

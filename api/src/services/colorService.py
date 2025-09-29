@@ -3,6 +3,7 @@ from sqlmodel import Session, select
 from fastapi import Depends
 from src.models.models import get_session
 
+
 def choice_color(db = next(get_session())):
     """
     choisie une couleur qui n'est pas encore utilisé par un cours

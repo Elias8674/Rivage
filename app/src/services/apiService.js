@@ -132,3 +132,12 @@ export async function putCoursName(id, coursName) {
     }
 }
 
+export async function putIndexTp(id, index) {
+    try {
+        const response = await API.put(`tp/${id}/${index}`, {}, {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur PUT Index Tp :', error);
+    }
+}

@@ -5,7 +5,29 @@ import PropTypes from "prop-types";
 import './listeTp.css'
 import ListeTp from "./ListeTp.jsx";
 import TpEditing from "./TpEditing.jsx";
-import {getDataWithId} from "../../services/apiService.js";
+import {getDataWithId, putIndexTp} from "../../services/apiService.js";
+
+// Imports @dnd-kit
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+
+import {
+    restrictToParentElement,
+    restrictToVerticalAxis
+} from '@dnd-kit/modifiers';
 
 const ListeTpEditing = (props) => {
     const [tp, setTp] = useState([]);
@@ -13,11 +35,24 @@ const ListeTpEditing = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [reload, setReload] = useState(false);
 
+    // Configuration des sensors pour le drag & drop
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8, // Évite les clics accidentels
+            },
+        }),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
+
     useEffect(() => {
         const fetchTp = async () => {
             const data = await getDataWithId('cours', props.id);
-            setTp(data.tp);
-            setFilteredTp(data.tp);
+            const sortedTp = data.tp.slice().sort((a, b) => a.index - b.index);
+            setTp(sortedTp);
+            setFilteredTp(sortedTp);
         }
         fetchTp();
         setReload(false);
@@ -34,6 +69,81 @@ const ListeTpEditing = (props) => {
         setFilteredTp(tp.filter(c => c.titre.toLowerCase().includes(value.toLowerCase())));
     };
 
+    const mouveTp = async (id, index) => {
+        console.log("mouveTp", id, index);
+        await putIndexTp(id, index);
+        console.log("finish");
+    }
+
+    // Fonction appelée à la fin du drag
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+
+        if (!over) {
+            return; // Pas de destination valide
+        }
+
+        if (active.id !== over.id) {
+            setFilteredTp((items) => {
+                const oldIndex = items.findIndex(item => item.id === active.id);
+                const newIndex = items.findIndex(item => item.id === over.id);
+
+                // arrayMove réorganise le tableau
+                const newItems = arrayMove(items, oldIndex, newIndex);
+
+                // Si pas de recherche active, met à jour aussi tp principal
+                if (!searchTerm) {
+                    setTp(newItems);
+                }
+
+                return newItems;
+            });
+
+            const tp1 = filterdTp.find(item => item.id === active.id);
+            const tp2 = filterdTp.find(item => item.id === over.id);
+            mouveTp(tp1.id, tp2.index)
+
+        }
+    };
+
+    return (
+        <div className={"listeTp_container"}>
+            <input className={"SearchBar"}
+                   type="text"
+                   placeholder="Chercher un tp"
+                   value={searchTerm}
+                   onChange={updateSearch}
+            />
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+            >
+                <SortableContext
+                    items={filterdTp.map(tp => tp.id)}
+                    strategy={verticalListSortingStrategy}
+                >
+                    <div className={"listeTp_container_content"}>
+                        {filterdTp.map((tp) => {
+                            return (
+                                <Tp
+                                    key={tp.id}
+                                    id={tp.id}
+                                    titre={tp.titre}
+                                    description={tp.description}
+                                    isDraggable={true}
+                                />
+                            )
+                        })}
+                    </div>
+                </SortableContext>
+            </DndContext>
+        </div>
+    )
+}
+
+    /*
     return (
         <div className={"listeTp_container"}>
             <input className={"SearchBar"}
@@ -54,7 +164,9 @@ const ListeTpEditing = (props) => {
         </div>
 
     )
-}
+
+     */
+
 
 
 ListeTp.propTypes = {
