@@ -58,7 +58,7 @@ def update_tp_by_id(tp_id: int, tp: TpUpdate, db: Session = Depends(get_db)):
     db.refresh(db_tp)
     return db_tp
 
-@router.put("/{tp_id}/{index}", response_model=TpUpdate, name="Interchange l'index d'un TP avec un autre.")
+@router.put("/{tp_id}/{index}", name="Interchange l'index d'un TP avec un autre.")
 def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db)):
     """
     Interchange l'index d'un TP avec un autre.
@@ -68,7 +68,7 @@ def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db))
     :return:
     """
 
-    switchTpByIndex(tp_id, index, db)
+    switchTpByIndex(tp_id, index)
 
     """
     db_tp1 = db.exec(select(Tp).where(Tp.id == tp_id)).first()
