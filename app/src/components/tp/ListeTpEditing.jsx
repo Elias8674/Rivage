@@ -70,9 +70,7 @@ const ListeTpEditing = (props) => {
     };
 
     const mouveTp = async (id, index) => {
-        console.log("mouveTp", id, index);
         await putIndexTp(id, index);
-        console.log("finish");
     }
 
     // Fonction appelée à la fin du drag
@@ -127,7 +125,7 @@ const ListeTpEditing = (props) => {
                     <div className={"listeTp_container_content"}>
                         {filterdTp.map((tp) => {
                             return (
-                                <Tp
+                                <TpEditing
                                     key={tp.id}
                                     id={tp.id}
                                     titre={tp.titre}

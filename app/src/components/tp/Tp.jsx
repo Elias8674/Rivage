@@ -4,29 +4,9 @@ import {useState} from "react";
 import ListeDocuments from "../document/ListeDocuments.jsx";
 import { motion } from "framer-motion";
 
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-
-import dragHandle from '../../assets/icons/drag-handle.svg';
-
 const Tp = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const sortable = useSortable({id: props.id});
-    const {
-            attributes,
-            listeners,
-            setNodeRef,
-            transform,
-            transition,
-            isDragging,
-        } = sortable;
-
-        const style = {
-            transform: CSS.Transform.toString(transform),
-            transition,
-            opacity: isDragging ? 0.5 : 1, // Feedback visuel pendant le drag
-        };
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -34,12 +14,7 @@ const Tp = (props) => {
 
 
     return (
-        <div
-            className={"tp_container"}
-            ref={setNodeRef}
-            style={style}
-            {...attributes}
-        >
+        <div className={"tp_container"}>
             <div className={"tp_container_header"} onClick={toggleOpen}>
                 <svg
                     src={'../../assets/icons/chevronUp.svg'}
@@ -58,13 +33,6 @@ const Tp = (props) => {
                 </svg>
 
                 <h1 className={"tp_container_header_title"}>{props.titre}</h1>
-
-                <img
-                    className={"tp_container_header_dragHandle"}
-                    src={dragHandle}
-                    alt="Edit"
-                    {...listeners}
-                />
             </div>
 
 

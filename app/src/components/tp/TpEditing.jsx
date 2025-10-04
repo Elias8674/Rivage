@@ -7,6 +7,10 @@ import {replace} from "react-router-dom";
 import PropsTypes from "prop-types";
 import {postTp} from "../../services/apiService.js";
 import {useUpdate} from "../../services/UpdateContext.jsx";
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import dragHandle from '../../assets/icons/drag-handle.svg';
+
 
 
 const TpEditing = (props) => {
@@ -15,6 +19,23 @@ const TpEditing = (props) => {
     const [isDescription, setIsDescription] = useState(props.description || '');
     const [error, setError] = useState('');
     const { addTpUpdate } = useUpdate();
+
+    const sortable = useSortable({id: props.id});
+    const {
+            attributes,
+            listeners,
+            setNodeRef,
+            transform,
+            transition,
+            isDragging,
+        } = sortable;
+
+        const style = {
+            transform: CSS.Transform.toString(transform),
+            transition,
+            opacity: isDragging ? 0.5 : 1, // Feedback visuel pendant le drag
+        };
+
 
 
     const toggleOpen = () => {
@@ -54,7 +75,12 @@ const TpEditing = (props) => {
     }
 
     return (
-        <div className={"tp_container"}>
+        <div
+            className={"tp_container"}
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+        >
             <div className={"tp_container_header"} onClick={toggleOpen}>
                 <svg
                     src={'../../assets/icons/chevronUp.svg'}
@@ -77,6 +103,13 @@ const TpEditing = (props) => {
                     className={"tp_container_header_title"}
                     value={isTitle}
                     onChange={(e) => updateTitleTp(e)}
+                />
+
+                <img
+                    className={"tp_container_header_dragHandle"}
+                    src={dragHandle}
+                    alt="Edit"
+                    {...listeners}
                 />
             </div>
 
