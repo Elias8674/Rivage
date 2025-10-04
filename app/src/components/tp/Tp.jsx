@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 const Tp = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
-
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
