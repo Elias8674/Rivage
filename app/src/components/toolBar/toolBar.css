@@ -29,10 +29,36 @@
     border-radius: 14px;
     background: var(--color-primary, #0079FF);
 
+    border: none;
+
     color: #FFF;
     font-family: Switzer;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+.toolBar_container_save_button:hover {
+    background: #004C98;
+    transition: background-color 0.3s ease;
+}
+
+.toolBare_container_newTP_button {
+    display: flex;
+    width: 43px;
+    height: 43px;
+    padding: 12px 11px 11px 12px;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+
+    border-radius: 8px;
+    background: #F7F7F7;
+}
+
+.toolBare_container_newTP_button:hover {
+    background: #E8E8E8;
+    transition: background-color 0.3s ease;
 }

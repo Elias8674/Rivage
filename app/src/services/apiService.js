@@ -76,12 +76,11 @@ export async function postCours(nom, couleur) {
     }
 }
 
-export async function postTp(titre, description, index, idCours) {
+export async function postTp(titre, description, idCours) {
     try {
         const response = await API.post('tp', {
             titre: titre,
             description: description,
-            index: index,
             cours_id: idCours
         }, {
             withCredentials: true,
