@@ -70,23 +70,6 @@ def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db))
 
     switchTpByIndex(tp_id, index)
 
-    """
-    db_tp1 = db.exec(select(Tp).where(Tp.id == tp_id)).first()
-    db_tp2 = db.exec(select(Tp).where(Tp.index == index)).first()
-
-    if not db_tp1 or not db_tp2:
-        raise HTTPException(status_code=404, detail="TP non trouvé")
-
-    db_tp2.index = db_tp1.index
-    db_tp1.index = index
-
-    db.add(db_tp1)
-    db.add(db_tp2)
-    db.commit()
-    db.refresh(db_tp1)
-    db.refresh(db_tp2)
-    """
-
     return {"message": "Opération réussie"}
 
 
@@ -99,3 +82,21 @@ def read_tp_by_id(tp_id: int, db: Session = Depends(get_db)):
     if not tp:
         raise HTTPException(status_code=404, detail="TP non trouvé")
     return tp
+
+@router.delete("/{tp_id}")
+def delete_tp(tp_id: int, db: Session = Depends(get_db)):
+    """
+    Supprime un TP par son ID.
+    :param document_id: 
+    :param db: 
+    :return: 
+    """
+
+    tp = db.get(Tp, tp_id)
+    if not tp:
+        raise HTTPException(status_code=404, detail="Tp non trouvé")
+
+    db.delete(tp)
+    db.commit()
+
+    return {'message': 'Cours supprimer avec succès'}
