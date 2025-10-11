@@ -5,26 +5,6 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' }
 });
 
-export async function checkAuthStatus() {
-    try {
-        const response = await API.get('/users/me', {
-            withCredentials: true, // Inclut les cookies dans la requête
-        });
-
-        if (response.status === 200) {
-            console.log("Utilisateur authentifié");
-            return true;
-        } else {
-            console.log("Utilisateur non authentifié");
-            return false;
-        }
-    } catch (error) {
-        console.error("Erreur lors de la vérification de l'authentification :", error);
-        return false;
-    }
-}
-
-
 
 // Get param
 export async function getData(endpoint) {
@@ -89,19 +69,18 @@ export async function postCours(nom, couleur) {
         }, {
             withCredentials: true,
         });
-        return response.status;
+        return response.data;
     } catch (error) {
         console.error('Erreur POST Cours :', error);
         throw error;
     }
 }
 
-export async function postTp(titre, description, index, idCours) {
+export async function postTp(titre, description, idCours) {
     try {
         const response = await API.post('tp', {
             titre: titre,
             description: description,
-            index: index,
             cours_id: idCours
         }, {
             withCredentials: true,
@@ -110,5 +89,54 @@ export async function postTp(titre, description, index, idCours) {
     } catch (error) {
         console.error('Erreur POST Tp :', error);
         throw error;
+    }
+}
+
+export async function putTp(id, titre, description) {
+    try {
+        const response = await API.put(`tp/${id}`, {
+            titre: titre,
+            description: description
+        }, {
+            withCredentials: true,
+        });
+        return response.status;
+    } catch (error) {
+        console.error('Erreur PUT Tp :', error);
+        throw error;
+    }
+}
+
+export async function postDescriptionDocument(id, description) {
+    try {
+        const response = await API.post(`documents/${id}?description=${encodeURIComponent(description)}`, {}, {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur POST Description Document :', error);
+        throw error;
+    }
+}
+
+export async function putCoursName(id, coursName) {
+    try {
+        const response = await API.patch(`cours/${id}`, {
+            nom: coursName
+        }, {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur PUT Cours Name :', error);
+        throw error;
+    }
+}
+
+export async function putIndexTp(id, index) {
+    try {
+        const response = await API.put(`tp/${id}/${index}`, {}, {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur PUT Index Tp :', error);
     }
 }

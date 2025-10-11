@@ -1,8 +1,13 @@
 import os
 import shutil
-from src.config import storage_cloud, supabase_url, supabase_key
-
+from unidecode import unidecode
 from supabase import create_client, Client
+
+
+from src.config import storage_cloud, supabase_url, supabase_key, supabase_bucket_name
+
+
+
 
 class LocalStorage:
     """
@@ -34,14 +39,16 @@ class SupabaseStorage:
     Classe pour gérer le stockage dans Supabase.
     """
     def __init__(self):
+        print(f"DB URL : {supabase_url}")
         self.client: Client = create_client(supabase_url, supabase_key)
-        self.bucket_name = "lycee"
+        self.bucket_name = supabase_bucket_name
 
     def save_file(self, file, path):
         """
         Enregistre un fichier dans Supabase.
         """
         try:
+            path = unidecode(path)
             # Lire le contenu du fichier
             file.file.seek(0)  # Retour au début du fichier
             file_content = file.file.read()
@@ -71,6 +78,7 @@ class SupabaseStorage:
         Télécharge un fichier depuis Supabase.
         """
         try:
+            path = unidecode(path)
             # Télécharger le fichier
             result = self.client.storage.from_(self.bucket_name).download(path)
 
@@ -87,6 +95,7 @@ class SupabaseStorage:
 localStorage = LocalStorage()
 
 if storage_cloud:
+    print(f"DB URL : {supabase_url}")
     supabaseStorage = SupabaseStorage()
 
 

@@ -1,26 +1,19 @@
 import PropsTypes from 'prop-types';
 import Cours from "./Cours.jsx";
-import {use, useEffect, useState} from "react";
-
 import './listeCours.css'
-import {checkAuthStatus, getData, postCours} from "../../services/apiService.js";
+
+import {useEffect, useState} from "react";
+import {getData, postCours} from "../../services/apiService.js";
+import {useAuth} from "../../services/AuthContext.jsx";
 
 const ListeCours = () => {
     const [cours, setCours] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredCours, setFilteredCours] = useState(cours);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isNameCours, setIsNameCours] = useState('');
-
     const [reload, setReload] = useState(false);
 
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            setIsAuthenticated(await checkAuthStatus());
-        }
-        checkAuth();
-    },[]);
+    const { connected } = useAuth();
 
 
     useEffect(() => {
@@ -39,49 +32,34 @@ const ListeCours = () => {
         setFilteredCours(cours.filter(c => c.nom.toLowerCase().includes(value.toLowerCase())));
     };
 
-    const handleAddCours = async (e) => {
-        e.preventDefault();
-        setError('');
-
-        await postCours(isNameCours, "string");
-        setReload(!reload);
+    const handleAddCours = async () => {
+        const dataCours = await postCours("Aucun nom");
+        window.location.href = "/" + dataCours.id;
+        //setReload(!reload);
     }
 
 
     return (
         <div className='listeCours_container'>
-            <input className='SearchBar'
-                   type="text"
-                   placeholder="Chercher un cours"
-                   value={searchTerm}
-                   onChange={updateSearch}
+            <input
+                className='SearchBar'
+                type="text"
+                placeholder="Chercher un cours"
+                value={searchTerm}
+                onChange={updateSearch}
             />
 
             <div className='listeCours_container_content'>
-                {filteredCours.map((cours, index) => {
-                    return (
-                        <Cours index={index} id={cours.id} name={cours.nom}/>
-                    )
-                    })}
-                {isAuthenticated && (
-                    <div className="listeCours_container_authenticated_coursadd">
-                        <form className="listeCours_container_authenticated_coursadd_footer" onSubmit={handleAddCours}>
-                            <input
-                                className={"listeCours_container_authenticated_coursadd_footer_title"}
-                                id="coursName"
-                                name="coursName"
-                                type="text"
-                                required
-                                onChange={e => setIsNameCours(e.target.value)}
-                                placeholder="Nom du cours"
-                            />
-                            <button className="listeCours_container_authenticated_coursadd_footer_button" type={"submit"}>
-                                Créer
-                            </button>
-                        </form>
+                {connected && (
+                    <div className={"listeCours_container_authenticated_coursadd"} onClick={handleAddCours}>
+                        <h3 className={"listeCours_container_authenticated_coursadd_title"}>Nouveau cours</h3>
                     </div>
                 )}
-
+                {filteredCours.map((cours, index) => {
+                    return (
+                        <Cours index={index} id={cours.id} name={cours.nom} couleur_id={cours.couleur_id}/>
+                    )
+                    })}
             </div>
         </div>
     )

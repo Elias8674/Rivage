@@ -11,59 +11,42 @@
  }
 
 .listeCours_container_authenticated_coursadd {
-    display: flex;
-    width: 260px;
-    height: 180px;
-    justify-content: center;
-    align-items: end;
-    flex-shrink: 0;
 
+    border-radius: 17px;
+    border: 2px dashed #DFDFDF;
+    background: #FFF;
     box-sizing: border-box;
 
-    border-radius: 26px;
-    border: 1px dashed #0079FF;
-    background: rgba(0, 125, 252, 0.10);
-}
-
-.listeCours_container_authenticated_coursadd_footer {
     display: flex;
     width: 260px;
-    height: 50px;
-    padding-left: 20px;
-    padding-right: 11px;
-    justify-content: space-between;
-    align-items: center;
-    /*gap: 106px;*/
+    height: 148px;
+    padding: 26px 26px 15px 26px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 38px;
+    flex-shrink: 0;
 
-    border-radius: 0px 0px 26px 26px;
-    background: #FFF;
+    cursor: pointer;
 }
 
-.listeCours_container_authenticated_coursadd_footer_title {
-    color: #01180B;
-    font-family: Inter;
+
+.listeCours_container_authenticated_coursadd_title {
+
+    color: #DFDFDF;
+    font-family: Switzer;
     font-size: 20px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 900;
     line-height: normal;
 
-    border: none;
-    background-color: transparent;
     width: 100%;
-
     padding: 0;
-
+    margin: 0;
 }
 
-.listeCours_container_authenticated_coursadd_footer_title:focus {
-    outline: none;
-}
 
-.listeCours_container_authenticated_coursadd_footer_title::placeholder {
-    color: rgba(16, 17, 17, 0.30);
-}
-
-.listeCours_container_authenticated_coursadd_footer_button {
+.listeCours_container_authenticated_coursadd_button {
     display: flex;
     padding: 7px 13px;
     flex-direction: column;
@@ -81,9 +64,10 @@
     line-height: normal;
 
     background-color: transparent;
+
 }
 
-.listeCours_container_authenticated_coursadd_footer_button:hover {
+.listeCours_container_authenticated_coursadd_button:hover {
     background: #0079FF;
     color: white;
     transition-duration: 0.6s;

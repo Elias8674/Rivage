@@ -2,6 +2,10 @@ import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
+import {AuthProvider} from "./services/AuthContext.jsx";
+import {UpdateProvider} from "./services/UpdateContext.jsx";
+
+
 import './index.css'
 import "./assets/font.css"
 import Home from "./pages/Home.jsx";
@@ -11,6 +15,7 @@ import Login from "./pages/Login.jsx";
 import './Ui/variables.css'
 import "./Ui/search.css"
 import "./Ui/button.css"
+
 const router = createBrowserRouter([
     {
         path: "/home",
@@ -28,6 +33,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <RouterProvider router={router}/>
+        <AuthProvider>
+            <UpdateProvider>
+                <RouterProvider router={router}/>
+            </UpdateProvider>
+        </AuthProvider>
     </StrictMode>
 );

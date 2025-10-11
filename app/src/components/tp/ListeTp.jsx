@@ -3,8 +3,7 @@ import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
 import './listeTp.css'
-import {getDataWithId} from "../../services/apiService.js";
-
+import {getDataWithId, putIndexTp} from "../../services/apiService.js";
 
 const ListeTp = (props) => {
     const [tp, setTp] = useState([]);
@@ -12,11 +11,13 @@ const ListeTp = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
 
 
+
     useEffect(() => {
         const fetchTp = async () => {
             const data = await getDataWithId('cours', props.id);
-            setTp(data.tp);
-            setFilteredTp(data.tp);
+            const sortedTp = data.tp.slice().sort((a, b) => a.index - b.index);
+            setTp(sortedTp);
+            setFilteredTp(sortedTp);
         }
         fetchTp();
     }, []);
@@ -28,13 +29,14 @@ const ListeTp = (props) => {
         setFilteredTp(tp.filter(c => c.titre.toLowerCase().includes(value.toLowerCase())));
     };
 
+
     return (
         <div className={"listeTp_container"}>
             <input className={"SearchBar"}
-                type="text"
-                placeholder="Chercher un tp"
-                value={searchTerm}
-                onChange={updateSearch}
+                   type="text"
+                   placeholder="Chercher un tp"
+                   value={searchTerm}
+                   onChange={updateSearch}
             />
             <div className={"listeTp_container_content"}>
                 {filterdTp.map((tp, index) => {
@@ -43,7 +45,6 @@ const ListeTp = (props) => {
                     )
                 })}
             </div>
-
         </div>
 
     )

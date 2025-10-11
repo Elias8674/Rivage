@@ -27,5 +27,11 @@ class TpRead(TpBase):
     documents: List["DocumentRead"]
 
 class TpWrite(TpBase):
-    index: int
     cours_id: int
+
+class TpWriteInternal(TpBase):
+    cours_id: int
+    index: int
+
+class TpUpdate(TpBase):
+    pass

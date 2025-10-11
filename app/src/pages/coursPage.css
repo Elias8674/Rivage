@@ -18,19 +18,42 @@
     flex-direction: column;
     align-items: flex-start;
     align-content: flex-start;
-    gap: 25px;
+    gap: 5px;
     flex-wrap: wrap;
 
     margin: 0 auto;
 }
 
-.coursPage_container_content_title {
-    color: #01180B;
-    font-family: Inter;
-    font-size: 35px;
+.coursPage_container_content_header {
+    display: flex;
+    width: 830px;
+    height: 162px;
+    align-items: end;
+    flex-shrink: 0;
+
+    box-sizing: border-box;
+
+    border-radius: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+.coursPage_container_content_header_title {
+    border: none;
+    background: transparent;
+
+    color: #6C043E;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: Switzer;
+    font-size: 20px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 900;
     line-height: normal;
 
-    margin-top: 40px;
+    margin-bottom: 25px;
+    margin-left: 25px;
+}
+
+.coursPage_container_content_header_title:focus {
+    outline: none;
 }

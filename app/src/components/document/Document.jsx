@@ -4,20 +4,17 @@ import "./document.css"
 import {downloadDocument} from "../../services/documentService.js";
 import useDownload from "../../hooks/useDownload.jsx";
 import {useEffect, useState} from "react";
-import {checkAuthStatus, deleteData} from "../../services/apiService.js";
+import {deleteData} from "../../services/apiService.js";
+import {useAuth} from "../../services/AuthContext.jsx";
+
+import {useUpdate} from "../../services/UpdateContext.jsx";
 
 const Document = (props) => {
     const { downloadDocument, isDownloading } = useDownload();
     const [isDescription, setIsDescription] = useState(props.description || '');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { connected } = useAuth();
+    const { addDocumentUpdate } = useUpdate();
 
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            setIsAuthenticated(await checkAuthStatus());
-        }
-        checkAuth();
-    },[]);
 
     const handleDownload = async () => {
         const result = await downloadDocument(props.id, props.nom);
@@ -40,37 +37,49 @@ const Document = (props) => {
         }
     };
 
+    const updateDescriptionDocument = async (e) => {
+        const value = e.target.value;
+        setIsDescription(value);
+        addDocumentUpdate(props.id, value);
+    }
 
-    return (
-        <div className="document_container">
-            <div className="document_container_content">
-                <div className={"document_container_content_icon"}></div>
-                <h3 className={"document_container_content_title"}>{props.nom}</h3>
 
-                <div className={"document_container_content_buttons"}>
-                    {isAuthenticated && (
+    return connected ? (
+            <div className={"document_container"}>
+
+                <div className="document_container_content">
+                    <div className={"document_container_content_icon"}></div>
+                    <h3 className={"document_container_content_title"}>{props.nom}</h3>
+
+                    <div className={"document_container_content_buttons"}>
                         <button className="button-delete" onClick={handleDelete}>Supprimer</button>
-                    )}
-                    <button className="button" onClick={handleDownload}>Téléchargement</button>
+                        <button className="button" onClick={handleDownload}>Téléchargement</button>
+                    </div>
                 </div>
-            </div>
-
-            {isAuthenticated ? (
-                <form className="document_container_footer">
+                <div className="document_container_footer">
                     <input
                         className={"document_container_footer_text"}
                         value={isDescription}
                         placeholder="Description du document"
-                        onChange={(e) => setIsDescription(e.target.value)}
+                        onChange={(e) => updateDescriptionDocument(e)}
                     />
-                </form>
-            ) : (
-                <div className="document_container_footer">
-                    {props.description && <p className={"document_container_footer_text"}>{props.description}</p>}
                 </div>
-            )}
+            </div>
+        ) : (
+            <div className={"document_container"}>
+                <div className="document_container_content">
+                    <div className={"document_container_content_icon"}></div>
+                    <h3 className={"document_container_content_title"}>{props.nom}</h3>
 
-        </div>
+                    <div className={"document_container_content_buttons"}>
+                        <button className="button" onClick={handleDownload}>Téléchargement</button>
+                    </div>
+                </div>
+                <div className="document_container_footer">
+                    {isDescription && <p className={"document_container_footer_text"}>{isDescription}</p>}
+
+                </div>
+            </div>
     )
 }
 

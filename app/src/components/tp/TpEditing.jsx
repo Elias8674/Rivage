@@ -5,13 +5,38 @@ import ListeDocuments from "../document/ListeDocuments.jsx";
 import { motion } from "framer-motion";
 import {replace} from "react-router-dom";
 import PropsTypes from "prop-types";
-import {postTp} from "../../services/apiService.js";
+import {deleteData, postTp} from "../../services/apiService.js";
+import {useUpdate} from "../../services/UpdateContext.jsx";
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import dragHandle from '../../assets/icons/drag-handle.svg';
+
+
 
 const TpEditing = (props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isTitle, setIsTitle] = useState('');
-    const [isDescription, setIsDescription] = useState('');
+    const [isTitle, setIsTitle] = useState(props.titre || '');
+    const [isDescription, setIsDescription] = useState(props.description || '');
     const [error, setError] = useState('');
+    const { addTpUpdate } = useUpdate();
+
+    const sortable = useSortable({id: props.id});
+    const {
+            attributes,
+            listeners,
+            setNodeRef,
+            transform,
+            transition,
+            isDragging,
+        } = sortable;
+
+        const style = {
+            transform: CSS.Transform.toString(transform),
+            transition,
+            opacity: isDragging ? 0.5 : 1, // Feedback visuel pendant le drag
+        };
+
+
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -37,68 +62,80 @@ const TpEditing = (props) => {
         }
     }
 
+    const updateTitleTp = (e) => {
+        const value = e.target.value;
+        setIsTitle(value);
+        addTpUpdate(props.id, value , isDescription)
+    }
+
+    const updateDescriptionTp = (e) => {
+        const value = e.target.value;
+        setIsDescription(value);
+        addTpUpdate(props.id, isTitle , value)
+    }
+
+
     return (
-        <form className={"tp_container"} onSubmit={handleAddTp}>
-            <div className={"tp_container_header"}>
+        <div
+            className={"tp_container"}
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+        >
+            <div className={"tp_container_header"} onClick={toggleOpen}>
                 <svg
+                    src={'../../assets/icons/chevronUp.svg'}
                     width="32"
                     height="32"
                     viewBox="0 0 32 32"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    onClick={toggleOpen}
                     className={`tp_container_header_toggle ${isOpen ? 'open' : ''}`}
                     role="button"
                     tabIndex="0"
                     style={{cursor: 'pointer'}}
                 >
-                    <path d="M24 12L16 20L8 12" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24 12L16 20L8 12" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round"
+                          stroke-linejoin="round"/>
 
                 </svg>
 
                 <input
                     className={"tp_container_header_title"}
-                    type="text"
-                    required
                     value={isTitle}
-                    placeholder="Titre du TP"
-                    onChange={(e) => setIsTitle(e.target.value)}
+                    onChange={(e) => updateTitleTp(e)}
+                />
+
+                <button className={"tp_container_header_delete"} onClick={() => props.handleDeleteTp(props.id)}>Supprimer</button>
+
+                <img
+                    className={"tp_container_header_dragHandle"}
+                    src={dragHandle}
+                    alt="Edit"
+                    {...listeners}
                 />
             </div>
 
+
             <motion.div
                 className={"tp_container_content"}
-                initial={{ height: 0, opacity: 0 }}
-                animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{ overflow: "hidden" }}
+                initial={{height: 0, opacity: 0}}
+                animate={isOpen ? {height: "auto", opacity: 1} : {height: 0, opacity: 0}}
+                transition={{duration: 0.5, ease: "easeInOut"}}
+                style={{overflow: "hidden"}}
             >
-                <textarea
+                <input
                     className={"tp_container_content_title"}
                     value={isDescription}
-                    rows="3"
-                    cols="50"
-                    placeholder="Description du TP"
-                    onChange={(e) => setIsDescription(e.target.value)}
+                    onChange={(e) => updateDescriptionTp(e)}
                 />
-                <ListeDocuments TpID={props.id} />
-                <div className={"tp_container_content_addDocument"}>
-                    <p className={"tp_container_content_addDocument_text"}>Faites glisser et déposez un document ou :</p>
-                    <input
-                        className={"tp_container_content_addDocument_button"}
-                        type="file"
-                        form=""
-                    />
-                </div>
-
-                <button className={"tp_container_content_button"} type="submit">
-                    Créer
-                </button>
-
+                <ListeDocuments TpID={props.id}/>
             </motion.div>
 
-        </form>
+
+        </div>
     );
+
 }
 
 
@@ -108,6 +145,7 @@ TpEditing.propTypes = {
     id: PropTypes.number.isRequired,
     open: PropTypes.bool,
     startReload: PropsTypes.func,
+    handleDeleteTp: PropsTypes.func,
 }
 
 export default TpEditing;

@@ -7,6 +7,10 @@ services:
       - ENV=dev
       - DATABASE_URL=${DATABASE_URL}
       - DATABASE_URL_ASYNC=${DATABASE_URL_ASYNC}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - SUPABASE_BUCKET_NAME=${SUPABASE_BUCKET_NAME}
+
     volumes:
       - ./api:/api
       - ./data:/data

@@ -1,0 +1,64 @@
+.toolBar_container {
+    position: fixed;
+    z-index: 100;
+    bottom: 30px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: fit-content;
+
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 13px;
+    border: 1px solid #E8E8E8;
+    background: #FFF;
+    box-shadow: 0 65px 18px 0 rgba(0, 0, 0, 0.00), 0 41px 17px 0 rgba(0, 0, 0, 0.01), 0 23px 14px 0 rgba(0, 0, 0, 0.02), 0 10px 10px 0 rgba(0, 0, 0, 0.03), 0 3px 6px 0 rgba(0, 0, 0, 0.04);
+}
+
+.toolBar_container_save_button {
+    display: flex;
+    padding: 12px 18px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 14px;
+    background: var(--color-primary, #0079FF);
+
+    border: none;
+
+    color: #FFF;
+    font-family: Switzer;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.toolBar_container_save_button:hover {
+    background: #004C98;
+    transition: background-color 0.3s ease;
+}
+
+.toolBare_container_newTP_button {
+    display: flex;
+    width: 43px;
+    height: 43px;
+    padding: 12px 11px 11px 12px;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+
+    border-radius: 8px;
+    background: #F7F7F7;
+}
+
+.toolBare_container_newTP_button:hover {
+    background: #E8E8E8;
+    transition: background-color 0.3s ease;
+}

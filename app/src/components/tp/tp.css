@@ -1,8 +1,13 @@
 .tp_container {
     width: 830px;
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 17px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: #FDFDFD;
 
+}
+
+.tp_container:hover {
+    border: 1px solid #0079FF;
 }
 
 .tp_container_header {
@@ -13,19 +18,21 @@
     flex-shrink: 0;
 
     height: 80px;
+
+    cursor: pointer;
 }
 
 .tp_container_header_title {
-    color: #1B1B1B;
-    font-family: Inter;
+    border: none;
+    background: transparent;
+    width: 700px;
+
+    color: #232323;
+    font-family: Switzer;
     font-size: 20px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: normal;
-
-    border: none;
-
-    width: 700px;
 }
 
 .tp_container_header_title:focus {
@@ -69,12 +76,11 @@
 
 .tp_container_content_title {
     color: #000;
-    font-family: Inter;
+    font-family: Switzer;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-
     border: none;
     resize: none;
     overflow: hidden;
@@ -83,6 +89,7 @@
     margin-bottom: 30px;
 
     width: 700px;
+    background: transparent;
 }
 
 .tp_container_content_title:focus {
@@ -139,4 +146,8 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.tp_container_header_dragHandle {
+    margin-right: 25px;
 }

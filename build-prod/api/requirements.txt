@@ -11,3 +11,4 @@ fastapi-users-db-sqlmodel
 asyncpg
 python-dotenv
 supabase
+unidecode
