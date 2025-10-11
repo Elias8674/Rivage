@@ -5,7 +5,7 @@ import ListeDocuments from "../document/ListeDocuments.jsx";
 import { motion } from "framer-motion";
 import {replace} from "react-router-dom";
 import PropsTypes from "prop-types";
-import {postTp} from "../../services/apiService.js";
+import {deleteData, postTp} from "../../services/apiService.js";
 import {useUpdate} from "../../services/UpdateContext.jsx";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -74,6 +74,7 @@ const TpEditing = (props) => {
         addTpUpdate(props.id, isTitle , value)
     }
 
+
     return (
         <div
             className={"tp_container"}
@@ -104,6 +105,8 @@ const TpEditing = (props) => {
                     value={isTitle}
                     onChange={(e) => updateTitleTp(e)}
                 />
+
+                <button className={"tp_container_header_delete"} onClick={() => props.handleDeleteTp(props.id)}>Supprimer</button>
 
                 <img
                     className={"tp_container_header_dragHandle"}
@@ -142,6 +145,7 @@ TpEditing.propTypes = {
     id: PropTypes.number.isRequired,
     open: PropTypes.bool,
     startReload: PropsTypes.func,
+    handleDeleteTp: PropsTypes.func,
 }
 
 export default TpEditing;

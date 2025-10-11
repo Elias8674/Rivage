@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import './listeTp.css'
 import ListeTp from "./ListeTp.jsx";
 import TpEditing from "./TpEditing.jsx";
-import {getDataWithId, putIndexTp} from "../../services/apiService.js";
+import {deleteData, getDataWithId, putIndexTp} from "../../services/apiService.js";
 
 // Imports @dnd-kit
 import {
@@ -104,6 +104,22 @@ const ListeTpEditing = (props) => {
         }
     };
 
+    const handleDeleteTp = async (id) => {
+        const previousListTp = tp
+        setTp(tp.filter(tp => tp.id !== id));
+        setFilteredTp(tp.filter(tp => tp.id !== id))
+
+        try {
+            await deleteData('tp', id);
+        } catch (error) {
+            setTp(previousListTp);
+            setFilteredTp(previousListTp);
+            console.log("Erreur lors de la suppression du tp");
+        }
+
+
+    }
+
     return (
         <div className={"listeTp_container"}>
             <input className={"SearchBar"}
@@ -131,6 +147,7 @@ const ListeTpEditing = (props) => {
                                     titre={tp.titre}
                                     description={tp.description}
                                     isDraggable={true}
+                                    handleDeleteTp={handleDeleteTp}
                                 />
                             )
                         })}
