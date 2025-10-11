@@ -4,7 +4,7 @@ from sqlmodel import Session, select, func
 
 from src.endpoints.dependencies import get_db
 from src.models.tpModel import TpWrite, Tp, TpRead, TpUpdate, TpWriteInternal
-from src.services.indexService import switchTpByIndex
+from src.services.indexService import switchTpByIndex, switchTPtoLastPlace
 
 router = APIRouter(prefix="/tp", tags=["tp"])
 
@@ -95,6 +95,8 @@ def delete_tp(tp_id: int, db: Session = Depends(get_db)):
     tp = db.get(Tp, tp_id)
     if not tp:
         raise HTTPException(status_code=404, detail="Tp non trouvé")
+
+    switchTPtoLastPlace(tp_id, db)
 
     db.delete(tp)
     db.commit()
