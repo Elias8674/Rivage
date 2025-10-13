@@ -4,6 +4,7 @@ from sqlmodel import Session, select
 
 from src.endpoints.dependencies import get_db
 from src.models.coursModel import CoursRead, CoursWrite, Cours, CoursReadWithTp, CoursUpdate
+from src.models.tpModel import Tp
 from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
 from src.models.userModel import User
 
@@ -68,6 +69,10 @@ def delete_cours(cours_id: int, db: Session = Depends(get_db)):
     db_cours = db.get(Cours, cours_id)
     if not db_cours:
         raise HTTPException(status_code=404, detail="Cours non trouvé, suppression impossible")
+
+    db_list_tp = db.exec(select(Tp).where(Tp.cours_id == cours_id)).all()
+    for tp in db_list_tp:
+        db.delete(tp)
 
     db.delete(db_cours)
     db.commit()
