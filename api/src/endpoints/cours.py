@@ -56,3 +56,20 @@ def update_cours_by_id(cours_id: int, cours: CoursUpdate, db: Session = Depends(
     db.commit()
     db.refresh(db_cours)
     return db_cours
+
+@router.delete("/{cours_id}")
+def delete_cours(cours_id: int, db: Session = Depends(get_db)):
+    """
+    supprime un cours par son ID.
+    :param cours_id:
+    :param db:
+    :return:
+    """
+    db_cours = db.get(Cours, cours_id)
+    if not db_cours:
+        raise HTTPException(status_code=404, detail="Cours non trouvé, suppression impossible")
+
+    db.delete(db_cours)
+    db.commit()
+
+    return {"message": "Cours supprimé avec succès"}
