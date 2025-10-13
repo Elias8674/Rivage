@@ -10,9 +10,13 @@ const Header = () => {
         window.location.href = "/login";
     }
 
+    const HandleHome = () => {
+        window.location.href = "/home";
+    }
+
     return (
         <div className={"header_container"}>
-            <div className={"header_logo"}>
+            <div className={"header_logo"} onClick={HandleHome}>
                 <img src={"src/assets/icons/logoRivage.svg"} alt={"logo"}/>
                 <h1 className={"header_logo_title"}>Rivage</h1>
             </div>
