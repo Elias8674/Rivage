@@ -151,3 +151,32 @@
 .tp_container_header_dragHandle {
     margin-right: 25px;
 }
+
+.tp_container_header_delete {
+    display: inline-flex;
+    height: 32px;
+    padding: 10px 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    border-radius: 11px;
+    background: #FBE6E6;
+
+    border: none;
+
+    color: #E40C04;
+    font-family: Switzer;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.tp_container_header_delete:hover {
+    background: #E40C04;
+    color: #FFF;
+    transition: background-color 0.3s ease;
+}
