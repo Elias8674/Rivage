@@ -101,4 +101,4 @@ def delete_tp(tp_id: int, db: Session = Depends(get_db)):
     db.delete(tp)
     db.commit()
 
-    return {'message': 'Cours supprimer avec succès'}
+    return {'message': 'TP supprimer avec succès'}
