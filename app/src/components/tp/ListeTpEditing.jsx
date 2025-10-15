@@ -28,6 +28,7 @@ import {
     restrictToParentElement,
     restrictToVerticalAxis
 } from '@dnd-kit/modifiers';
+import TableOfContents from "../tableOfContents/TableOfContents.jsx";
 
 const ListeTpEditing = (props) => {
     const [tp, setTp] = useState([]);
@@ -120,8 +121,19 @@ const ListeTpEditing = (props) => {
 
     }
 
+    const scrollToTp = (id) => {
+        const tp = document.getElementById(id);
+        console.log('enter to scroll')
+        if (tp) {
+            tp.scrollIntoView({ behavior: 'smooth' });
+            console.log("scroll")
+        }
+    }
+
     return (
         <div className={"listeTp_container"}>
+            <TableOfContents ListeTp={tp} scrollToTp={scrollToTp} />
+
             <input className={"SearchBar"}
                    type="text"
                    placeholder="Chercher un tp"

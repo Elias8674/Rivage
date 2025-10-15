@@ -1,0 +1,35 @@
+.tableOfContents_container {
+    position: fixed;
+    left: calc(50% - 415px - 200px - 50px);
+    /*
+    50% pour centrer,
+    415 moitié de la largeur de liste TP,
+    200 pour la largeur de tableOfContents,
+    50px pour le gap
+    */
+
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.tableOfContents_container_button {
+    color: #070707;
+    font-family: Switzer;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tableOfContents_container_button:hover {
+    color: #0079FF;
+}

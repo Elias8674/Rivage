@@ -77,6 +77,7 @@ const TpEditing = (props) => {
 
     return (
         <div
+            id={props.id}
             className={"tp_container"}
             ref={setNodeRef}
             style={style}
