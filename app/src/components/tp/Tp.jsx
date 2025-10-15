@@ -13,7 +13,7 @@ const Tp = (props) => {
 
 
     return (
-        <div className={"tp_container"}>
+        <div className={"tp_container"} id={props.id}>
             <div className={"tp_container_header"} onClick={toggleOpen}>
                 <svg
                     src={'../../assets/icons/chevronUp.svg'}

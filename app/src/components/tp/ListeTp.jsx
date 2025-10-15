@@ -2,6 +2,7 @@ import Tp from "./Tp.jsx";
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
+import TableOfContents from "../tableOfContents/TableOfContents.jsx";
 import './listeTp.css'
 import {getDataWithId, putIndexTp} from "../../services/apiService.js";
 
@@ -29,9 +30,19 @@ const ListeTp = (props) => {
         setFilteredTp(tp.filter(c => c.titre.toLowerCase().includes(value.toLowerCase())));
     };
 
+    const scrollToTp = (id) => {
+        const tp = document.getElementById(id);
+        console.log('enter to scroll')
+        if (tp) {
+            tp.scrollIntoView({ behavior: 'smooth' });
+            console.log("scroll")
+        }
+    }
+
 
     return (
         <div className={"listeTp_container"}>
+            <TableOfContents ListeTp={tp} scrollToTp={scrollToTp} />
             <input className={"SearchBar"}
                    type="text"
                    placeholder="Chercher un tp"
