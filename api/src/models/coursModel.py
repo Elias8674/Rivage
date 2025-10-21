@@ -49,3 +49,4 @@ class CoursWrite(CoursBase):
 class CoursUpdate(CoursBase):
     nom: Optional[str] = None
     couleur_id: Optional[int] = None
+

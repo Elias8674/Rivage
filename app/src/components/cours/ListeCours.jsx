@@ -21,7 +21,6 @@ const ListeCours = () => {
             const dataCours = await getData('cours');
             setCours(dataCours);
             setFilteredCours(dataCours);
-            console.log("data cours", dataCours);
         };
         fetchData();
     }, [reload]);
@@ -57,7 +56,7 @@ const ListeCours = () => {
                 )}
                 {filteredCours.map((cours, index) => {
                     return (
-                        <Cours index={index} id={cours.id} name={cours.nom} couleur_id={cours.couleur_id}/>
+                        <Cours index={index} id={cours.id} name={cours.nom} background_color={cours.couleur.background_color} text_color={cours.couleur.text_color}/>
                     )
                     })}
             </div>
