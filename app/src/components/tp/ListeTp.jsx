@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import TableOfContents from "../tableOfContents/TableOfContents.jsx";
 import './listeTp.css'
 import {getDataWithId, putIndexTp} from "../../services/apiService.js";
+import PropsTypes from "prop-types";
 
 const ListeTp = (props) => {
     const [tp, setTp] = useState([]);
@@ -15,8 +16,7 @@ const ListeTp = (props) => {
 
     useEffect(() => {
         const fetchTp = async () => {
-            const data = await getDataWithId('cours', props.id);
-            const sortedTp = data.tp.slice().sort((a, b) => a.index - b.index);
+            const sortedTp = props.tp.slice().sort((a, b) => a.index - b.index);
             setTp(sortedTp);
             setFilteredTp(sortedTp);
         }
@@ -32,10 +32,8 @@ const ListeTp = (props) => {
 
     const scrollToTp = (id) => {
         const tp = document.getElementById(id);
-        console.log('enter to scroll')
         if (tp) {
             tp.scrollIntoView({ behavior: 'smooth' });
-            console.log("scroll")
         }
     }
 
@@ -63,6 +61,7 @@ const ListeTp = (props) => {
 
 ListeTp.propTypes = {
     id: PropTypes.number.isRequired,
+    tp: PropsTypes.array.isRequired,
 }
 
 

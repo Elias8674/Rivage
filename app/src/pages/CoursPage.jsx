@@ -17,8 +17,6 @@ import ToolBar from "../components/toolBar/ToolBar.jsx";
 const CoursPage = () => {
     const { id } = useParams();
     const [cours, setCours] = useState([]);
-    const [backgroudColor, setBackgroundColor] = useState("#fff");
-    const [textColor, setTextColor] = useState("#000");
     const { connected } = useAuth();
     const { CoursNameUpdate } = useUpdate();
 
@@ -26,11 +24,7 @@ const CoursPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const dataCours = await getDataWithId('cours', id);
-            setCours(dataCours)
-
-            const dataCouleur  = await getDataWithId('couleur', dataCours.couleur_id);
-            setBackgroundColor(dataCouleur.background_color);
-            setTextColor(dataCouleur.text_color);
+            await setCours(dataCours)
         };
         fetchData();
     }, [id]);
@@ -42,15 +36,17 @@ const CoursPage = () => {
     }
 
 
+
+
     // Si l'utilisateur est connecté la première partie est affiché en mode édition
     // Sinon la deuxième partie est affiché en mode lecture seule
     return connected ? (
             <div className={"courPage_container_content"}>
                 <Header/>
-                <div className={"coursPage_container_content_header"} style={{backgroundColor: backgroudColor}}>
+                <div className={"coursPage_container_content_header"} style={{backgroundColor: cours?.couleur?.background_color ?? "#FFF"}}>
                     <input
                         className={"coursPage_container_content_header_title"}
-                        style={{color: textColor}}
+                        style={{color: cours?.couleur?.text_color ?? "#000000" }}
                         value={cours.nom}
                         onChange={(e) => updateCoursName(e)}
                     />
@@ -61,10 +57,10 @@ const CoursPage = () => {
         ) : (
             <div className={"courPage_container_content"}>
                 <Header/>
-                <div className={"coursPage_container_content_header"} style={{backgroundColor: backgroudColor}}>
-                    <h1 className={"coursPage_container_content_header_title"} style={{color: textColor}}> {cours.nom} </h1>
+                <div className={"coursPage_container_content_header"} style={{backgroundColor: cours?.couleur?.background_color ?? "#FFF"}}>
+                    <h1 className={"coursPage_container_content_header_title"} style={{color: cours?.couleur?.text_color ?? "#000000"}}> {cours.nom} </h1>
                 </div>
-                    <ListeTp id={id}/>
+                    {cours.tp && <ListeTp id={id} tp={cours.tp}/>}
             </div>
         )
 

@@ -1,17 +1,19 @@
 import './header.css'
 import {useAuth} from "../../services/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
     const { connected, logout } = useAuth();
+    const navigate = useNavigate();
     console.log(connected)
 
 
     const Redirect = () => {
-        window.location.href = "/login";
+        navigate("/login");
     }
 
     const HandleHome = () => {
-        window.location.href = "/home";
+        navigate("/");
     }
 
     return (

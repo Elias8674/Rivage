@@ -40,7 +40,7 @@ class CoursRead(CoursBase):
 
 class CoursReadWithTp(CoursBase):
     id: int
-    couleur_id: int
+    couleur: CouleurRead
     tp: List["TpRead"]
 
 class CoursWrite(CoursBase):

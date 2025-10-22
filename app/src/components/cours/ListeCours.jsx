@@ -5,6 +5,7 @@ import './listeCours.css'
 import {useEffect, useState} from "react";
 import {getData, postCours} from "../../services/apiService.js";
 import {useAuth} from "../../services/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 const ListeCours = () => {
     const [cours, setCours] = useState([]);
@@ -12,6 +13,7 @@ const ListeCours = () => {
     const [filteredCours, setFilteredCours] = useState(cours);
     const [isNameCours, setIsNameCours] = useState('');
     const [reload, setReload] = useState(false);
+    const navigate = useNavigate();
 
     const { connected } = useAuth();
 
@@ -33,8 +35,7 @@ const ListeCours = () => {
 
     const handleAddCours = async () => {
         const dataCours = await postCours("Aucun nom");
-        window.location.href = "/" + dataCours.id;
-        //setReload(!reload);
+        navigate(`/${dataCours.id}`);
     }
 
 

@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
+import {useNavigate} from "react-router-dom";
 import './cours.css';
 
 const Cours = (props) => {
+    const navigate = useNavigate();
 
 
     const Redirect = () => {
-        window.location.href = "/" + props.id;
+        navigate(`/${props.id}`);
     }
 
 

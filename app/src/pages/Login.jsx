@@ -19,7 +19,7 @@ const Login = () => {
 
         if (reponse) {
             //window.location.href = '/home';
-            navigate('/home');
+            navigate(-1);
         } else {
             setError('Email ou mot de passe incorrect');
         }
@@ -27,7 +27,7 @@ const Login = () => {
 
 
     const handleBack = () => {
-        window.history.back();
+        navigate("/");
     }
 
     return (
@@ -68,7 +68,7 @@ const Login = () => {
                     <button className={"coursPage_container_content_fields_button"} type="submit">
                         Connexion
                     </button>
-                    <button className={"coursPage_container_content_fields_secondaryButton"} onClick={() => {navigate(-1)}}>
+                    <button className={"coursPage_container_content_fields_secondaryButton"} type={"button"} onClick={handleBack}>
                         Retour en arrière
                     </button>
                 </form>

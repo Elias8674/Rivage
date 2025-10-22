@@ -115,7 +115,6 @@ const ListeTpEditing = (props) => {
         } catch (error) {
             setTp(previousListTp);
             setFilteredTp(previousListTp);
-            console.log("Erreur lors de la suppression du tp");
         }
 
 
@@ -126,7 +125,6 @@ const ListeTpEditing = (props) => {
         console.log('enter to scroll')
         if (tp) {
             tp.scrollIntoView({ behavior: 'smooth' });
-            console.log("scroll")
         }
     }
 
