@@ -3,21 +3,25 @@ import './toolBar.css'
 import {useUpdate} from "../../services/UpdateContext.jsx";
 import {postTp, deleteData} from "../../services/apiService.js";
 import {delay} from "motion";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
-const ToolBar = () => {
+const ToolBar = (props) => {
     const { sendUpdate } = useUpdate();
     const { id } = useParams();
+    const navigate = useNavigate();
 
+    // gérer le cas ou la save passe pas
     const  handleSave = async () => {
         await delay(2000);
         await sendUpdate();
-        window.location.reload();
+        console.log("save")
+        navigate(0);
     }
 
     const handleNewTp = async () => {
         await postTp("", "", id);
-        window.location.reload();
+        navigate(0);
 
     }
 
@@ -25,11 +29,9 @@ const ToolBar = () => {
         const confirmDelete = window.confirm("Voulez vous vraiment supprimer ce cours ?");
         if (confirmDelete) {
             await deleteData('cours', id);
-            window.location.href = '/home';
+            navigate("/");
         }
     }
-
-
 
     return (
         <div className={"toolBar_container"}>
@@ -44,5 +46,10 @@ const ToolBar = () => {
         </div>
     )
 }
+
+ToolBar.propTypes = {
+    reload: PropTypes.func.isRequired,
+}
+
 
 export default ToolBar;

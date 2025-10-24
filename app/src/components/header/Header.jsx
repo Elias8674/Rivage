@@ -13,7 +13,7 @@ const Header = () => {
     }
 
     const HandleHome = () => {
-        navigate("/");
+        navigate("/", { viewTransition: true});
     }
 
     return (

@@ -13,12 +13,16 @@ import {useUpdate} from "../services/UpdateContext.jsx";
 import {useAuth} from "../services/AuthContext.jsx";
 import ToolBar from "../components/toolBar/ToolBar.jsx";
 
+import {useNavigate} from "react-router-dom";
+
 
 const CoursPage = () => {
     const { id } = useParams();
     const [cours, setCours] = useState([]);
     const { connected } = useAuth();
     const { CoursNameUpdate } = useUpdate();
+    const [reloadKey, setReloadKey] = useState(0);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -27,7 +31,7 @@ const CoursPage = () => {
             await setCours(dataCours)
         };
         fetchData();
-    }, [id]);
+    }, [id, reloadKey]);
 
     const updateCoursName = async (e) => {
         const newName = e.target.value;
@@ -35,7 +39,9 @@ const CoursPage = () => {
         CoursNameUpdate(cours.id, newName);
     }
 
-
+    const handleReload = () => {
+        setReloadKey(prevKey => prevKey + 1);
+    }
 
 
     // Si l'utilisateur est connecté la première partie est affiché en mode édition
@@ -51,8 +57,8 @@ const CoursPage = () => {
                         onChange={(e) => updateCoursName(e)}
                     />
                 </div>
-                    <ListeTpEditing id={id}/> 
-                <ToolBar />
+                {cours.tp && <ListeTpEditing id={id} tp={cours.tp}/>}
+                <ToolBar reload={handleReload}/>
             </div>
         ) : (
             <div className={"courPage_container_content"}>
