@@ -27,7 +27,6 @@
     align-items: center;
     gap: 10px;
     border-radius: 14px;
-    background: var(--color-primary, #0079FF);
 
     border: none;
 
@@ -39,8 +38,29 @@
     line-height: normal;
 }
 
-.toolBar_container_save_button:hover {
+.toolBar_container_save_button.ready {
+    background: var(--color-primary, #0079FF);
+}
+
+.toolBar_container_save_button.disabled {
+    background: #5e5b5b;
+    transition: background-color 0.3s ease;
+
+    cursor: not-allowed;
+}
+
+.toolBar_container_save_button.saving {
     background: #004C98;
+    transition: background-color 0.3s ease;
+
+    cursor: not-allowed;
+}
+
+
+
+
+.toolBar_container_save_button:hover {
+    background: #056ada;
     transition: background-color 0.3s ease;
 }
 
