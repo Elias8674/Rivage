@@ -21,14 +21,7 @@ const TpEditing = (props) => {
     const { addTpUpdate } = useUpdate();
 
     const sortable = useSortable({id: props.id});
-    const {
-            attributes,
-            listeners,
-            setNodeRef,
-            transform,
-            transition,
-            isDragging,
-        } = sortable;
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging,} = sortable;
 
         const style = {
             transform: CSS.Transform.toString(transform),
@@ -44,6 +37,8 @@ const TpEditing = (props) => {
 
     useEffect(() => {
         props.open ? setIsOpen(true) : setIsOpen(false);
+
+
         setIsTitle(props.titre);
         setIsDescription(props.description);
     }, []);
@@ -103,6 +98,7 @@ const TpEditing = (props) => {
 
                 <input
                     className={"tp_container_header_title"}
+                    placeholder={"Nom du TP"}
                     value={isTitle}
                     onChange={(e) => updateTitleTp(e)}
                 />
@@ -120,13 +116,14 @@ const TpEditing = (props) => {
 
             <motion.div
                 className={"tp_container_content"}
-                initial={{height: 0, opacity: 0}}
-                animate={isOpen ? {height: "auto", opacity: 1} : {height: 0, opacity: 0}}
+                initial={{height: 0, opacity: 0, paddingBottom: 0}}
+                animate={isOpen ? {height: "auto", opacity: 1, paddingBottom: 22} : {height: 0, opacity: 0}}
                 transition={{duration: 0.5, ease: "easeInOut"}}
                 style={{overflow: "hidden"}}
             >
                 <input
                     className={"tp_container_content_title"}
+                    placeholder={"Description du TP"}
                     value={isDescription}
                     onChange={(e) => updateDescriptionTp(e)}
                 />

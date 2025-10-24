@@ -40,7 +40,7 @@
 }
 
 .tp_container_header_title::placeholder {
-    color: rgba(16, 17, 17, 0.30);
+    color: rgba(0, 0, 0, 0.23);
 }
 
 .tp_container_header_toggle {

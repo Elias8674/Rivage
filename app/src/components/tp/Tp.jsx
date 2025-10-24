@@ -38,8 +38,8 @@ const Tp = (props) => {
 
             <motion.div
                 className={"tp_container_content"}
-                initial={{ height: 0, opacity: 0 }}
-                animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+                initial={{ height: 0, opacity: 0, paddingBottom: 0 }}
+                animate={isOpen ? { height: "auto", opacity: 1, paddingBottom: 22 } : { height: 0, opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 style={{ overflow: "hidden" }}
             >

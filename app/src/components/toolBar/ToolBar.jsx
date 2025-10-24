@@ -15,7 +15,6 @@ const ToolBar = (props) => {
     const  handleSave = async () => {
         await delay(2000);
         await sendUpdate();
-        console.log("save")
         navigate(0);
     }
 
