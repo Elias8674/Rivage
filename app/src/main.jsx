@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     element: <RootLayout />, // Le layout racine contenant l'Outlet
     children: [
       { index: true, element: <Home /> },       // correspond à "/"
-      { path: ":id", element: <CoursPage /> },  // correspond à "/123"
+      { path: "cours/:id", element: <CoursPage /> },  // correspond à "/123"
       { path: "login", element: <Login /> },    // correspond à "/login"
       { path: "*", element: <NotFound />}
     ],

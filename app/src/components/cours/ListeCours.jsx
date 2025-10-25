@@ -35,7 +35,7 @@ const ListeCours = () => {
 
     const handleAddCours = async () => {
         const dataCours = await postCours("Aucun nom");
-        navigate(`/${dataCours.id}`);
+        navigate(`/cours/${dataCours.id}`);
     }
 
 
