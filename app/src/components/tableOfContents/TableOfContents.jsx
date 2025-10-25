@@ -13,7 +13,7 @@ const TableOfContents = (props) => {
         <div className={"tableOfContents_container"}>
             {props.ListeTp.map((tp, index) => {
                 return (
-                    <button className={"tableOfContents_container_button"} onClick={()=> {props.scrollToTp(tp.id)}}>{tp.titre}</button>
+                    <button key={tp.id} className={"tableOfContents_container_button"} onClick={()=> {props.scrollToTp(tp.id)}}>{tp.titre}</button>
                 )
             })}
         </div>

@@ -2,6 +2,8 @@ import './header.css'
 import {useAuth} from "../../services/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
 
+import logoRivage from "../../assets/icons/logoRivage.svg";
+
 const Header = () => {
     const { connected, logout } = useAuth();
     const navigate = useNavigate();
@@ -18,7 +20,7 @@ const Header = () => {
     return (
         <div className={"header_container"}>
             <div className={"header_logo"} onClick={HandleHome}>
-                <img src={"src/assets/icons/logoRivage.svg"} alt={"logo"}/>
+                <img src={logoRivage} alt={"logo"}/>
                 <h1 className={"header_logo_title"}>Rivage</h1>
             </div>
 

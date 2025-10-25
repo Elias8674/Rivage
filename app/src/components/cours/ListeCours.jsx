@@ -57,7 +57,7 @@ const ListeCours = () => {
                 )}
                 {filteredCours.map((cours, index) => {
                     return (
-                        <Cours index={index} id={cours.id} name={cours.nom} background_color={cours.couleur.background_color} text_color={cours.couleur.text_color}/>
+                        <Cours key={cours.id} index={index} id={cours.id} name={cours.nom} background_color={cours.couleur.background_color} text_color={cours.couleur.text_color}/>
                     )
                     })}
             </div>

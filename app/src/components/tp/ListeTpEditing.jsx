@@ -122,7 +122,6 @@ const ListeTpEditing = (props) => {
 
     const scrollToTp = (id) => {
         const tp = document.getElementById(id);
-        console.log('enter to scroll')
         if (tp) {
             tp.scrollIntoView({ behavior: 'smooth' });
         }

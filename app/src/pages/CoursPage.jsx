@@ -28,7 +28,6 @@ const CoursPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const dataCours = await getDataWithId('cours', id);
-            console.log("data cours", dataCours);
             if (!dataCours || (typeof dataCours === 'object' && Object.keys(dataCours).length === 0)) {
                 navigate("404");
             }
@@ -57,7 +56,7 @@ const CoursPage = () => {
                     <input
                         className={"coursPage_container_content_header_title"}
                         style={{color: cours?.couleur?.text_color ?? "#000000" }}
-                        value={cours.nom}
+                        value={cours.nom ?? ""}
                         onChange={(e) => updateCoursName(e)}
                     />
                 </div>

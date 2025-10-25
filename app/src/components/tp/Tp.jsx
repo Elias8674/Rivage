@@ -27,7 +27,7 @@ const Tp = (props) => {
                     tabIndex="0"
                     style={{cursor: 'pointer'}}
                 >
-                    <path d="M24 12L16 20L8 12" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24 12L16 20L8 12" stroke="#1E1E1E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
 
                 </svg>
 

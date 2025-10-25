@@ -44,7 +44,7 @@ const ListeDocuments = (props) => {
         try {
           // Appel de votre fonction d'upload
           const result = await uploadDocuments(acceptedFiles[0], props.TpID);
-          console.log('Upload réussi:', result);
+          //console.log('Upload réussi:', result);
         } catch (error) {
           console.error('Erreur upload:', error);
         }
