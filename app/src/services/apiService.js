@@ -23,7 +23,7 @@ export async function getDataWithId(endpoint, id) {
         return (response.data);
     } catch (error) {
         console.error('Erreur GET avec ID :', error);
-        throw error;
+        //throw error;
     }
 }
 

@@ -28,6 +28,10 @@ const CoursPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const dataCours = await getDataWithId('cours', id);
+            console.log("data cours", dataCours);
+            if (!dataCours || (typeof dataCours === 'object' && Object.keys(dataCours).length === 0)) {
+                navigate("/");
+            }
             await setCours(dataCours)
         };
         fetchData();
