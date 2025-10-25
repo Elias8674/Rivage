@@ -7,7 +7,7 @@ const Cours = (props) => {
 
 
     const Redirect = () => {
-        navigate(`/cours/${props.id}`);
+        navigate(`/cours/${props.id}`, { viewTransition: true});
     }
 
 

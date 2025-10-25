@@ -10,7 +10,7 @@ const Header = () => {
 
 
     const Redirect = () => {
-        navigate("/login");
+        navigate("/login", { viewTransition: true});
     }
 
     const HandleHome = () => {
