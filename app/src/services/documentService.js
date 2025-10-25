@@ -37,6 +37,7 @@ export async function uploadDocuments(file, tpId){
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
+            withCredentials: true,
         });
         return response.data;
     } catch (error) {

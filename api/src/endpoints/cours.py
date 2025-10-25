@@ -41,7 +41,7 @@ def get_cours_by_id(cours_id: int, db: Session = Depends(get_db)):
     return cours
 
 @router.patch("/{cours_id}", response_model=CoursRead)
-def update_cours_by_id(cours_id: int, cours: CoursUpdate, db: Session = Depends(get_db)):
+def update_cours_by_id(cours_id: int, cours: CoursUpdate, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Met à jour un cours par son ID.
     """
@@ -59,7 +59,7 @@ def update_cours_by_id(cours_id: int, cours: CoursUpdate, db: Session = Depends(
     return db_cours
 
 @router.delete("/{cours_id}")
-def delete_cours(cours_id: int, db: Session = Depends(get_db)):
+def delete_cours(cours_id: int, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     supprime un cours par son ID.
     :param cours_id:
