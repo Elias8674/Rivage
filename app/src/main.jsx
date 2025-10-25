@@ -17,6 +17,7 @@ import Login from "./pages/Login.jsx";
 import './Ui/variables.css'
 import "./Ui/search.css"
 import "./Ui/button.css"
+import NotFound from "./pages/NotFound.jsx";
 
 
 
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },       // correspond à "/"
       { path: ":id", element: <CoursPage /> },  // correspond à "/123"
       { path: "login", element: <Login /> },    // correspond à "/login"
+      { path: "*", element: <NotFound />}
     ],
   },
 ]);
