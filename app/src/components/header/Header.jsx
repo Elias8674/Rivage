@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 const Header = () => {
     const { connected, logout } = useAuth();
     const navigate = useNavigate();
-    console.log(connected)
 
 
     const Redirect = () => {

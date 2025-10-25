@@ -13,7 +13,7 @@
     align-items: center;
     gap: 12px;
 
-    border-radius: 13px;
+    border-radius: 18px;
     border: 1px solid #E8E8E8;
     background: #FFF;
     box-shadow: 0 65px 18px 0 rgba(0, 0, 0, 0.00), 0 41px 17px 0 rgba(0, 0, 0, 0.01), 0 23px 14px 0 rgba(0, 0, 0, 0.02), 0 10px 10px 0 rgba(0, 0, 0, 0.03), 0 3px 6px 0 rgba(0, 0, 0, 0.04);
@@ -81,4 +81,36 @@
 .toolBare_container_newTP_button:hover {
     background: #E8E8E8;
     transition: background-color 0.3s ease;
+}
+
+.toolBar_container_divider {
+    width: 1px;
+    height: 43px;
+
+    background: #E8E8E8;
+}
+
+
+.toolBar_container_delete_button {
+    display: flex;
+    width: 43px;
+    height: 43px;
+    padding: 10px 9px 9px 10px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+    border-radius: 8px;
+    background: #F2DDDD;
+
+    border: none;
+}
+
+.toolBar_container_delete_button:hover {
+    background: #E40C04;
+}
+
+.toolBar_container_delete_button:hover svg,
+.toolBar_container_delete_button:hover svg path {
+    stroke: #F2DDDD;
 }

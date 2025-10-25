@@ -27,7 +27,7 @@ const Login = () => {
 
 
     const handleBack = () => {
-        navigate("/");
+        navigate(-1);
     }
 
     return (
