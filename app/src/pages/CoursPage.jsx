@@ -30,7 +30,7 @@ const CoursPage = () => {
             const dataCours = await getDataWithId('cours', id);
             console.log("data cours", dataCours);
             if (!dataCours || (typeof dataCours === 'object' && Object.keys(dataCours).length === 0)) {
-                navigate("/");
+                navigate("404");
             }
             await setCours(dataCours)
         };
