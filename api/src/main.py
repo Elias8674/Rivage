@@ -15,6 +15,14 @@ from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
 from alembic.config import Config
 from alembic import command
 
+#Pour les mails :
+from starlette.responses import JSONResponse
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
+from pydantic import EmailStr, BaseModel
+from typing import List
+
+import logging
+
 #Creation du moteur SQLAlchemy
 #DATABASE_URL = "postgresql://endpoints:lycee@database:5432/lycee"
 #engine = create_engine(DATABASE_URL, echo=True)
@@ -80,3 +88,42 @@ def read_root():
 @app.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(current_active_user)):
     return {"message": f"Hello {user.email}!"}
+
+
+
+
+
+
+
+password_mail_server = os.getenv('PASSWORD_EMAIL_SERVER')
+
+
+class EmailSchema(BaseModel):
+    email: List[EmailStr]
+
+
+conf = ConnectionConfig(
+    MAIL_USERNAME="rivage.learning@gmail.com",
+    MAIL_PASSWORD=password_mail_server,
+    MAIL_FROM="rivage.learning@gmail.com",
+    MAIL_PORT=587,
+    MAIL_SERVER="smtp.gmail.com",
+    MAIL_STARTTLS=True,
+    MAIL_SSL_TLS=False,
+    USE_CREDENTIALS=True,
+    VALIDATE_CERTS=True
+)
+
+@app.post("/email")
+async def simple_send(email: EmailSchema) -> JSONResponse:
+    html = """<p>Hi this test mail, thanks for using Fastapi-mail</p> """
+
+    message = MessageSchema(
+        subject="Fastapi-Mail module",
+        recipients=email.dict().get("email"),
+        body=html,
+        subtype=MessageType.html)
+
+    fm = FastMail(conf)
+    await fm.send_message(message)
+    return JSONResponse(status_code=200, content={"message": "email has been sent"})
