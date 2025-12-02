@@ -21,7 +21,7 @@ const Account = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await patchUserMe('users/me', {email: email, name: nom});
+        await patchUserMe( email,  nom);
 
         console.log('update account success');
     }

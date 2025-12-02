@@ -154,7 +154,7 @@ export async function patchUserMe(email, nom) {
     try {
         const response = await API.patch('users/me', {
             email: email,
-            nom: nom
+            name: nom
         }, {
             withCredentials: true,
         });
