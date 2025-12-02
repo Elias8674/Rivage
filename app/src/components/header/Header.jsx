@@ -3,6 +3,10 @@ import {useAuth} from "../../services/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
 
 import logoRivage from "../../assets/icons/logoRivage.svg";
+import logoParametre from "../../assets/icons/parametre.svg";
+
+import account from "../../pages/Account.jsx";
+
 
 const Header = () => {
     const { connected, logout } = useAuth();
@@ -11,6 +15,10 @@ const Header = () => {
 
     const Redirect = () => {
         navigate("/login", { viewTransition: true});
+    }
+
+    const RedirectToAccount = () => {
+        navigate("/account", { viewTransition: true});
     }
 
     const HandleHome = () => {
@@ -25,8 +33,13 @@ const Header = () => {
             </div>
 
             {connected ? (
-                <div className={"button-rounded"} onClick={logout}>
-                    <p className={"header_text"}>Déconnexion</p>
+                <div className={"header_buttons"}>
+                    <div className={"button-rounded"} onClick={logout}>
+                        <p className={"header_text"}>Déconnexion</p>
+                    </div>
+                    <div className={"button-rounded"} onClick={RedirectToAccount}>
+                        <img src={logoParametre} alt={"logo"} className={"header_parametre"}></img>
+                    </div>
                 </div>
             ) : (
                 <div className={"button-rounded"} onClick={Redirect}>

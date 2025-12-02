@@ -28,3 +28,8 @@
     font-weight: 700;
     line-height: normal;
 }
+
+.header_buttons {
+    display: flex;
+    gap: 12px;
+}

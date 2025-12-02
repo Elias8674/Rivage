@@ -18,6 +18,7 @@ import './Ui/variables.css'
 import "./Ui/search.css"
 import "./Ui/button.css"
 import NotFound from "./pages/NotFound.jsx";
+import Account from "./pages/Account.jsx";
 
 
 
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },       // correspond à "/"
       { path: "cours/:id", element: <CoursPage /> },  // correspond à "/123"
       { path: "login", element: <Login /> },    // correspond à "/login"
+      { path: "account", element: <Account /> },
       { path: "404", element: <NotFound />},
       { path: "*", element: <NotFound />},
     ],

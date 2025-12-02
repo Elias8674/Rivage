@@ -17,6 +17,15 @@ export async function getData(endpoint) {
     }
 }
 
+export async function getDataCredentials(endpoint){
+    try {
+        const response = await API.get(`/${endpoint}`, {withCredentials: true});
+        return response.data;
+    } catch (error) {
+        console.error('Erreur GET :', error);
+    }
+}
+
 export async function getDataWithId(endpoint, id) {
     try {
         const response = await API.get(`/${endpoint}/${id}`);
@@ -138,5 +147,18 @@ export async function putIndexTp(id, index) {
         });
     } catch (error) {
         console.error('Erreur PUT Index Tp :', error);
+    }
+}
+
+export async function patchUserMe(email, nom) {
+    try {
+        const response = await API.patch('users/me', {
+            email: email,
+            nom: nom
+        }, {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur PATCH User Me :', error);
     }
 }
