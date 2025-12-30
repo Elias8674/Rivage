@@ -1,17 +1,22 @@
 import './account.css'
 
-import {getDataCredentials, patchUserMe} from "../services/apiService.js";
+import {deleteData, getDataCredentials, patchUserMe} from "../services/apiService.js";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Account = () => {
     const [email, setEmail] = useState('');
     const [nom, setNom] = useState('');
+    const [id, setId] = useState('');
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await getDataCredentials('users/me');
             await setEmail(data.email);
             await setNom(data.name);
+            await setId(data.id);
             console.log(data);
         }
         fetchData();
@@ -24,6 +29,16 @@ const Account = () => {
         await patchUserMe( email,  nom);
 
         console.log('update account success');
+    }
+
+    const handleDeleteAccount = async (e) => {
+        e.preventDefault();
+
+        await deleteData('users', id);
+
+        console.log('delete account success');
+
+        navigate();
     }
 
     return (
@@ -55,6 +70,11 @@ const Account = () => {
 
                     <button type="submit">Mettre à jour</button>
                 </form>
+            </div>
+
+            <div>
+                <h3>Zone dangereuse</h3>
+                <button>Supprimer le compte</button>
             </div>
         </div>
     )
