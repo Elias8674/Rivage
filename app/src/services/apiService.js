@@ -162,3 +162,13 @@ export async function patchUserMe(email, nom) {
         console.error('Erreur PATCH User Me :', error);
     }
 }
+
+export async function deleteMe() {
+    try {
+        const response = await API.delete('me/delete', {
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error('Erreur DELETE Me :', error);
+    }
+}

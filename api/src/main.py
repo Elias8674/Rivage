@@ -7,6 +7,7 @@ from src.endpoints.cours import router as cours_router
 from src.endpoints.tp import router  as tp_router
 from src.endpoints.documents import router as documents_router
 from src.endpoints.couleur import router as couleur_router
+from src.endpoints.auth import router as me_router
 
 from src.models.userModel import User
 from src.models.userModel import UserCreate, UserRead, UserUpdate
@@ -80,6 +81,8 @@ app.include_router(
     prefix="/users",
     tags=["users"],
 )
+
+app.include_router(me_router)
 
 @app.get("/")
 def read_root():

@@ -1,8 +1,10 @@
 import './account.css'
 
-import {deleteData, getDataCredentials, patchUserMe} from "../services/apiService.js";
+import {deleteMe, getDataCredentials, patchUserMe} from "../services/apiService.js";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+
+import {useAuth} from "../services/AuthContext.jsx";
 
 const Account = () => {
     const [email, setEmail] = useState('');
@@ -10,6 +12,7 @@ const Account = () => {
     const [id, setId] = useState('');
 
     const navigate = useNavigate();
+    const {logout} = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,11 +37,15 @@ const Account = () => {
     const handleDeleteAccount = async (e) => {
         e.preventDefault();
 
-        await deleteData('users', id);
+        const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.");
 
-        console.log('delete account success');
+        if (confirmed) {
+            await deleteMe();
+            logout();
+            console.log('delete account success');
+            navigate('/');
+        }
 
-        navigate();
     }
 
     return (
@@ -74,7 +81,10 @@ const Account = () => {
 
             <div>
                 <h3>Zone dangereuse</h3>
-                <button>Supprimer le compte</button>
+                <button type="button"
+                        onClick={handleDeleteAccount}>
+                    Supprimer le compte
+                </button>
             </div>
         </div>
     )
