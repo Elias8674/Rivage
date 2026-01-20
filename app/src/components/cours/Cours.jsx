@@ -1,30 +1,19 @@
 import PropTypes from 'prop-types';
+import {useNavigate} from "react-router-dom";
 import './cours.css';
-import {useEffect, useState} from "react";
-import {getData, getDataWithId} from "../../services/apiService.js";
 
 const Cours = (props) => {
-    const [backgroudColor, setBackgroundColor] = useState("#fff");
-    const [textColor, setTextColor] = useState("#000");
+    const navigate = useNavigate();
 
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const dataCouleur = await getDataWithId('couleur', props.couleur_id);
-            setBackgroundColor(dataCouleur.background_color);
-            setTextColor(dataCouleur.text_color)
-        };
-        fetchData();
-    }, []);
 
     const Redirect = () => {
-        window.location.href = "/" + props.id;
+        navigate(`/cours/${props.id}`, { viewTransition: true});
     }
 
 
     return (
-        <div class="cours_cards" onClick={Redirect} style={{backgroundColor: backgroudColor}}>
-            <h2 class="cours_cards_title" style={{ color: textColor}}>{props.name}</h2>
+        <div className="cours_cards" onClick={Redirect} style={{backgroundColor: props.background_color}}>
+            <h2 className="cours_cards_title" style={{ color: props.text_color}}>{props.name}</h2>
         </div>
     )
 }
@@ -32,6 +21,8 @@ const Cours = (props) => {
 Cours.propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
+    background_color: PropTypes.string.isRequired,
+    text_color: PropTypes.string.isRequired,
 }
 
 export default Cours;

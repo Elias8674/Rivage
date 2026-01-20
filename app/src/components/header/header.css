@@ -1,7 +1,23 @@
+.header_container {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    width: 830px;
+
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+
+    background: white;
+}
+
 .header_logo {
     display: flex;
     align-items: center;
     gap: 8px;
+
+    cursor: pointer;
 }
 
 .header_logo_title {
@@ -13,12 +29,7 @@
     line-height: normal;
 }
 
-.header_container {
+.header_buttons {
     display: flex;
-    align-items: center;
-    width: 830px;
-
-    justify-content: space-between;
-    margin-left: auto;
-    margin-right: auto;
+    gap: 12px;
 }

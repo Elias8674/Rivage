@@ -28,6 +28,7 @@ import {
     restrictToParentElement,
     restrictToVerticalAxis
 } from '@dnd-kit/modifiers';
+import TableOfContents from "../tableOfContents/TableOfContents.jsx";
 
 const ListeTpEditing = (props) => {
     const [tp, setTp] = useState([]);
@@ -49,8 +50,8 @@ const ListeTpEditing = (props) => {
 
     useEffect(() => {
         const fetchTp = async () => {
-            const data = await getDataWithId('cours', props.id);
-            const sortedTp = data.tp.slice().sort((a, b) => a.index - b.index);
+            //const data = await getDataWithId('cours', props.id);
+            const sortedTp = props.tp.slice().sort((a, b) => a.index - b.index);
             setTp(sortedTp);
             setFilteredTp(sortedTp);
         }
@@ -114,14 +115,22 @@ const ListeTpEditing = (props) => {
         } catch (error) {
             setTp(previousListTp);
             setFilteredTp(previousListTp);
-            console.log("Erreur lors de la suppression du tp");
         }
 
 
     }
 
+    const scrollToTp = (id) => {
+        const tp = document.getElementById(id);
+        if (tp) {
+            tp.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
     return (
         <div className={"listeTp_container"}>
+            <TableOfContents ListeTp={tp} scrollToTp={scrollToTp} />
+
             <input className={"SearchBar"}
                    type="text"
                    placeholder="Chercher un tp"
@@ -186,6 +195,7 @@ const ListeTpEditing = (props) => {
 
 ListeTp.propTypes = {
     id: PropTypes.number.isRequired,
+    tp: PropTypes.array.isRequired,
 }
 
 export default ListeTpEditing;

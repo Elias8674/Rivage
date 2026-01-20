@@ -71,6 +71,11 @@ export const UpdateProvider = ({children}) => {
         setUpdateNameCours(new Map());
     }
 
+    //fonction pour vérifier si il y'a des modifications
+    const hasUpdate = () => {
+        return updateTp.size > 0 || updateDocument.size > 0 || updateNameCours.size > 0;
+    }
+
     const value = {
         updateTp,
         updateDocument,
@@ -78,7 +83,8 @@ export const UpdateProvider = ({children}) => {
         addDocumentUpdate,
         CoursNameUpdate,
         clearUpdate,
-        sendUpdate
+        sendUpdate,
+        hasUpdate,
     }
 
     return (

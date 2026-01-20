@@ -1,7 +1,8 @@
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import String
 
 
 from sqlmodel import Session
@@ -13,14 +14,13 @@ from src.models.models import get_async_session
 
 
 class UserRead(schemas.BaseUser[uuid.UUID]):
-    pass
+    name: str
 
 class UserCreate(schemas.BaseUserCreate):
-    pass
+    name: str
 
 class UserUpdate(schemas.BaseUserUpdate):
-    pass
-
+    name: str | None
 
 
 class Base(DeclarativeBase):
@@ -29,6 +29,7 @@ class Base(DeclarativeBase):
 
 class User(SQLAlchemyBaseUserTableUUID, Base):
     __tablename__ = "users"
+    name: Mapped[str | None] = mapped_column(String(length=256), nullable=True)
 
 user_metadata = Base.metadata
 

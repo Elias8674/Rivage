@@ -1,7 +1,8 @@
 import uuid
 from typing import Optional
 
-from fastapi import Depends, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin, models
 from fastapi_users.authentication import (
     AuthenticationBackend,
@@ -10,7 +11,13 @@ from fastapi_users.authentication import (
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
 
+from sqlmodel import Session
+
+
 from src.models.userModel import User, get_user_db
+
+from src.endpoints.dependencies import get_db
+from src.models.models import get_async_session
 
 SECRET = "random_secret_key"
 
@@ -55,3 +62,19 @@ auth_backend = AuthenticationBackend(
 
 fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
 current_active_user = fastapi_users.current_user(active=True)
+
+
+
+router = APIRouter(prefix="/me", tags=["me"])
+
+@router.delete("/delete", status_code=status.HTTP_204_NO_CONTENT)
+def delete_me(
+        current_user: User = Depends(current_active_user),
+        db: Session = Depends(get_db)
+    ):
+    user_in_this_session = db.get(User, current_user.id)
+    if not user_in_this_session:
+        raise HTTPException(status_code=404, detail="Utilisateur introuvable")
+
+    db.delete(user_in_this_session)
+    db.commit()

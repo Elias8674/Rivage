@@ -36,11 +36,11 @@ class Cours(CoursBase, table=True):
 
 class CoursRead(CoursBase):
     id: int
-    couleur_id: int
+    couleur: CouleurRead
 
 class CoursReadWithTp(CoursBase):
     id: int
-    couleur_id: int
+    couleur: CouleurRead
     tp: List["TpRead"]
 
 class CoursWrite(CoursBase):
@@ -49,3 +49,4 @@ class CoursWrite(CoursBase):
 class CoursUpdate(CoursBase):
     nom: Optional[str] = None
     couleur_id: Optional[int] = None
+

@@ -13,32 +13,37 @@ import {useUpdate} from "../services/UpdateContext.jsx";
 import {useAuth} from "../services/AuthContext.jsx";
 import ToolBar from "../components/toolBar/ToolBar.jsx";
 
+import {useNavigate} from "react-router-dom";
+
 
 const CoursPage = () => {
     const { id } = useParams();
     const [cours, setCours] = useState([]);
-    const [backgroudColor, setBackgroundColor] = useState("#fff");
-    const [textColor, setTextColor] = useState("#000");
     const { connected } = useAuth();
     const { CoursNameUpdate } = useUpdate();
+    const [reloadKey, setReloadKey] = useState(0);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
         const fetchData = async () => {
             const dataCours = await getDataWithId('cours', id);
-            setCours(dataCours)
-
-            const dataCouleur  = await getDataWithId('couleur', dataCours.couleur_id);
-            setBackgroundColor(dataCouleur.background_color);
-            setTextColor(dataCouleur.text_color);
+            if (!dataCours || (typeof dataCours === 'object' && Object.keys(dataCours).length === 0)) {
+                navigate("404");
+            }
+            await setCours(dataCours)
         };
         fetchData();
-    }, [id]);
+    }, [id, reloadKey]);
 
     const updateCoursName = async (e) => {
         const newName = e.target.value;
         setCours(prevCours => ({ ...prevCours, nom: newName }));
         CoursNameUpdate(cours.id, newName);
+    }
+
+    const handleReload = () => {
+        setReloadKey(prevKey => prevKey + 1);
     }
 
 
@@ -47,24 +52,24 @@ const CoursPage = () => {
     return connected ? (
             <div className={"courPage_container_content"}>
                 <Header/>
-                <div className={"coursPage_container_content_header"} style={{backgroundColor: backgroudColor}}>
+                <div className={"coursPage_container_content_header"} style={{backgroundColor: cours?.couleur?.background_color ?? "#FFF"}}>
                     <input
                         className={"coursPage_container_content_header_title"}
-                        style={{color: textColor}}
-                        value={cours.nom}
+                        style={{color: cours?.couleur?.text_color ?? "#000000" }}
+                        value={cours.nom ?? ""}
                         onChange={(e) => updateCoursName(e)}
                     />
                 </div>
-                    <ListeTpEditing id={id}/> 
-                <ToolBar />
+                {cours.tp && <ListeTpEditing id={id} tp={cours.tp}/>}
+                <ToolBar reload={handleReload}/>
             </div>
         ) : (
             <div className={"courPage_container_content"}>
                 <Header/>
-                <div className={"coursPage_container_content_header"} style={{backgroundColor: backgroudColor}}>
-                    <h1 className={"coursPage_container_content_header_title"} style={{color: textColor}}> {cours.nom} </h1>
+                <div className={"coursPage_container_content_header"} style={{backgroundColor: cours?.couleur?.background_color ?? "#FFF"}}>
+                    <h1 className={"coursPage_container_content_header_title"} style={{color: cours?.couleur?.text_color ?? "#000000"}}> {cours.nom} </h1>
                 </div>
-                    <ListeTp id={id}/>
+                    {cours.tp && <ListeTp id={id} tp={cours.tp}/>}
             </div>
         )
 

@@ -5,6 +5,7 @@ import './listeCours.css'
 import {useEffect, useState} from "react";
 import {getData, postCours} from "../../services/apiService.js";
 import {useAuth} from "../../services/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 const ListeCours = () => {
     const [cours, setCours] = useState([]);
@@ -12,6 +13,7 @@ const ListeCours = () => {
     const [filteredCours, setFilteredCours] = useState(cours);
     const [isNameCours, setIsNameCours] = useState('');
     const [reload, setReload] = useState(false);
+    const navigate = useNavigate();
 
     const { connected } = useAuth();
 
@@ -21,7 +23,6 @@ const ListeCours = () => {
             const dataCours = await getData('cours');
             setCours(dataCours);
             setFilteredCours(dataCours);
-            console.log("data cours", dataCours);
         };
         fetchData();
     }, [reload]);
@@ -34,8 +35,7 @@ const ListeCours = () => {
 
     const handleAddCours = async () => {
         const dataCours = await postCours("Aucun nom");
-        window.location.href = "/" + dataCours.id;
-        //setReload(!reload);
+        navigate(`/cours/${dataCours.id}`, { viewTransition: true});
     }
 
 
@@ -57,7 +57,7 @@ const ListeCours = () => {
                 )}
                 {filteredCours.map((cours, index) => {
                     return (
-                        <Cours index={index} id={cours.id} name={cours.nom} couleur_id={cours.couleur_id}/>
+                        <Cours key={cours.id} index={index} id={cours.id} name={cours.nom} background_color={cours.couleur.background_color} text_color={cours.couleur.text_color}/>
                     )
                     })}
             </div>

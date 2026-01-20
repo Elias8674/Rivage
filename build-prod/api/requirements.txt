@@ -12,3 +12,4 @@ asyncpg
 python-dotenv
 supabase
 unidecode
+fastapi-mail

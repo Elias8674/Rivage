@@ -10,6 +10,7 @@ services:
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_KEY=${SUPABASE_KEY}
       - SUPABASE_BUCKET_NAME=${SUPABASE_BUCKET_NAME}
+      - PASSWORD_EMAIL_SERVER=${PASSWORD_EMAIL_SERVER}
 
     volumes:
       - ./api:/api
@@ -26,6 +27,7 @@ services:
       dockerfile: ./build/app/Dockerfile
     volumes:
       - ./app:/app
+      - /app/node_modules
     ports:
       - 5173:5173
     networks:

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function Dropzone({ onFilesDrop }) {
     const onDrop = (acceptedFiles) => {
-        console.log('Fichiers reçus :', acceptedFiles);
+        //console.log('Fichiers reçus :', acceptedFiles);
         // Appel de la fonction du parent
         if (onFilesDrop) {
             onFilesDrop(acceptedFiles);

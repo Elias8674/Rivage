@@ -5,11 +5,15 @@ from sqlmodel import Session, select, func
 from src.endpoints.dependencies import get_db
 from src.models.tpModel import TpWrite, Tp, TpRead, TpUpdate, TpWriteInternal
 from src.services.indexService import switchTpByIndex, switchTPtoLastPlace
+from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
+from src.models.userModel import User
+
+
 
 router = APIRouter(prefix="/tp", tags=["tp"])
 
 @router.post("/", response_model=TpWriteInternal)
-def create_tp(tp: TpWrite, db: Session = Depends(get_db)):
+def create_tp(tp: TpWrite, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Crée un nouveau TP.
     """
@@ -35,7 +39,7 @@ def create_tp(tp: TpWrite, db: Session = Depends(get_db)):
     return db_tp
 
 @router.put("/{tp_id}", response_model=TpUpdate)
-def update_tp_by_id(tp_id: int, tp: TpUpdate, db: Session = Depends(get_db)):
+def update_tp_by_id(tp_id: int, tp: TpUpdate, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Mettre à jour un TP par son ID.
     :param tp_id:
@@ -59,7 +63,7 @@ def update_tp_by_id(tp_id: int, tp: TpUpdate, db: Session = Depends(get_db)):
     return db_tp
 
 @router.put("/{tp_id}/{index}", name="Interchange l'index d'un TP avec un autre.")
-def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db)):
+def update_tp_index_by_id(tp_id: int, index: int, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Interchange l'index d'un TP avec un autre.
     :param tp_id:
@@ -84,7 +88,7 @@ def read_tp_by_id(tp_id: int, db: Session = Depends(get_db)):
     return tp
 
 @router.delete("/{tp_id}")
-def delete_tp(tp_id: int, db: Session = Depends(get_db)):
+def delete_tp(tp_id: int, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Supprime un TP par son ID.
     :param document_id: 
@@ -101,4 +105,4 @@ def delete_tp(tp_id: int, db: Session = Depends(get_db)):
     db.delete(tp)
     db.commit()
 
-    return {'message': 'Cours supprimer avec succès'}
+    return {'message': 'TP supprimer avec succès'}

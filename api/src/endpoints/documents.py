@@ -11,11 +11,15 @@ from src.endpoints.dependencies import get_db
 from src.models.documentModel import DocumentRead, DocumentWrite, DocumentBase, Document
 from src.models.tpModel import Tp
 
+from src.endpoints.auth import auth_backend, current_active_user, fastapi_users
+from src.models.userModel import User
+
+
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
 @router.post("/uploadfile/{tp_id}", response_model=Document)
-async def create_upload_file(file: UploadFile, tp_id: int, description: str = "", db: Session = Depends(get_db)):
+async def create_upload_file(file: UploadFile, tp_id: int, description: str = "", db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Télécharge un fichier sur le serveur.
     """
@@ -58,7 +62,7 @@ async def get_document(document_id: int, db: Session = Depends(get_db)):
     return document.path
 
 @router.post("/{document_id}", response_model=DocumentWrite)
-async def post_description_document(document_id: int, description: str, db: Session = Depends(get_db)):
+async def post_description_document(document_id: int, description: str, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Met à jour la description d'un document.
     """
@@ -74,7 +78,7 @@ async def post_description_document(document_id: int, description: str, db: Sess
     return DocumentWrite.from_orm(document)
 
 @router.delete("/{document_id}")
-async def delete_document(document_id: int, db: Session = Depends(get_db)):
+async def delete_document(document_id: int, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     """
     Supprime un document par son ID.
     """

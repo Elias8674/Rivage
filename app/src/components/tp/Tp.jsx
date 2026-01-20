@@ -13,7 +13,7 @@ const Tp = (props) => {
 
 
     return (
-        <div className={"tp_container"}>
+        <div className={"tp_container"} id={props.id}>
             <div className={"tp_container_header"} onClick={toggleOpen}>
                 <svg
                     src={'../../assets/icons/chevronUp.svg'}
@@ -27,7 +27,7 @@ const Tp = (props) => {
                     tabIndex="0"
                     style={{cursor: 'pointer'}}
                 >
-                    <path d="M24 12L16 20L8 12" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24 12L16 20L8 12" stroke="#1E1E1E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
 
                 </svg>
 
@@ -38,8 +38,8 @@ const Tp = (props) => {
 
             <motion.div
                 className={"tp_container_content"}
-                initial={{ height: 0, opacity: 0 }}
-                animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+                initial={{ height: 0, opacity: 0, paddingBottom: 0 }}
+                animate={isOpen ? { height: "auto", opacity: 1, paddingBottom: 22 } : { height: 0, opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 style={{ overflow: "hidden" }}
             >
